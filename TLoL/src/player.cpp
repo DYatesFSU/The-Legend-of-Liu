@@ -6,7 +6,7 @@
 using namespace std;
 
 
-timer *T = new timer();
+//timer *objectTimer = new timer();
 
 textureLoader runText[10];
 textureLoader stand[2];
@@ -23,57 +23,39 @@ player::player()
     runspeed  =0;
     jumpspeed =0;
     actionTrigger =0;
+
+    spriteX = 0;
+    spriteY = 0;
+
+    sprRenderCount = 0;
+
+    sprPrevMovUp = false;
+    sprPrevMovDown = false;
+    sprPrevMovLeft = false;
+    sprPrevMovRight = false;
+
+    objectTexture = new textureLoader[1]();
+    objectTimer = new timer();
 }
 
 player::~player()
 {
     //dtor
+    delete []objectTexture;
+    delete objectTimer;
 }
 void player::drawPlayer(bool facingRight)
 {
-  //  glColor3f(1.0,0.0,0.0);
-   // glPushMatrix();
-  glBegin(GL_QUADS);
-    if (facingRight)
-    {
-    glTexCoord2f(0.0,1.0);
-    glVertex3f(verticies[0].x,verticies[0].y,verticies[0].z);
 
-    glTexCoord2f(1.0,1.0);
-    glVertex3f(verticies[1].x,verticies[1].y,verticies[1].z);
-
-    glTexCoord2f(1.0,0.0);
-    glVertex3f(verticies[2].x,verticies[2].y,verticies[2].z);
-
-    glTexCoord2f(0.0,0.0);
-    glVertex3f(verticies[3].x,verticies[3].y,verticies[3].z);
-    }
-    else
-    {
-    glTexCoord2f(1.0,1.0);
-    glVertex3f(verticies[0].x,verticies[0].y,verticies[0].z);
-
-    glTexCoord2f(0.0,1.0);
-    glVertex3f(verticies[1].x,verticies[1].y,verticies[1].z);
-
-    glTexCoord2f(0.0,0.0);
-    glVertex3f(verticies[2].x,verticies[2].y,verticies[2].z);
-
-    glTexCoord2f(1.0,0.0);
-    glVertex3f(verticies[3].x,verticies[3].y,verticies[3].z);
-    }
-
-
-    glEnd();
-
- //   glPopMatrix();
+    objectTexture[0].binder();
+    selectSprite(spriteX, spriteY, sprHeight, sprWidth);
 }
 
 void player::playerInit()
 {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-    T->start();
+    objectTimer->start();
 
     stand[0].bindTexture("images/player/play.png");
 
@@ -88,40 +70,41 @@ void player::playerInit()
     runText[8].bindTexture("images/player/player8.png");
     runText[9].bindTexture("images/player/player9.png");
 
+    objectTexture[0].bindTexture("images/playerSprites00.png");
+    //playerSprites00.png
+
 }
 
 void player::actions(int action)
 {
-    if (action == 0)
-    {
-        glPushMatrix();
-        glTranslated(getxPos(),getyPos(),-5.0);
-        stand[0].binder();
-          //  glutSolidTeapot(1.5);
-        drawPlayer(facingRight);
-        glPopMatrix();
-    }
-    else if (action >= 1)
-    {
-        glPushMatrix();
-        setxPos(getxVel());
-        setyPos(getyVel());
+    glPushMatrix();
+
+    if (action >= 1)
+        {
+            setxPos(getxVel());
+            setyPos(getyVel());
+        }
        glTranslated(getxPos(),getyPos(),-5.0);
 
-       if(T->getTicks()>15){
+       if(objectTimer->getTicks()>15){
 
-        runspeed++;
+        if(action >= 1)
+        {
+         runspeed++;
         runspeed = runspeed %10;
-        T->reset();
+        }
+        objectTimer->reset();
+
+        if (sprRenderCount % 5 == 0)
+            calcSprite();
+        sprRenderCount++;
        }
 
-       runText[runspeed].binder();
        drawPlayer(facingRight);
 
-       glPopMatrix();
-
-    }
-
+    glPopMatrix();
+    if (sprRenderCount > 1000000)
+        sprRenderCount = 0;
 }
 
 void player::setxPos(float x)
@@ -168,4 +151,74 @@ float player::getyVel()
 bool player::checkMoving()
 {
     return (movingLeft || movingRight || movingUp || movingDown);
+}
+
+void player::calcSprite()
+{
+
+	spriteX++;
+	if (spriteX > 9)
+		spriteX = 0;
+	if (movingLeft)
+	{
+		spriteY = sprHeight - 1 - 2;
+	}
+	if (movingRight)
+	{
+		spriteY = sprHeight - 1 - 0;
+	}
+	if (movingUp)
+	{
+		spriteY = sprHeight - 1 - 1;
+	}
+	if (movingDown)
+	{
+		spriteY = sprHeight - 1 - 3;
+	}
+	if (!movingRight && !movingLeft && !movingUp && !movingDown)
+	{
+	    if (spriteY > 3)
+            spriteY -= 4;
+		if (spriteY == sprHeight - 1 - 5)
+			spriteX = 0;
+		else if (spriteX > 2)
+			spriteX = 0;
+	}
+
+	//spriteY = 0;
+	//spriteX = 0;
+}
+
+
+void player::selectSprite(int x, int y, int spritesHeight, int spritesWidth)
+{
+	double lowBoundX, highBoundX;
+	double lowBoundY, highBoundY;
+
+	lowBoundX = double(x)/double(spritesWidth);
+	highBoundX = double(x+1)/double(spritesWidth);
+	lowBoundY = double(y)/double(spritesHeight);
+	highBoundY = double(y+1)/double(spritesHeight);
+
+	glBegin(GL_QUADS);
+
+    glTexCoord2f(lowBoundX + 0.005, highBoundY - 0.005);
+    glVertex3f(verticies[0].x,verticies[0].y,verticies[0].z);
+
+    glTexCoord2f(highBoundX - 0.005, highBoundY - 0.005);
+    glVertex3f(verticies[1].x,verticies[1].y,verticies[1].z);
+
+    glTexCoord2f(highBoundX - 0.005, lowBoundY + 0.005);
+    glVertex3f(verticies[2].x,verticies[2].y,verticies[2].z);
+
+    glTexCoord2f(lowBoundX + 0.005, lowBoundY + 0.005);
+    glVertex3f(verticies[3].x,verticies[3].y,verticies[3].z);
+
+    glEnd();
+}
+
+//NM: currently not in use
+bool player::compareMoves()
+{
+    return (sprPrevMovUp == movingUp && sprPrevMovDown == movingDown && sprPrevMovLeft == movingLeft && sprPrevMovRight == movingRight);
 }
