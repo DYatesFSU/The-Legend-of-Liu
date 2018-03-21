@@ -5,12 +5,15 @@
 #include <parallax.h>
 #include <player.h>
 #include <skyBox.h>
+#include <Enemy191T.h>
 
 //Model *modelTeapot = new Model();
 Inputs *KbMs = new Inputs();
 parallax *plx = new parallax();
 player *ply = new player();
 //skyBox *sky = new skyBox;
+
+Enemy191T *enemy191t = new Enemy191T();
 
 GLScene::GLScene()
 {
@@ -40,6 +43,7 @@ GLint GLScene::initGL()
     plx->parallaxInit("images/bak.jpg");
     ply->playerInit();
     //sky->loadTextures();
+    enemy191t->objectInit();
 
     return true;
 }
@@ -92,6 +96,8 @@ GLint GLScene::drawGLScene()
             plx->yLevel--;
         }
     glPopMatrix();
+
+    enemy191t->drawObject();
 
 }
 
