@@ -62,6 +62,8 @@ class player:Model
         void selectSprite(int x, int y, int spritesHeight, int spritesWidth);
         bool compareMoves();
 
+        void moveObject();
+
         int spriteX, spriteY;
         const int sprHeight = 8;
         const int sprWidth = 10;

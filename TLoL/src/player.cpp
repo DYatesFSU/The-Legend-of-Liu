@@ -81,6 +81,7 @@ void player::actions(int action)
 
     if (action >= 1)
         {
+            moveObject();
             setxPos(getxVel());
             setyPos(getyVel());
         }
@@ -221,4 +222,29 @@ void player::selectSprite(int x, int y, int spritesHeight, int spritesWidth)
 bool player::compareMoves()
 {
     return (sprPrevMovUp == movingUp && sprPrevMovDown == movingDown && sprPrevMovLeft == movingLeft && sprPrevMovRight == movingRight);
+}
+
+void player::moveObject()
+{
+    //if (!checkMoving())
+    {
+        if (movingUp && !movingDown)
+        {
+            setyVel(.005);
+        }
+        if (movingDown && !movingUp)
+        {
+            setyVel(-.005);
+        }
+        if (movingRight && !movingLeft)
+        {
+            setxVel(.005);
+        }
+        if (movingLeft && !movingRight)
+        {
+            setxVel(-.005);
+        }
+        //setyVel(.005);
+    }
+    //return (movingLeft || movingRight || movingUp || movingDown);
 }

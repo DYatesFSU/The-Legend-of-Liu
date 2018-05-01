@@ -78,7 +78,7 @@ void Inputs::keyPressed(player* ply)
     switch(wParam)
     {
      case VK_LEFT:
-       ply->setxVel(-.005);
+       //ply->setxVel(-.005);
        //cout << "xPos: " << ply->getxPos() << ", yPos: " << ply->getyPos() << endl
        //<< "Moving: " << ply->getMoving();
        ply->movingLeft = true;
@@ -87,21 +87,21 @@ void Inputs::keyPressed(player* ply)
         break;
 
     case VK_RIGHT:
-       ply->setxVel(.005);
+       //ply->setxVel(.005);
        ply->movingRight = true;
        ply->facingRight = true;
         //ply->actionTrigger = 1;
         break;
 
     case VK_DOWN:
-        ply->setyVel(-.005);
+        //ply->setyVel(-.005);
 
         ply->movingDown = true;
          //ply->actionTrigger = 1;
         break;
 
     case VK_UP:
-        ply->setyVel(.005);
+        //ply->setyVel(.005);
         ply->movingUp = true;
          //ply->actionTrigger = 1;
         break;
