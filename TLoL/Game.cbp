@@ -43,8 +43,10 @@
 			<Add library="gdi32" />
 			<Add library="../Common/lib/glut32.lib" />
 		</Linker>
+		<Unit filename="include/Enemy191T.h" />
 		<Unit filename="include/GLLight.h" />
 		<Unit filename="include/GLScene.h" />
+		<Unit filename="include/GlobalDataStructures.h" />
 		<Unit filename="include/Inputs.h" />
 		<Unit filename="include/Model.h" />
 		<Unit filename="include/parallax.h" />
@@ -53,6 +55,7 @@
 		<Unit filename="include/textureLoader.h" />
 		<Unit filename="include/timer.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Enemy191T.cpp" />
 		<Unit filename="src/GLLight.cpp" />
 		<Unit filename="src/GLScene.cpp" />
 		<Unit filename="src/Inputs.cpp" />
