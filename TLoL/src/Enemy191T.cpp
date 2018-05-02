@@ -2,6 +2,7 @@
 #include <textureLoader.h>
 #include <timer.h>
 #include <iostream>
+#include <player.h>
 
 using namespace std;
 
@@ -14,13 +15,14 @@ Enemy191T::Enemy191T()
     vertices[2].x = 1.0;vertices[2].y = 1.0;vertices[2].z = -1.0;
     vertices[3].x = 0.0;vertices[3].y = 1.0;vertices[3].z = -1.0;
 
-    runspeed  =0;
-    jumpspeed =0;
-    actionTrigger =0;
+    runspeed  = 0.001;
 
     Xpos = 0;
     Ypos = 0;
     Zpos = -5.0;
+
+    xVel = 0;
+    yVel = 0;
 
     objectTexture = new textureLoader[11]();
     objectTimer = new timer();
@@ -37,6 +39,7 @@ Enemy191T::~Enemy191T()
 void Enemy191T::drawObject()
 {
     //objectTexture[0].binder();
+
 
     cartesian2d objOrient[4];
 
@@ -89,6 +92,22 @@ void Enemy191T::objectInit()
     objectTexture[8].bindTexture("images/player/player7.png");
     objectTexture[9].bindTexture("images/player/player8.png");
     objectTexture[10].bindTexture("images/player/player9.png");
+}
+
+void Enemy191T::updateEnemy(player* ply)
+{
+    if (ply->getxPos() - Xpos > 0)
+        setxVel(runspeed);
+    else if (ply->getxPos() - Xpos < - 0)
+        setxVel(-runspeed);
+    if (ply->getyPos() - Ypos > 0)
+        setyVel(runspeed);
+    else if (ply->getyPos() - Ypos < -0)
+        setyVel(-runspeed);
+
+    Xpos += getxVel();
+    Ypos += getyVel();
+
 }
 
 void Enemy191T::orientDirection(int direction, cartesian2d retCoord[])
@@ -152,3 +171,25 @@ void Enemy191T::orientDirection(int direction, cartesian2d retCoord[])
             break;
     }
 }
+
+
+double Enemy191T::getxVel()
+{
+    return xVel;
+}
+
+void Enemy191T::setxVel(double x)
+{
+    xVel = x;
+}
+
+double Enemy191T::getyVel()
+{
+    return yVel;
+}
+
+void Enemy191T::setyVel(double y)
+{
+    yVel = y;
+}
+

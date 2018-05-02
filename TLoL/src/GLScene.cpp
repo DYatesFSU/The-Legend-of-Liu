@@ -102,7 +102,7 @@ GLint GLScene::drawGLScene()
             plx->yLevel--;
         }
     glPopMatrix();
-
+    enemy191t->updateEnemy(ply);
     enemy191t->drawObject();
 
 

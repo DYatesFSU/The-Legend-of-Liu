@@ -1,5 +1,6 @@
 #ifndef ENEMY191T_H
 #define ENEMY191T_H
+#include <player.h>
 
 #include<GlobalDataStructures.h>
 
@@ -13,13 +14,12 @@ class Enemy191T
         virtual ~Enemy191T();
         cartesian3d vertices[4];
 
-        int runspeed;
-        int jumpspeed;
-        int actionTrigger;
+        double runspeed;
+
+
 
         void drawObject();
         void objectInit();
-        void objectAction();
 
         //NM: this is intended to change as it is bad design
         void orientDirection(int direction, cartesian2d retCoord[]);
@@ -27,6 +27,14 @@ class Enemy191T
         double Xpos;
         double Ypos;
         double Zpos;
+
+        double xVel, yVel;
+
+        double getxVel();
+        void setxVel(double x);
+
+        double getyVel();
+        void setyVel(double y);
 
         //void calcSprite();
         //void selectSprite(int x, int y, int spritesHeight, int spritesWidth);
@@ -41,9 +49,14 @@ class Enemy191T
         textureLoader *objectTexture;
         timer *objectTimer;
 
+        void updateEnemy(player* ply);
+
     protected:
 
     private:
+
 };
+
+
 
 #endif // ENEMY191T_H
