@@ -5,12 +5,19 @@
 #include <parallax.h>
 #include <player.h>
 #include <skyBox.h>
+#include <LoadShader.h>
+#include <Enemy191T.h>
+#include <ParticleEngine.h>
 
 //Model *modelTeapot = new Model();
 Inputs *KbMs = new Inputs();
 parallax *plx = new parallax();
 player *ply = new player();
+LoadShader *shader = new LoadShader();
+ParticleEngine *particle = new ParticleEngine();
 //skyBox *sky = new skyBox;
+
+Enemy191T *enemy191t = new Enemy191T();
 
 GLScene::GLScene()
 {
@@ -32,6 +39,8 @@ GLint GLScene::initGL()
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
 
+    glewInit();
+
    // glEnable(GL_COLOR_MATERIAL);
     GLLight SetLight(GL_LIGHT0);
     GLLight Light(GL_LIGHT0);
@@ -40,6 +49,7 @@ GLint GLScene::initGL()
     plx->parallaxInit("images/bak.jpg");
     ply->playerInit();
     //sky->loadTextures();
+    enemy191t->objectInit();
 
     return true;
 }
@@ -92,6 +102,20 @@ GLint GLScene::drawGLScene()
             plx->yLevel--;
         }
     glPopMatrix();
+    enemy191t->updateEnemy(ply);
+    enemy191t->drawObject();
+
+
+    	/*glPushMatrix();
+        glUseProgram(shader->program);
+        glTranslated(0.70,-2.5,-2.0);
+        particle->generateParticle();
+        particle->drawParticle();
+        particle->lifeTime();
+        glUseProgram(0);
+
+	glPopMatrix();
+*/
 
 }
 

@@ -10,6 +10,7 @@
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "glu32.lib")
 
+
 #include <GLScene.h>
 #include <stdlib.h>
 #include <iostream>

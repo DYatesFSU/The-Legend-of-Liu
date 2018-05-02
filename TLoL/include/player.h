@@ -3,7 +3,7 @@
 
 #include<Model.h>
 #include<gl/gl.h>
-#include<textureLoader.h>
+//#include<textureLoader.h>
 
 typedef struct
 {
@@ -11,6 +11,9 @@ typedef struct
    float y;
    float z;
 }vec;
+
+class textureLoader;
+class timer;
 
 class player:Model
 {
@@ -54,6 +57,23 @@ class player:Model
         bool checkMoving();
 
         bool facingRight = true;
+
+        void calcSprite ();
+        void selectSprite(int x, int y, int spritesHeight, int spritesWidth);
+        bool compareMoves();
+
+        void moveObject();
+
+        int spriteX, spriteY;
+        const int sprHeight = 8;
+        const int sprWidth = 10;
+        int sprRenderCount;
+        bool sprPrevMovUp, sprPrevMovDown, sprPrevMovLeft, sprPrevMovRight;
+
+        textureLoader *objectTexture;
+        timer *objectTimer;
+
+
     protected:
 
     private:
