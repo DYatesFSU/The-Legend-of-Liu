@@ -106,15 +106,16 @@ GLint GLScene::drawGLScene()
     enemy191t->drawObject();
 
 
-    	glPushMatrix();
+    	/*glPushMatrix();
         glUseProgram(shader->program);
         glTranslated(0.70,-2.5,-2.0);
         particle->generateParticle();
         particle->drawParticle();
         particle->lifeTime();
         glUseProgram(0);
-	glPopMatrix();
 
+	glPopMatrix();
+*/
 
 }
 
