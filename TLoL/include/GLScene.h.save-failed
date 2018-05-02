@@ -3,8 +3,6 @@
 
 #include <windows.h> // Header File For Windows
 #include <string.h>
-#define GLEW_STATIC
-#include <GL/glew.h>
 
 #ifdef __APPLE__
 #include <GLUT/glut.h>
