@@ -82,8 +82,10 @@ void player::actions(int action)
     if (action >= 1)
         {
             moveObject();
-            setxPos(getxVel());
-            setyPos(getyVel());
+            if (getxVel() + getxPos() > -4 && getxVel() + getxPos() < 3)
+                setxPos(getxVel());
+            if (getyVel() + getyPos() > -2 && getyVel() + getyPos() < 1)
+                setyPos(getyVel());
         }
        glTranslated(getxPos(),getyPos(),-5.0);
 
