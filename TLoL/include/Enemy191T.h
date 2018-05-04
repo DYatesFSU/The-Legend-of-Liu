@@ -54,6 +54,9 @@ class Enemy191T
     protected:
 
     private:
+        double scaleSizeX;
+        double scaleSizeY;
+        double scaleSizeZ;
 
 };
 

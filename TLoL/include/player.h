@@ -64,6 +64,25 @@ class player:Model
 
         void moveObject();
 
+        /*
+        int spriteX, spriteY;
+        const int sprHeight = 8;
+        const int sprWidth = 10;
+        int sprRenderCount;
+        bool sprPrevMovUp, sprPrevMovDown, sprPrevMovLeft, sprPrevMovRight;
+
+        textureLoader *objectTexture;
+        timer *objectTimer;
+        */
+
+    protected:
+
+    private:
+
+        double scaleSizeX;
+        double scaleSizeY;
+        double scaleSizeZ;
+
         int spriteX, spriteY;
         const int sprHeight = 8;
         const int sprWidth = 10;
@@ -73,11 +92,10 @@ class player:Model
         textureLoader *objectTexture;
         timer *objectTimer;
 
-
-    protected:
-
-    private:
         float xPos = 0, yPos = 0, xVel = 0, yVel = 0;
+
+
+
 };
 
 #endif // PLAYER_H
