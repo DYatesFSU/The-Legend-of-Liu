@@ -27,7 +27,7 @@ class Enemy191T
         double Xpos;
         double Ypos;
         double Zpos;
-        double destXPos, destYPos;
+
         double xVel, yVel;
 
         double getxVel();
@@ -54,9 +54,6 @@ class Enemy191T
     protected:
 
     private:
-        double scaleSizeX;
-        double scaleSizeY;
-        double scaleSizeZ;
 
 };
 
