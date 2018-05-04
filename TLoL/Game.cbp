@@ -50,8 +50,10 @@
 		<Unit filename="include/GlobalDataStructures.h" />
 		<Unit filename="include/Inputs.h" />
 		<Unit filename="include/LoadShader.h" />
+		<Unit filename="include/Map.h" />
 		<Unit filename="include/Model.h" />
 		<Unit filename="include/ParticleEngine.h" />
+		<Unit filename="include/Wall.h" />
 		<Unit filename="include/parallax.h" />
 		<Unit filename="include/player.h" />
 		<Unit filename="include/skyBox.h" />
@@ -63,8 +65,10 @@
 		<Unit filename="src/GLScene.cpp" />
 		<Unit filename="src/Inputs.cpp" />
 		<Unit filename="src/LoadShader.cpp" />
+		<Unit filename="src/Map.cpp" />
 		<Unit filename="src/Model.cpp" />
 		<Unit filename="src/ParticleEngine.cpp" />
+		<Unit filename="src/Wall.cpp" />
 		<Unit filename="src/parallax.cpp" />
 		<Unit filename="src/player.cpp" />
 		<Unit filename="src/skyBox.cpp" />
