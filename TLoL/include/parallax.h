@@ -17,7 +17,7 @@ class parallax
         void scroll(bool,string,float);
 
         float Xmax,Ymax,Xmin,Ymin;
-        int xLevel = 2, yLevel = 2;
+        int xLevel = 0, yLevel = 0;
     protected:
 
     private:

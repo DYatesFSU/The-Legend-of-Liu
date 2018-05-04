@@ -8,6 +8,7 @@
 #include <LoadShader.h>
 #include <Enemy191T.h>
 #include <ParticleEngine.h>
+#include <Levels.h>
 
 //Model *modelTeapot = new Model();
 Inputs *KbMs = new Inputs();
@@ -16,6 +17,9 @@ player *ply = new player();
 LoadShader *shader = new LoadShader();
 ParticleEngine *particle = new ParticleEngine();
 //skyBox *sky = new skyBox;
+Levels *lvl = new Levels();
+int xLvl = 0;
+int yLvl = 2;
 
 Enemy191T *enemy191t = new Enemy191T();
 
@@ -45,11 +49,13 @@ GLint GLScene::initGL()
     GLLight SetLight(GL_LIGHT0);
     GLLight Light(GL_LIGHT0);
 
+
     //modelTeapot->modelInit("images/player/player0.png",true);
     plx->parallaxInit("images/bak.jpg");
     ply->playerInit();
     //sky->loadTextures();
     enemy191t->objectInit();
+    lvl->LevelInit();
 
     return true;
 }
@@ -79,28 +85,68 @@ GLint GLScene::drawGLScene()
             ply->actions(1);
         else
             ply->actions(0);
-        if (ply->getxPos() > 4.5)
+
+        if (ply->checkDoor != '0')
+        {
+            if (ply->checkDoor == 'w' && lvl->getwDoor(xLvl, yLvl))
+            {
+                cout << "Going West\n";
+                ply->setxPos(6.8);
+                plx->xLevel--;
+                ply->checkDoor = '0';
+                xLvl--;
+            }
+            else if (ply->checkDoor == 'e' && lvl->geteDoor(xLvl, yLvl))
+            {
+                cout << "Going East\n";
+                ply->setxPos(-6.8);
+                plx->xLevel++;
+                ply->checkDoor = '0';
+                xLvl++;
+            }
+            else if (ply->checkDoor == 's' && lvl->getsDoor(xLvl, yLvl))
+            {
+                cout << "Going South\n";
+                ply->setyPos(2.7);
+                plx->yLevel--;
+                ply->checkDoor = '0';
+                yLvl--;
+            }
+            else if (ply->checkDoor == 'n' && lvl->getnDoor(xLvl, yLvl))
+            {
+                cout << "Going North\n";
+                ply->setyPos(-2.7);
+                plx->yLevel++;
+                ply->checkDoor = '0';
+                yLvl++;
+            }
+             else   ply->checkDoor = '0';
+        }
+
+
+
+        /*if (ply->getxPos() > 4.5)
         {
             //cout << "xPos: " << ply->getxPos() << ", yPos: " << ply->getyPos() << endl;
-            ply->setxPos(-9.5);
+            ply->setxPos(-8.5);
             plx->xLevel++;
             //cout << "xPos: " << ply->getxPos() << ", yPos: " << ply->getyPos() << endl;
         }
         if (ply->getxPos() < -5.5)
         {
-            ply->setxPos(9.5);
+            ply->setxPos(8.5);
             plx->xLevel--;
         }
         if (ply->getyPos() > 2.5)
         {
-            ply->setyPos(-5.5);
+            ply->setyPos(-4.5);
             plx->yLevel++;
         }
         if (ply->getyPos() < -3.5)
         {
-            ply->setyPos(5.5);
+            ply->setyPos(4.5);
             plx->yLevel--;
-        }
+        }*/
     glPopMatrix();
     enemy191t->updateEnemy(ply);
     enemy191t->drawObject();
