@@ -21,13 +21,18 @@ Levels *lvl = new Levels();
 int xLvl = 0;
 int yLvl = 2;
 
-Enemy191T *enemy191t = new Enemy191T();
+
+
+Enemy191T *e191Array[10];
+int currEnemyCount = 0;
 
 GLScene::GLScene()
 {
     //ctor
     screenHeight= GetSystemMetrics(SM_CYSCREEN);
     screenWidth = GetSystemMetrics(SM_CXSCREEN);
+    //e191Array = new Enemy191T[10];
+//    e191Array = NULL;
 }
 
 GLScene::~GLScene()
@@ -54,7 +59,6 @@ GLint GLScene::initGL()
     plx->parallaxInit("images/bak.jpg");
     ply->playerInit();
     //sky->loadTextures();
-    enemy191t->objectInit();
     lvl->LevelInit();
 
     return true;
@@ -90,35 +94,20 @@ GLint GLScene::drawGLScene()
         {
             if (ply->checkDoor == 'w' && lvl->getwDoor(xLvl, yLvl))
             {
-                cout << "Going West\n";
-                ply->setxPos(6.8);
-                plx->xLevel--;
-                ply->checkDoor = '0';
-                xLvl--;
+                transition('w');
+
             }
             else if (ply->checkDoor == 'e' && lvl->geteDoor(xLvl, yLvl))
             {
-                cout << "Going East\n";
-                ply->setxPos(-6.8);
-                plx->xLevel++;
-                ply->checkDoor = '0';
-                xLvl++;
+                transition('e');
             }
             else if (ply->checkDoor == 's' && lvl->getsDoor(xLvl, yLvl))
             {
-                cout << "Going South\n";
-                ply->setyPos(2.7);
-                plx->yLevel--;
-                ply->checkDoor = '0';
-                yLvl--;
+                transition('s');
             }
             else if (ply->checkDoor == 'n' && lvl->getnDoor(xLvl, yLvl))
             {
-                cout << "Going North\n";
-                ply->setyPos(-2.7);
-                plx->yLevel++;
-                ply->checkDoor = '0';
-                yLvl++;
+                transition('n');
             }
              else   ply->checkDoor = '0';
         }
@@ -147,9 +136,12 @@ GLint GLScene::drawGLScene()
             ply->setyPos(4.5);
             plx->yLevel--;
         }*/
-    glPopMatrix();
-    enemy191t->updateEnemy(ply);
-    enemy191t->drawObject();
+    //glPopMatrix();
+    for (int i = 0; i < currEnemyCount; i++)
+    {
+        e191Array[i]->updateEnemy(ply);
+        e191Array[i]->drawObject();
+    }
 
 
     	/*glPushMatrix();
@@ -159,9 +151,80 @@ GLint GLScene::drawGLScene()
         particle->drawParticle();
         particle->lifeTime();
         glUseProgram(0);
-
-	glPopMatrix();
 */
+	glPopMatrix();
+
+
+}
+
+void GLScene::transition(char dir)
+{
+    switch (dir){
+case 'w':
+    cout << "Going West\n";
+                ply->setxPos(6.8);
+                plx->xLevel--;
+                ply->checkDoor = '0';
+                xLvl--;
+                clearEnemies();
+                generateEnemies();
+                break;
+case 'e':
+    cout << "Going East\n";
+                ply->setxPos(-6.8);
+                plx->xLevel++;
+                ply->checkDoor = '0';
+                xLvl++;
+                clearEnemies();
+                generateEnemies();
+                break;
+case 'n':
+    cout << "Going North\n";
+                ply->setyPos(-2.7);
+                plx->yLevel++;
+                ply->checkDoor = '0';
+                yLvl++;
+                clearEnemies();
+                generateEnemies();
+                break;
+case 's':
+    cout << "Going South\n";
+                ply->setyPos(2.7);
+                plx->yLevel--;
+                ply->checkDoor = '0';
+                yLvl--;
+                clearEnemies();
+                generateEnemies();
+                break;
+    }
+}
+
+void GLScene::generateEnemies()
+{
+    //e191Array = new Enemy191T[lvl->getMaxE(xLvl, yLvl)];
+    for (int i = 0; i < lvl->getMaxE(xLvl, yLvl); i++)
+    {
+        e191Array[i] = new Enemy191T;
+        //e191Array = new Enemy191T[];
+        currEnemyCount++;
+        e191Array[i]->objectInit();
+        //e191Array[i].objectInit();
+    }
+}
+
+void GLScene::clearEnemies()
+{
+    for (int i = 0; i < currEnemyCount; i++)
+    {
+        delete e191Array[i];
+        //delete e191Array[i];
+    }
+    /*
+    if (e191Array != NULL)
+    {
+    delete []e191Array;*/
+    currEnemyCount = 0;
+    //e191Array = NULL;
 
 }
 

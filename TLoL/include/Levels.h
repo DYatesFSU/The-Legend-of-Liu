@@ -8,7 +8,7 @@ typedef struct {
              bool wDoor = false;
              bool hasKey = false;
              bool isBoss = false;
-             int maxEenemies = 0;
+             int maxEnemies = 0;
              int maxProps = 0;} properties;
 
 
@@ -22,6 +22,7 @@ class Levels
         bool getsDoor(int x, int y);
         bool getnDoor(int x, int y);
         void LevelInit();
+        int getMaxE(int x, int y);
 
         //int maxEnemies(array);
         //int maxProps(array);

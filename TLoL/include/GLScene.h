@@ -18,6 +18,8 @@
 
 using namespace std;
 
+//class Enemy191T;
+
 class GLScene
 {
     public:
@@ -29,6 +31,12 @@ class GLScene
 
         int windMsg(HWND,UINT, WPARAM,LPARAM);
 
+        void transition(char);
+
+        void clearEnemies();
+
+        void generateEnemies();
+
 
         WPARAM wParam;
         float screenHeight;
@@ -36,6 +44,7 @@ class GLScene
     protected:
 
     private:
+        //Enemy191T *e191Array;
 };
 
 #endif // GLSCENE_H

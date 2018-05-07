@@ -32,9 +32,11 @@ void Levels::LevelInit()
     rooms[1][2].wDoor = true;
     rooms[1][2].sDoor = true;
     rooms[1][2].eDoor = true;
+    rooms[1][2].maxEnemies = 3;
 
     rooms[2][2].wDoor = true;
     rooms[2][2].nDoor = true;
+    rooms[2][2].maxEnemies = 4;
 
     rooms[1][3].eDoor = true;
 
@@ -54,6 +56,11 @@ void Levels::LevelInit()
 
     rooms[4][4].sDoor = true;
 
+}
+
+int Levels::getMaxE(int x, int y)
+{
+    return rooms[x][y].maxEnemies;
 }
 
 bool Levels::getwDoor(int x, int y)
