@@ -73,6 +73,8 @@ class player:Model
         textureLoader *objectTexture;
         timer *objectTimer;
 
+        char checkDoor;
+
 
     protected:
 

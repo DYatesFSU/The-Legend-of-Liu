@@ -2,6 +2,7 @@
 #include <timer.h>
 #include <textureLoader.h>
 #include <iostream>
+#include <Levels.h>
 
 using namespace std;
 
@@ -36,6 +37,7 @@ player::player()
 
     objectTexture = new textureLoader[1]();
     objectTimer = new timer();
+    checkDoor = '0';
 }
 
 player::~player()
@@ -82,8 +84,41 @@ void player::actions(int action)
     if (action >= 1)
         {
             moveObject();
-            setxPos(getxVel());
-            setyPos(getyVel());
+
+            if (getxVel() + getxPos() < -3.9)
+             {
+                 if (getyVel() + getyPos() > -.1 && getyVel() + getyPos() < .1)
+                    checkDoor = 'w';
+             }
+            else if (getxVel() + getxPos() > 2.9)
+            {
+                if (getyVel() + getyPos() > -.1 && getyVel() + getyPos() < .1)
+                {
+                    checkDoor = 'e';
+                }
+
+            }
+            else
+            {
+
+                setxPos(getxVel());
+            }
+
+            if (getyVel() + getyPos() < -1.9)
+             {
+                 if (getxVel() + getxPos() > -.2 && getxVel() + getxPos() < .2)
+                    checkDoor = 's';
+             }
+            else if (getyVel() + getyPos() > .9)
+            {
+                if (getxVel() + getxPos() > -.2 && getxVel() + getxPos() < .2)
+                    checkDoor = 'n';
+            }
+            else
+            {
+                setyPos(getyVel());
+            }
+
         }
        glTranslated(getxPos(),getyPos(),-5.0);
 
