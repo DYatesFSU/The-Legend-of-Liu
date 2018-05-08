@@ -45,51 +45,27 @@ class Map
         int calcTaxiDistance(grid2d inpStartPos, grid2d inpEndPos);
         int calcDiagonalTaxiDist(grid2d inpStartPos, grid2d inpEndPos);
 
-        void searchDijkstras(grid2d startPos, vector < grid2d > endPos, queue < grid2d > &retSolution);
-        void searchAStar(grid2d startPos, vector < grid2d > endPos, queue < grid2d > &retSolution);
+        void searchDijkstras(grid2d startPos, vector < grid2d > endPos, vector < int > blockList, queue < grid2d > &retSolution);
+        void searchAStar(grid2d startPos, vector < grid2d > endPos, vector < int > blockList, queue < grid2d > &retSolution);
         cartesian2d getLowRealCoord(grid2d inpGraphCoord, cart2dDim inpWorldDim);
         cartesian2d getHighRealCoord(grid2d inpGraphCoord, cart2dDim inpWorldDim);
         void getRealToGraphCoords(cartesian2d inpObjectCoord, cart2dDim inpObjectDim, cart2dDim inpWorldDim, std::vector < grid2d > &retGraphCoords);
 
         void initMap(grid2dDim inpDim, int elementVariety);
-		gridElements getMapElement(grid2d inpCoord);
 		void getMapElementGeneric(grid2d inpCoord, vector < vector < int > > &retElement);
 		bool isGraphCollisionGeneric(vector < grid2d > inpPositions, int inpID, int inpType, int cmpType);
 		void addGenericElement(int inpID, int inpType, vector < grid2d > inpPositions);
         void removeGenericElement(int inpID, int inpType, vector < grid2d > inpPositions);
         void updateGenericElement(int inpID, int inpType, vector < grid2d > oldPositions, vector < grid2d > newPositions);
 
-		bool isGraphWallCollision(vector < grid2d > inpPositions, int inpID = -1);
-		bool isGraphEnemyCollision(vector < grid2d > inpPositions, int inpID = -1);
-		bool isGraphPlayerCollision(vector < grid2d > inpPositions, int inpID = -1);
-		//void insertWalls();
-		//void insertEnemies();
-		//void insertPlayers();
-		//void addWallList(vector < int > inpIDList, vector < vector < grid2d > > inpPosList);
-		//void addEnemyList(vector < int > inpIDList, vector < vector < grid2d > > inpPosList);
-		//void addPlayerList(vector < int > inpIDList, vector < vector < grid2d > > inpPosList);
-        void addWall(int inpID, vector < grid2d > inpPositions);
-        void addEnemy(int inpID, vector < grid2d > inpPositions);
-        void addPlayer(int inpID, vector < grid2d > inpPositions);
-        void removeWall(int inpID, vector < grid2d > inpPositions);
-        void removeEnemy(int inpID, vector < grid2d > inpPositions);
-        void removePlayer(int inpID, vector < grid2d > inpPositions);
-        void updateWall(int inpID, vector < grid2d > oldPositions, vector < grid2d > newPositions);
-        void updateEnemy(int inpID, vector < grid2d > oldPositions, vector < grid2d > newPositions);
-        void updatePlayer(int inpID, vector < grid2d > oldPositions, vector < grid2d > newPositions);
-
-
     protected:
 
     private:
 
-        void basicDijkstras(vector < vector < gridElements > > inpGraph, grid2d startPos, vector < grid2d > endPos, queue < grid2d > &retSolution);
-        void basicAStar(vector < vector < gridElements > > inpGraph, grid2d startPos, vector < grid2d > endPos, queue < grid2d > &retSolution);
         cartesian2d mapToLowRealCoord(grid2d inpGraphCoord, grid2dDim inpGraphDim, cart2dDim inpWorldDim);
         cartesian2d mapToHighRealCoord(grid2d inpGraphCoord, grid2dDim inpGraphDim, cart2dDim inpWorldDim);
         void realCoordToGraph(cartesian2d inpObjectCoord, cart2dDim inpObjectDim, cart2dDim inpWorldDim, grid2dDim inpGraphDim, std::vector < grid2d > &retGraphCoords);
 
-        void expandMapLoc(vector < vector < gridElements > > inpGraph, grid2d inpCoord, vector < grid2d > &retExpansion);
         int calcMinTaxiDist(grid2d inpStartPos, vector < grid2d > inpEndPos);
         int calcMinDiagTaxiDist(grid2d inpStartPos, vector < grid2d > inpEndPos);
         bool isInPriorQueue(priority_queue < priorityCoordObject > inpQueue, grid2d inpElement);
@@ -124,7 +100,6 @@ class Map
         void display1DPriorQueue(priority_queue <T> inpQueue, string inpDelim = "");
 
         grid2dDim classMapDimensions;
-        std::vector < std::vector < gridElements > > classMainMap;
         vector < vector < vector < vector < int > > > > classMainMap00;
 
         /*

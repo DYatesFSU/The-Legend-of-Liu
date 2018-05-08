@@ -36,11 +36,6 @@ void Map::initMap(grid2dDim inpDim, int elementVariety)
 	}
 }
 
-gridElements Map::getMapElement(grid2d inpCoord)
-{
-	return classMainMap.at(inpCoord.y).at(inpCoord.x);
-}
-
 void Map::getMapElementGeneric(grid2d inpCoord, vector < vector < int > > &retElement)
 {
     vector < vector < int > > tempElement;
@@ -114,214 +109,21 @@ void Map::updateGenericElement(int inpID, int inpType, vector < grid2d > oldPosi
     addGenericElement(inpID, inpType, newPositions);
 }
 
-bool Map::isGraphWallCollision(vector < grid2d > inpPositions, int inpID)
-{
-	int count00 = 0;
-	bool done = false;
-
-	if (inpID == -1)
-	{
-		while (count00 < inpPositions.size() && !done)
-		{
-			if (classMainMap.at(inpPositions.at(count00).y).at(inpPositions.at(count00).x).walls.size() > 0)
-			{
-				done = true;
-			}
-			count00++;
-		}
-	}
-	else
-	{
-		int tempInt;
-		while (count00 < inpPositions.size() && !done)
-		{
-			tempInt = classMainMap.at(inpPositions.at(count00).y).at(inpPositions.at(count00).x).walls.size();
-			if (tempInt > 0)
-			{
-				if (searchVector(classMainMap.at(inpPositions.at(count00).y).at(inpPositions.at(count00).x).walls, inpID) != -1)
-				{
-					if (tempInt > 1)
-					{
-						done = true;
-					}
-				}
-			}
-			count00++;
-		}
-	}
-	return done;
-}
-bool Map::isGraphEnemyCollision(vector < grid2d > inpPositions, int inpID)
-{
-	int count00 = 0;
-	bool done = false;
-
-	if (inpID == -1)
-	{
-		while (count00 < inpPositions.size() && !done)
-		{
-			if (classMainMap.at(inpPositions.at(count00).y).at(inpPositions.at(count00).x).enemies.size() > 0)
-			{
-				done = true;
-			}
-			count00++;
-		}
-	}
-	else
-	{
-		int tempInt;
-		while (count00 < inpPositions.size() && !done)
-		{
-			tempInt = classMainMap.at(inpPositions.at(count00).y).at(inpPositions.at(count00).x).enemies.size();
-			if (tempInt > 0)
-			{
-				if (searchVector(classMainMap.at(inpPositions.at(count00).y).at(inpPositions.at(count00).x).enemies, inpID) != -1)
-				{
-					if (tempInt > 1)
-					{
-						done = true;
-					}
-				}
-			}
-			count00++;
-		}
-	}
-	return done;
-}
-bool Map::isGraphPlayerCollision(vector < grid2d > inpPositions, int inpID)
-{
-	int count00 = 0;
-	bool done = false;
-
-	if (inpID == -1)
-	{
-		while (count00 < inpPositions.size() && !done)
-		{
-			if (classMainMap.at(inpPositions.at(count00).y).at(inpPositions.at(count00).x).players.size() > 0)
-			{
-				done = true;
-			}
-			count00++;
-		}
-	}
-	else
-	{
-		int tempInt;
-		while (count00 < inpPositions.size() && !done)
-		{
-			tempInt = classMainMap.at(inpPositions.at(count00).y).at(inpPositions.at(count00).x).players.size();
-			if (tempInt > 0)
-			{
-				if (searchVector(classMainMap.at(inpPositions.at(count00).y).at(inpPositions.at(count00).x).players, inpID) != -1)
-				{
-					if (tempInt > 1)
-					{
-						done = true;
-					}
-				}
-			}
-			count00++;
-		}
-	}
-	return done;
-}
-
-void Map::addWall(int inpID, vector < grid2d > inpPositions)
-{
-    vector < grid2d > tempGraphCoords;
-    //getRealToGraphCoords(inpPos, inpDimensions, cart2dDim inpWorldDim, std::vector < grid2d > &retGraphCoords);
-    for (int i = 0; i < inpPositions.size(); i++)
-    {
-        if (searchVector(classMainMap.at(inpPositions.at(i).y).at(inpPositions.at(i).x).walls, inpID) == -1)
-            classMainMap.at(inpPositions.at(i).y).at(inpPositions.at(i).x).walls.push_back(inpID);
-    }
-}
-
-void Map::addEnemy(int inpID, vector < grid2d > inpPositions)
-{
-    for (int i = 0; i < inpPositions.size(); i++)
-    {
-        if (searchVector(classMainMap.at(inpPositions.at(i).y).at(inpPositions.at(i).x).enemies, inpID) == -1)
-            classMainMap.at(inpPositions.at(i).y).at(inpPositions.at(i).x).enemies.push_back(inpID);
-    }
-}
-
-void Map::addPlayer(int inpID, vector < grid2d > inpPositions)
-{
-    for (int i = 0; i < inpPositions.size(); i++)
-    {
-        if (searchVector(classMainMap.at(inpPositions.at(i).y).at(inpPositions.at(i).x).players, inpID) == -1)
-            classMainMap.at(inpPositions.at(i).y).at(inpPositions.at(i).x).players.push_back(inpID);
-    }
-}
-
-void Map::removeWall(int inpID, vector<grid2d>inpPositions)
-{
-    int tempLocIndex;
-    for (int i = 0; i < inpPositions.size(); i++)
-    {
-        tempLocIndex = searchVector(classMainMap.at(inpPositions.at(i).y).at(inpPositions.at(i).x).walls, inpID);
-        if (tempLocIndex != -1)
-            classMainMap.at(inpPositions.at(i).y).at(inpPositions.at(i).x).walls.erase(classMainMap.at(inpPositions.at(i).y).at(inpPositions.at(i).x).walls.begin() + tempLocIndex);
-    }
-}
-
-void Map::removeEnemy(int inpID, vector<grid2d>inpPositions)
-{
-    int tempLocIndex;
-    for (int i = 0; i < inpPositions.size(); i++)
-    {
-        tempLocIndex = searchVector(classMainMap.at(inpPositions.at(i).y).at(inpPositions.at(i).x).enemies, inpID);
-        if (tempLocIndex != -1)
-            classMainMap.at(inpPositions.at(i).y).at(inpPositions.at(i).x).enemies.erase(classMainMap.at(inpPositions.at(i).y).at(inpPositions.at(i).x).enemies.begin() + tempLocIndex);
-    }
-}
-
-void Map::removePlayer(int inpID, vector<grid2d>inpPositions)
-{
-    int tempLocIndex;
-    for (int i = 0; i < inpPositions.size(); i++)
-    {
-        tempLocIndex = searchVector(classMainMap.at(inpPositions.at(i).y).at(inpPositions.at(i).x).players, inpID);
-        if (tempLocIndex != -1)
-            classMainMap.at(inpPositions.at(i).y).at(inpPositions.at(i).x).players.erase(classMainMap.at(inpPositions.at(i).y).at(inpPositions.at(i).x).players.begin() + tempLocIndex);
-    }
-}
-
-void Map::updateWall(int inpID, vector < grid2d > oldPositions, vector < grid2d > newPositions)
-{
-    removeWall(inpID, oldPositions);
-    addWall(inpID, newPositions);
-}
-
-void Map::updateEnemy(int inpID, vector < grid2d > oldPositions, vector < grid2d > newPositions)
-{
-    removeEnemy(inpID, oldPositions);
-    addEnemy(inpID, newPositions);
-}
-
-void Map::updatePlayer(int inpID, vector < grid2d > oldPositions, vector < grid2d > newPositions)
-{
-    removePlayer(inpID, oldPositions);
-    addPlayer(inpID, newPositions);
-}
-
-
-void Map::searchDijkstras(grid2d startPos, vector<grid2d>endPos, queue<grid2d>& retSolution)
+void Map::searchDijkstras(grid2d startPos, vector<grid2d>endPos, vector < int > blockList, queue<grid2d>& retSolution)
 {
     queue < grid2d > tempSolution;
     vector < int > tempBlockers;
     tempBlockers.push_back(0);
-    basicDijkstrasGeneric(classMainMap00, startPos, endPos, tempBlockers, tempSolution);
+    basicDijkstrasGeneric(classMainMap00, startPos, endPos, blockList, tempSolution);
     retSolution = tempSolution;
 }
 
-void Map::searchAStar(grid2d startPos, vector<grid2d>endPos, queue<grid2d>& retSolution)
+void Map::searchAStar(grid2d startPos, vector<grid2d>endPos, vector < int > blockList, queue<grid2d>& retSolution)
 {
     queue < grid2d > tempSolution;
     vector < int > tempBlockers;
     tempBlockers.push_back(0);
-    basicAStarGeneric(classMainMap00, startPos, endPos, tempBlockers, tempSolution);
+    basicAStarGeneric(classMainMap00, startPos, endPos, blockList, tempSolution);
     retSolution = tempSolution;
 }
 
@@ -340,128 +142,6 @@ void Map::getRealToGraphCoords(cartesian2d inpObjectCoord, cart2dDim inpObjectDi
     vector < grid2d > tempCoords;
     realCoordToGraph(inpObjectCoord, inpObjectDim, inpWorldDim, classMapDimensions, tempCoords);
     retGraphCoords = tempCoords;
-}
-
-
-void Map::basicDijkstras(vector< vector < gridElements > > inpGraph, grid2d startPos, vector<grid2d>endPos, queue<grid2d>& retSolution)
-{
-	priority_queue < priorityCoordObject > frontier;
-	queue <grid2d> explored;
-	vector <grid2d> tempExpansion;
-	priorityCoordObject tempPriorObj;
-	priorityCoordObject topPriorObj;
-	bool found;
-	found = false;
-
-	topPriorObj.path.push(startPos);
-	//topPriorObj.priority = -minTaxiDistGC(startPos, endPos);
-	topPriorObj.priority = 0;
-	frontier.push(topPriorObj);
-
-	while (!frontier.empty() && !found)
-	{
-		if (searchVector(endPos, frontier.top().path.back()) != -1)
-		{
-			found = true;
-			retSolution = frontier.top().path;
-			frontier.pop();
-		}
-		else
-		{
-			//Side Note: take average of x and y for basic a star of 8 direction
-				//if they do and don't reach a wall add that node to main
-					//add all other nodes to unexplored queue
-						//the unexplored queue needs to be sorted by closet to start position
-			topPriorObj = frontier.top();
-			frontier.pop();
-			explored.push(topPriorObj.path.back());
-			//just checks if in bounds
-			expandMapLoc(inpGraph, topPriorObj.path.back(), tempExpansion);
-			for (int i = 0; i < tempExpansion.size(); i++)
-			{
-				//check if not wall
-				//if (getMapElement(inpGraph, tempExpansion.at(i).x, tempExpansion.at(i).y) != GWALL)
-				if (inpGraph.at(tempExpansion.at(i).y).at(tempExpansion.at(i).x).walls.size() > 0)
-				{
-					tempPriorObj = topPriorObj;
-					tempPriorObj.path.push(tempExpansion.at(i));
-					//check if in frontier or explored
-					if (!isInQueue(explored, tempExpansion.at(i)) && !isInPriorityQueue(frontier, tempPriorObj))
-					{
-						//tempPriorObj.priority = -minTaxiDistGC(tempExpansion.at(i), endPos);
-						tempPriorObj.priority--;
-						frontier.push(tempPriorObj);
-
-					}
-				}
-			}
-		}
-	}
-}
-
-void Map::basicAStar(vector< vector < gridElements > >inpGraph, grid2d startPos, vector<grid2d>endPos, queue<grid2d>& retSolution)
-{
-
-	priority_queue < priorityCoordObject > frontier;
-	//queue <grid2d> frontier;
-	queue <grid2d> explored;
-	//queue <grid2d> tempSolution;
-	vector <grid2d> tempExpansion;
-	priorityCoordObject tempPriorObj;
-	priorityCoordObject topPriorObj;
-	bool found;
-	found = false;
-
-
-	//frontier.push(startPos);
-	//potentialSolutions.push(frontier);
-	topPriorObj.path.push(startPos);
-	topPriorObj.priority = -calcMinTaxiDist(startPos, endPos);
-	frontier.push(topPriorObj);
-
-	while (!frontier.empty() && !found)
-	{
-		if (searchVector(endPos, frontier.top().path.back()) != -1)
-		{
-			found = true;
-			retSolution = frontier.top().path;
-			frontier.pop();
-		}
-		else
-		{
-
-			//first go for the beeLine direction since up down left right check if either horizontal or vertical decreases
-				//if they do and don't reach a wall add that node to main
-					//add all other nodes to unexplored queue
-						//the unexplored queue needs to be sorted by closet to end goal
-			topPriorObj = frontier.top();
-			frontier.pop();
-			explored.push(topPriorObj.path.back());
-			//just checks if in bounds
-			expandMapLoc(inpGraph, topPriorObj.path.back(), tempExpansion);
-			for (int i = 0; i < tempExpansion.size(); i++)
-			{
-				//check if not wall
-				//if (getMapElement(inpGraph, tempExpansion.at(i).x, tempExpansion.at(i).y) != GWALL)
-				if (inpGraph.at(tempExpansion.at(i).y).at(tempExpansion.at(i).x).walls.size() > 0)
-				{
-					tempPriorObj = topPriorObj;
-					tempPriorObj.path.push(tempExpansion.at(i));
-					//check if in frontier or explored
-					//if (!isInQueue(explored, tempExpansion.at(i)) && !isInPQGC(frontier, tempExpansion.at(i)))
-					if (!isInQueue(explored, tempExpansion.at(i)) && !isInPriorityQueue(frontier, tempPriorObj))
-					{
-
-						//tempPriorObj = topPriorObj;
-						//tempPriorObj.path.push(tempExpansion.at(i));
-						tempPriorObj.priority = -calcMinTaxiDist(tempExpansion.at(i), endPos);
-						frontier.push(tempPriorObj);
-
-					}
-				}
-			}
-		}
-	}
 }
 
 int Map::calcTaxiDistance(grid2d inpStartPos, grid2d inpEndPos)
@@ -524,32 +204,6 @@ void Map::realCoordToGraph(cartesian2d inpObjectCoord, cart2dDim inpObjectDim, c
     }
 
     retGraphCoords = tempGraphCoords;
-}
-
-void Map::expandMapLoc(vector< vector < gridElements > >inpGraph, grid2d inpCoord, vector<grid2d>& retExpansion)
-{
-    vector < grid2d > tempVec;
-	for (int i = inpCoord.y - 1; i <= inpCoord.y + 1; i++)
-	{
-		for (int j = inpCoord.x - 1; j <= inpCoord.x + 1; j++)
-		{
-			if (!(i == inpCoord.y && j == inpCoord.x)) //this makes it so it doesn't include itself
-			{
-                if (i == inpCoord.y || j == inpCoord.x) //this makes it so that it only moves up and down - without out diagonal is valid
-                {
-                    if (i >= 0 && i < inpGraph.size())
-                    {
-                        if (j >= 0 && j < inpGraph.at(i).size())
-                        {
-                            //cout << "push back" << endl;
-                            tempVec.push_back({j, i});
-                        }
-                    }
-                }
-			}
-		}
-	}
-	retExpansion = tempVec;
 }
 
 int Map::calcMinTaxiDist(grid2d inpStartPos, vector<grid2d>inpEndPos)
