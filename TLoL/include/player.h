@@ -78,11 +78,18 @@ class player:Model
         void addKey();
         int getKeys();
 
+        bool getFiring();
+        void setFiring(bool);
+        char getFiringDir();
+        void setFiringDir(char x);
+
 
     protected:
 
     private:
         float xPos = 0, yPos = 0, xVel = 0, yVel = 0;
+        bool isFiring;
+        char firingDir;
 };
 
 #endif // PLAYER_H

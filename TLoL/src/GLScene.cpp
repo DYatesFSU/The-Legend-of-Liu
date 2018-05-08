@@ -12,6 +12,8 @@
 #include <key.h>
 #include <cstdlib>
 #include <ctime>
+#include <Projectile.h>
+#include <timer.h>
 
 
 
@@ -24,6 +26,7 @@ ParticleEngine *particle = new ParticleEngine();
 //skyBox *sky = new skyBox;
 Levels *lvl = new Levels();
 key *floorKey = new key();
+
 int xLvl = 0;
 int yLvl = 2;
 
@@ -31,6 +34,11 @@ int yLvl = 2;
 
 Enemy191T *e191Array[10];
 int currEnemyCount = 0;
+
+Projectile *projArray[100];
+int currProjCount = 0;
+timer *projTimer = new timer();
+
 
 GLScene::GLScene()
 {
@@ -49,6 +57,7 @@ GLScene::~GLScene()
 
 GLint GLScene::initGL()
 {
+    projTimer->start();
     glShadeModel(GL_SMOOTH);
     glClearColor(0.0f,0.0f,0.0f,0.0f);
     glClearDepth(1.0f);
@@ -120,6 +129,19 @@ GLint GLScene::drawGLScene()
              else   ply->checkDoor = '0';
         }
 
+        if (projTimer->getTicks() >= 300 && ply->getFiring())
+        {
+
+            projTimer->reset();
+            projArray[currProjCount] = new Projectile();
+
+            projArray[currProjCount]->projInit(ply->getxPos(), ply->getyPos(), ply->getFiringDir());
+            currProjCount++;
+
+        }
+
+        manageProj();
+
 
 
         /*if (ply->getxPos() > 4.5)
@@ -183,6 +205,23 @@ GLint GLScene::drawGLScene()
 	glPopMatrix();
 
 
+}
+
+void GLScene::manageProj()
+{
+    for (int i = 0; i < currProjCount; i++)
+    {
+        if (projArray[i]->lifeTime->getTicks() > 1000)
+        {
+            delete projArray[i];
+            for (int j = i + 1; j < currProjCount; j++)
+                projArray[j - 1] = projArray[j];
+            currProjCount--;
+        }
+        projArray[i]->drawProj();
+
+
+    }
 }
 
 void GLScene::transition(char dir)

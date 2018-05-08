@@ -41,6 +41,8 @@ class GLScene
         WPARAM wParam;
         float screenHeight;
         float screenWidth;
+
+        void manageProj();
     protected:
 
     private:

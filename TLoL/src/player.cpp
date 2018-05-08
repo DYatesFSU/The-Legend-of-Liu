@@ -201,6 +201,26 @@ bool player::checkMoving()
     return (movingLeft || movingRight || movingUp || movingDown);
 }
 
+bool player::getFiring()
+{
+    return isFiring;
+}
+
+void player::setFiring(bool x)
+{
+    isFiring = x;
+}
+
+void player::setFiringDir(char x)
+{
+    firingDir = x;
+}
+
+char player::getFiringDir()
+{
+    return firingDir;
+}
+
 void player::calcSprite()
 {
 

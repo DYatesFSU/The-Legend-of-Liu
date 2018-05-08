@@ -17,7 +17,6 @@ Levels::~Levels()
 
 void Levels::LevelInit()
 {
-    srand(time(0));
     rooms[1][0].nDoor = true;
     rooms[1][0].exists = true;
 
