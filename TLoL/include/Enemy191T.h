@@ -13,6 +13,7 @@ class Enemy191T
         Enemy191T();
         virtual ~Enemy191T();
         cartesian3d vertices[4];
+        int waitTime;
 
         double runspeed;
 

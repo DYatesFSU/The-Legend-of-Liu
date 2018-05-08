@@ -37,7 +37,7 @@
 1525307233 c:\users\idb\documents\github\the-legend-of-liu\tlol\include\gllight.h
 	<GLScene.h>
 
-1525808954 source:c:\users\idb\documents\github\the-legend-of-liu\tlol\src\glscene.cpp
+1525810235 source:c:\users\idb\documents\github\the-legend-of-liu\tlol\src\glscene.cpp
 	"GLScene.h"
 	<GLLight.h>
 	<Model.h>
@@ -50,6 +50,8 @@
 	<ParticleEngine.h>
 	<Levels.h>
 	<key.h>
+	<cstdlib>
+	<ctime>
 
 1525307233 c:\users\idb\documents\github\the-legend-of-liu\tlol\include\model.h
 	<windows.h>
@@ -89,7 +91,7 @@
 	<iostream>
 	<fstream>
 
-1525739282 c:\users\idb\documents\github\the-legend-of-liu\tlol\include\enemy191t.h
+1525810563 c:\users\idb\documents\github\the-legend-of-liu\tlol\include\enemy191t.h
 	<player.h>
 	<GlobalDataStructures.h>
 
@@ -139,12 +141,14 @@
 1525307233 source:c:\users\idb\documents\github\the-legend-of-liu\tlol\src\timer.cpp
 	"timer.h"
 
-1525740535 source:c:\users\idb\documents\github\the-legend-of-liu\tlol\src\enemy191t.cpp
+1525810149 source:c:\users\idb\documents\github\the-legend-of-liu\tlol\src\enemy191t.cpp
 	"Enemy191T.h"
 	<textureLoader.h>
 	<timer.h>
 	<iostream>
 	<player.h>
+	<cstdlib>
+	<ctime>
 
 1525808837 source:c:\users\idb\documents\github\the-legend-of-liu\tlol\src\levels.cpp
 	"Levels.h"

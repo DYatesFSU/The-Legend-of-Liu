@@ -10,6 +10,10 @@
 #include <ParticleEngine.h>
 #include <Levels.h>
 #include <key.h>
+#include <cstdlib>
+#include <ctime>
+
+
 
 //Model *modelTeapot = new Model();
 Inputs *KbMs = new Inputs();
@@ -33,6 +37,7 @@ GLScene::GLScene()
     //ctor
     screenHeight= GetSystemMetrics(SM_CYSCREEN);
     screenWidth = GetSystemMetrics(SM_CXSCREEN);
+    srand(time(0));
     //e191Array = new Enemy191T[10];
 //    e191Array = NULL;
 }
