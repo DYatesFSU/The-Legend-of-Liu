@@ -1,7 +1,8 @@
 #ifndef GLOBALDATASTRUCTURES_H
 #define GLOBALDATASTRUCTURES_H
 
-#include <vector>
+//#include <vector>
+#include <queue>
 
 struct cartesian3d
 {
