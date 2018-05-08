@@ -1,5 +1,6 @@
 #include "Inputs.h"
 #include <player.h>
+#include <Menu.h>
 
 Inputs::Inputs()
 {
@@ -105,6 +106,8 @@ void Inputs::keyPressed(player* ply)
         ply->movingUp = true;
          //ply->actionTrigger = 1;
         break;
+    case 0x31:
+
 
     case VK_ADD:
 
@@ -148,6 +151,27 @@ void Inputs::keyUp(player* ply)
                 break;
             }
 }
+void Inputs::keyPressed(Menu* menu)
+{
+
+     switch(wParam)
+    {
+    case 0x4E:
+        menu->state=1;
+        break;
+    case 0x4D:
+        menu->state=2;
+        break;
+    case 0x51:
+        if (menu->state==2)
+        {
+            menu->state= menu->state-1;
+        }
+        break;
+    }
+}
+
+
 
 /*
 void Inputs::mouseEventDown(Model *Model, double x,double y)
