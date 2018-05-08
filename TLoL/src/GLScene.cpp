@@ -157,6 +157,22 @@ GLint GLScene::drawGLScene()
     if (lvl->roomHasKey(xLvl, yLvl))
     {
         floorKey->drawKey();
+        if (ply->getxPos() < .5 && ply->getxPos() > -.5 && ply->getyPos() < .5 && ply->getyPos() > -.5)
+        {
+            lvl->gotKey(xLvl, yLvl);
+            ply->addKey();
+        }
+    }
+
+    if (lvl->roomHasBoss(xLvl, yLvl))
+    {
+        if (ply->getKeys() >= 3)
+        {
+            if (ply->getxPos() < .5 && ply->getxPos() > -.5 && ply->getyPos() < .5 && ply->getyPos() > -.5)
+            {
+                exit(0);
+            }
+        }
     }
 
 	glPopMatrix();

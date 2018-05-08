@@ -74,9 +74,19 @@ void player::playerInit()
 
     objectTexture[0].bindTexture("images/playerSprites00.png");
 
-    keys = 0;
+    playerKeys = 0;
     //playerSprites00.png
 
+}
+
+int player::getKeys()
+{
+    return playerKeys;
+}
+
+void player::addKey()
+{
+    playerKeys++;
 }
 
 void player::actions(int action)

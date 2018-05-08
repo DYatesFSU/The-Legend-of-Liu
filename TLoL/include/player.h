@@ -74,7 +74,9 @@ class player:Model
         timer *objectTimer;
 
         char checkDoor;
-        int keys;
+        int playerKeys;
+        void addKey();
+        int getKeys();
 
 
     protected:
