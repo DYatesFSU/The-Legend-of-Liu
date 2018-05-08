@@ -23,6 +23,7 @@ class Levels
         bool getnDoor(int x, int y);
         void LevelInit();
         int getMaxE(int x, int y);
+        bool roomHasKey(int x, int y);
 
         //int maxEnemies(array);
         //int maxProps(array);

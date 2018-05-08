@@ -9,6 +9,7 @@
 #include <Enemy191T.h>
 #include <ParticleEngine.h>
 #include <Levels.h>
+#include <key.h>
 
 //Model *modelTeapot = new Model();
 Inputs *KbMs = new Inputs();
@@ -18,6 +19,7 @@ LoadShader *shader = new LoadShader();
 ParticleEngine *particle = new ParticleEngine();
 //skyBox *sky = new skyBox;
 Levels *lvl = new Levels();
+key *floorKey = new key();
 int xLvl = 0;
 int yLvl = 2;
 
@@ -60,6 +62,7 @@ GLint GLScene::initGL()
     ply->playerInit();
     //sky->loadTextures();
     lvl->LevelInit();
+    floorKey->keyInit();
 
     return true;
 }
@@ -150,8 +153,12 @@ GLint GLScene::drawGLScene()
         particle->generateParticle();
         particle->drawParticle();
         particle->lifeTime();
-        glUseProgram(0);
-*/
+        glUseProgram(0);*/
+    if (lvl->roomHasKey(xLvl, yLvl))
+    {
+        floorKey->drawKey();
+    }
+
 	glPopMatrix();
 
 

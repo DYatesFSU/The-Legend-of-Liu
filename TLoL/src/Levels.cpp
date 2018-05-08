@@ -82,3 +82,8 @@ bool Levels::getnDoor(int x, int y)
 {
     return rooms[x][y].nDoor;
 }
+
+bool Levels::roomHasKey(int x, int y)
+{
+    return rooms[x][y].hasKey;
+}

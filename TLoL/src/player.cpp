@@ -73,6 +73,8 @@ void player::playerInit()
     runText[9].bindTexture("images/player/player9.png");
 
     objectTexture[0].bindTexture("images/playerSprites00.png");
+
+    keys = 0;
     //playerSprites00.png
 
 }
