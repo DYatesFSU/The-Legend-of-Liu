@@ -55,6 +55,12 @@ class Enemy191T
         cartesian2d getDestPosition();
         void setPosition(cartesian2d inpCoord);
         void setDestPosition(cartesian2d inpCoord);
+        cart2dDim getObjectDimensions();
+
+        void getCurrGridPos(std::vector <grid2d> &retPos);
+        void setCurrGridPos(std::vector <grid2d> inpPos);
+        void getDestGridPos(std::vector <grid2d> &retPos);
+        void setDestGridPos(std::vector <grid2d> inpPos);
 
     protected:
 

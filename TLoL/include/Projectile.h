@@ -32,12 +32,20 @@ class Projectile
         void setyVel(float);
 
         timer *lifeTime = new timer();
+        cart2dDim getObjectDimensions();
+        cartesian2d getPosition();
+        void setPosition(cartesian2d inpCoord);
 
+        void getCurrGridPos(std::vector <grid2d> &retPos);
+        void setCurrGridPos(std::vector <grid2d> inpPos);
 
     protected:
 
     private:
         float xPos, yPos, xVel, yVel;
+
+        std::vector <grid2d> classCurrentGridCoords;
+        cart2dDim objectDimensions = {.25, .25};
 
 
 };

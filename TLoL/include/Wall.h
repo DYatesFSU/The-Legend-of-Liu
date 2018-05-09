@@ -13,16 +13,20 @@ class Wall
         Wall();
         virtual ~Wall();
 
+        void setPosition(cartesian2d inpPos);
+        cartesian2d getPosition();
+        cart2dDim getObjectDimensions();
+        void getCurrGridPos(std::vector <grid2d> &retPos);
+        void setCurrGridPos(std::vector <grid2d> inpPos);
+
     protected:
 
     private:
         std::vector <grid2d> classCurrentGridCoords;
-        //This is to test if an object can move in a direction
-        //I.E. if these coordinates turn out to be bad, then don't update the current grid coordinates
-        std::vector <grid2d> classTestGridCoords;
 
         //for box and graph collisions
         cart2dDim objectDimensions = {.99, .99};
+        cartesian2d objectPosition;
 };
 
 #endif // WALL_H

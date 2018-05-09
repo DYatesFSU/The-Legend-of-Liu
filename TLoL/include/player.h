@@ -66,6 +66,17 @@ class player:Model
 
         void moveObject();
 
+        cartesian2d getDestPosition();
+        cartesian2d setDestPosition(cartesian2d inpPos);
+        cartesian2d getPosition();
+
+        cart2dDim getObjectDimensions();
+
+        void getCurrGridPos(std::vector <grid2d> &retPos);
+        void setCurrGridPos(std::vector <grid2d> inpPos);
+        void getDestGridPos(std::vector <grid2d> &retPos);
+        void setDestGridPos(std::vector <grid2d> inpPos);
+
         /*
         int spriteX, spriteY;
         const int sprHeight = 8;
@@ -76,6 +87,16 @@ class player:Model
         textureLoader *objectTexture;
         timer *objectTimer;
         */
+
+        char checkDoor;
+        int playerKeys;
+        void addKey();
+        int getKeys();
+
+        bool getFiring();
+        void setFiring(bool);
+        char getFiringDir();
+        void setFiringDir(char x);
 
     protected:
 
@@ -101,7 +122,9 @@ class player:Model
 
         //for box and graph collisions
         cart2dDim objectDimensions = {.99, .99};
+        cartesian2d destPosition;
 
+        /*
         char checkDoor;
         int playerKeys;
         void addKey();
@@ -111,6 +134,7 @@ class player:Model
         void setFiring(bool);
         char getFiringDir();
         void setFiringDir(char x);
+        */
 
 
     protected:

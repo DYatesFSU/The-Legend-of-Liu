@@ -234,3 +234,27 @@ void Enemy191T::setDestPosition(cartesian2d inpCoord)
     destYPos = inpCoord.y;
 }
 
+cart2dDim Enemy191T::getObjectDimensions()
+{
+    return objectDimensions;
+}
+
+void Enemy191T::getCurrGridPos(vector<grid2d>& retPos)
+{
+    retPos = classCurrentGridCoords;
+}
+
+void Enemy191T::setCurrGridPos(vector<grid2d>inpPos)
+{
+    classCurrentGridCoords = inpPos;
+}
+
+void Enemy191T::getDestGridPos(vector<grid2d>& retPos)
+{
+    retPos = classTestGridCoords;
+}
+
+void Enemy191T::setDestGridPos(vector<grid2d>inpPos)
+{
+    classTestGridCoords = inpPos;
+}

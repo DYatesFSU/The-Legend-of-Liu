@@ -15,6 +15,8 @@
 #include <Projectile.h>
 #include <timer.h>
 
+#include <Wall.h>
+
 
 
 //Model *modelTeapot = new Model();
@@ -39,6 +41,8 @@ Projectile *projArray[100];
 int currProjCount = 0;
 timer *projTimer = new timer();
 
+Wall *wallArray[100];
+int currWallCount = 0;
 
 GLScene::GLScene()
 {
@@ -393,30 +397,85 @@ bool GLScene::boxCollision (cartesian2d objectLoc0, cart2dDim objectDim0, cartes
 
 bool GLScene::collisionEnemyToEnemy(int inpID1, int inpID2)
 {
+    cartesian2d objPos1;
+    cart2dDim objDim1;
+    cartesian2d objPos2;
+    cart2dDim objDim2;
 
+    objPos1 = e191Array[inpID1]->getDestPosition();
+    objDim1 = e191Array[inpID1]->getObjectDimensions();
+    objPos2 = e191Array[inpID2]->getDestPosition();
+    objDim2 = e191Array[inpID2]->getObjectDimensions();
+    return boxCollision(objPos1, objDim1, objPos2, objDim2);
 }
 
-bool GLScene::collisionEnemyToParticle(int inpID1, int inpID2)
+bool GLScene::collisionEnemyToProjectile(int inpID1, int inpID2)
 {
+    cartesian2d objPos1;
+    cart2dDim objDim1;
+    cartesian2d objPos2;
+    cart2dDim objDim2;
 
+    objPos1 = e191Array[inpID1]->getPosition();
+    objDim1 = e191Array[inpID1]->getObjectDimensions();
+    objPos2 = projArray[inpID2]->getPosition();
+    objDim2 = projArray[inpID2]->getObjectDimensions();
+    return boxCollision(objPos1, objDim1, objPos2, objDim2);
 }
 
 bool GLScene::collisionEnemyToPlayer(int inpID1, int inpID2)
 {
+    cartesian2d objPos1;
+    cart2dDim objDim1;
+    cartesian2d objPos2;
+    cart2dDim objDim2;
 
+    objPos1 = e191Array[inpID1]->getPosition();
+    objDim1 = e191Array[inpID1]->getObjectDimensions();
+    objPos2 = ply->getPosition();
+    objDim2 = ply->getObjectDimensions();
+
+    return boxCollision(objPos1, objDim1, objPos2, objDim2);
 }
 
 bool GLScene::collisionEnemyToWall(int inpID1, int inpID2)
 {
+    cartesian2d objPos1;
+    cart2dDim objDim1;
+    cartesian2d objPos2;
+    cart2dDim objDim2;
 
+    objPos1 = e191Array[inpID1]->getDestPosition();
+    objDim1 = e191Array[inpID1]->getObjectDimensions();
+    objPos2 = wallArray[inpID2]->getDestPosition();
+    objDim2 = wallArray[inpID2]->getObjectDimensions();
+    return boxCollision(objPos1, objDim1, objPos2, objDim2);
 }
 
 bool GLScene::collisionPlayerToWall(int inpID1, int inpID2)
 {
+    cartesian2d objPos1;
+    cart2dDim objDim1;
+    cartesian2d objPos2;
+    cart2dDim objDim2;
 
+    objPos1 = ply->getDestPosition();
+    objDim1 = ply->getObjectDimensions();
+    objPos2 = wallArray[inpID2]->getDestPosition();
+    objDim2 = wallArray[inpID2]->getObjectDimensions();
+    return boxCollision(objPos1, objDim1, objPos2, objDim2);
 }
 
-bool GLScene::collisionParticleToWall(int inpID1, int inpID2)
+bool GLScene::collisionProjectileToWall(int inpID1, int inpID2)
 {
+    cartesian2d objPos1;
+    cart2dDim objDim1;
+    cartesian2d objPos2;
+    cart2dDim objDim2;
 
+    objPos1 = projArray[inpID1]->getPosition();
+    objDim1 = projArray[inpID1]->getObjectDimensions();
+    objPos2 = wallArray[inpID2]->getPosition();
+    objDim2 = wallArray[inpID2]->getObjectDimensions();
+    return boxCollision(objPos1, objDim1, objPos2, objDim2);
 }
