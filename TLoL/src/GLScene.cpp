@@ -8,6 +8,9 @@
 #include <LoadShader.h>
 #include <Enemy191T.h>
 #include <ParticleEngine.h>
+#include <Levels.h>
+#include <Menu.h>
+#include <Fonts.h>
 
 //Model *modelTeapot = new Model();
 Inputs *KbMs = new Inputs();
@@ -16,14 +19,25 @@ player *ply = new player();
 LoadShader *shader = new LoadShader();
 ParticleEngine *particle = new ParticleEngine();
 //skyBox *sky = new skyBox;
+Levels *lvl = new Levels();
+Menu * men = new Menu();
+Fonts *F= new Fonts();
+int xLvl = 0;
+int yLvl = 2;
 
-Enemy191T *enemy191t = new Enemy191T();
+
+Enemy191T *e191Array[10];
+int currEnemyCount = 0;
 
 GLScene::GLScene()
 {
     //ctor
     screenHeight= GetSystemMetrics(SM_CYSCREEN);
     screenWidth = GetSystemMetrics(SM_CXSCREEN);
+    //e191Array = new Enemy191T[10];
+//    e191Array = NULL;
+     men->state =0;
+
 }
 
 GLScene::~GLScene()
@@ -44,15 +58,21 @@ GLint GLScene::initGL()
    // glEnable(GL_COLOR_MATERIAL);
     GLLight SetLight(GL_LIGHT0);
     GLLight Light(GL_LIGHT0);
+   // men.state = 0;
+
 
     //modelTeapot->modelInit("images/player/player0.png",true);
     plx->parallaxInit("images/bak.jpg");
     ply->playerInit();
     //sky->loadTextures();
-    enemy191t->objectInit();
+    lvl->LevelInit();
 
+
+   // F->initFonts("images/font.png");
+   // F->buildFont("Harkaran");
     return true;
 }
+
 
 GLint GLScene::drawGLScene()
 {
@@ -60,10 +80,38 @@ GLint GLScene::drawGLScene()
 	glLoadIdentity();									// Reset The Current Modelview Matrix
 
 
-    glPushMatrix();
-      glScaled(3.33,3.33,1.0);
-         plx->drawSquare(screenWidth,screenHeight);
-     glPopMatrix();
+	if(men->state==0)                           //Landing page at start of game
+    {
+         men->MenuInit("images/land.jpg"); //landing page
+           // cout<<"Landing Page"<<endl;
+
+            glPushMatrix();
+            glScaled(3.33,3.33,1.0);
+            men->DrawMenu(screenWidth,screenHeight);
+            glPopMatrix();
+
+
+    }
+    else if (men->state == 1)                   // Menu Page
+    {
+        men->MenuInit("images/mainmenu.jpg"); //landing page
+
+             glPushMatrix();
+            glScaled(3.33,3.33,1.0);
+            men->DrawMenu(screenWidth,screenHeight);
+            glPopMatrix();
+       // cout<<" Main Menu"<<endl;
+       // cout<<" Press N for New Game"<<endl;
+        //cout<<" Press O for Option"<<endl;
+        //cout<< "Press H for How to Play"<<endl;
+        //cout<< "Press ESC to quit"<<endl;
+    }
+    else if (men->state == 2)                   //
+    {
+            glPushMatrix();
+            glScaled(3.33,3.33,1.0);
+            plx->drawSquare(screenWidth,screenHeight);
+            glPopMatrix();
        //plx->scroll(true,"right",0.005);
 /*
     glPushMatrix();
@@ -79,31 +127,59 @@ GLint GLScene::drawGLScene()
             ply->actions(1);
         else
             ply->actions(0);
-        if (ply->getxPos() > 4.5)
+
+        if (ply->checkDoor != '0')
+        {
+            if (ply->checkDoor == 'w' && lvl->getwDoor(xLvl, yLvl))
+            {
+                transition('w');
+
+            }
+            else if (ply->checkDoor == 'e' && lvl->geteDoor(xLvl, yLvl))
+            {
+                transition('e');
+            }
+            else if (ply->checkDoor == 's' && lvl->getsDoor(xLvl, yLvl))
+            {
+                transition('s');
+            }
+            else if (ply->checkDoor == 'n' && lvl->getnDoor(xLvl, yLvl))
+            {
+                transition('n');
+            }
+             else   ply->checkDoor = '0';
+        }
+
+
+
+        /*if (ply->getxPos() > 4.5)
         {
             //cout << "xPos: " << ply->getxPos() << ", yPos: " << ply->getyPos() << endl;
-            ply->setxPos(-9.5);
+            ply->setxPos(-8.5);
             plx->xLevel++;
             //cout << "xPos: " << ply->getxPos() << ", yPos: " << ply->getyPos() << endl;
         }
         if (ply->getxPos() < -5.5)
         {
-            ply->setxPos(9.5);
+            ply->setxPos(8.5);
             plx->xLevel--;
         }
         if (ply->getyPos() > 2.5)
         {
-            ply->setyPos(-5.5);
+            ply->setyPos(-4.5);
             plx->yLevel++;
         }
         if (ply->getyPos() < -3.5)
         {
-            ply->setyPos(5.5);
+            ply->setyPos(4.5);
             plx->yLevel--;
-        }
-    glPopMatrix();
-    enemy191t->updateEnemy(ply);
-    enemy191t->drawObject();
+        }*/
+    //glPopMatrix();
+    for (int i = 0; i < currEnemyCount; i++)
+    {
+        e191Array[i]->updateEnemy(ply);
+        e191Array[i]->drawObject();
+    }
 
 
     	/*glPushMatrix();
@@ -113,9 +189,107 @@ GLint GLScene::drawGLScene()
         particle->drawParticle();
         particle->lifeTime();
         glUseProgram(0);
-
-	glPopMatrix();
 */
+	glPopMatrix();
+
+    }
+    else if(men->state == 3)
+    {
+        cout<<"Options"<<endl;
+    }
+    else if(men->state == 4)
+    {
+       // cout<<"How to Play"<<endl;
+         men->MenuInit("images/how.jpg");
+
+            glPushMatrix();
+            glScaled(3.33,3.33,1.0);
+            men->DrawMenu(screenWidth,screenHeight);
+            glPopMatrix();
+
+    }
+    else if (men->state== 5)
+    {
+
+        //cout<<"Pause Menu"<<endl;
+         men->MenuInit("images/paused.jpg");
+
+            glPushMatrix();
+            glScaled(3.33,3.33,1.0);
+            men->DrawMenu(screenWidth,screenHeight);
+            glPopMatrix();
+
+    }
+}
+
+void GLScene::transition(char dir)
+{
+    switch (dir){
+case 'w':
+    cout << "Going West\n";
+                ply->setxPos(6.8);
+                plx->xLevel--;
+                ply->checkDoor = '0';
+                xLvl--;
+                clearEnemies();
+                generateEnemies();
+                break;
+case 'e':
+    cout << "Going East\n";
+                ply->setxPos(-6.8);
+                plx->xLevel++;
+                ply->checkDoor = '0';
+                xLvl++;
+                clearEnemies();
+                generateEnemies();
+                break;
+case 'n':
+    cout << "Going North\n";
+                ply->setyPos(-2.7);
+                plx->yLevel++;
+                ply->checkDoor = '0';
+                yLvl++;
+                clearEnemies();
+                generateEnemies();
+                break;
+case 's':
+    cout << "Going South\n";
+                ply->setyPos(2.7);
+                plx->yLevel--;
+                ply->checkDoor = '0';
+                yLvl--;
+                clearEnemies();
+                generateEnemies();
+                break;
+    }
+}
+
+void GLScene::generateEnemies()
+{
+    //e191Array = new Enemy191T[lvl->getMaxE(xLvl, yLvl)];
+    for (int i = 0; i < lvl->getMaxE(xLvl, yLvl); i++)
+    {
+        e191Array[i] = new Enemy191T;
+        //e191Array = new Enemy191T[];
+        currEnemyCount++;
+        e191Array[i]->objectInit();
+        //e191Array[i].objectInit();
+    }
+}
+
+void GLScene::clearEnemies()
+{
+    for (int i = 0; i < currEnemyCount; i++)
+    {
+        delete e191Array[i];
+        //delete e191Array[i];
+    }
+    /*
+    if (e191Array != NULL)
+    {
+    delete []e191Array;*/
+    currEnemyCount = 0;
+    //e191Array = NULL;
 
 }
 
@@ -141,7 +315,9 @@ int GLScene::windMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	        //KbMs->keyPressed(modelTeapot);
 	        //KbMs->keyEnv(plx, 0.005);
 	        KbMs->keyPressed(ply);
+	        KbMs->keyPressed(men);
 	        //KbMs->keyPressed(sky);
+	       // KbMs->key
 
 	    break;
 
