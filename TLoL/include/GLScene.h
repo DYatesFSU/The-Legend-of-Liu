@@ -75,7 +75,9 @@ class GLScene
         bool collisionEnemyToPlayer(uintptr_t inpID1, uintptr_t inpID2);
         bool collisionEnemyToWall(uintptr_t inpID1, uintptr_t inpID2);
         bool collisionPlayerToWall(uintptr_t inpID1, uintptr_t inpID2);
+        bool collisionPlayerToProjectile(uintptr_t inpID1, uintptr_t inpID2);
         bool collisionProjectileToWall(uintptr_t inpID1, uintptr_t inpID2);
+        bool collisionProjectileToProjectile(uintptr_t inpID1, uintptr_t inpID2);
         void addEnemyListToGridMap();
         void addProjectileListToGridMap();
         void addWallListToGridMap();

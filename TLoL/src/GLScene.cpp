@@ -605,6 +605,43 @@ bool GLScene::collisionPlayerToWall(uintptr_t inpID1, uintptr_t inpID2)
     return boxCollision(objPos1, objDim1, objPos2, objDim2);
 }
 
+bool GLScene::collisionPlayerToProjectile(uintptr_t inpID1, uintptr_t inpID2)
+{
+    cartesian2d objPos1;
+    cart2dDim objDim1;
+    cartesian2d objPos2;
+    cart2dDim objDim2;
+
+    player *obj1 = (player *) inpID1;
+    Projectile *obj2 = (Projectile *) inpID2;
+
+    objPos1 = obj1->getPosition();
+    objDim1 = obj1->getObjectDimensions();
+    objPos2 = obj2->getPosition();
+    objDim2 = obj2->getObjectDimensions();
+
+    return boxCollision(objPos1, objDim1, objPos2, objDim2);
+}
+
+bool GLScene::collisionProjectileToProjectile(uintptr_t inpID1, uintptr_t inpID2)
+{
+    cartesian2d objPos1;
+    cart2dDim objDim1;
+    cartesian2d objPos2;
+    cart2dDim objDim2;
+
+    Projectile *obj1 = (Projectile *) inpID1;
+    Projectile *obj2 = (Projectile *) inpID2;
+
+    objPos1 = obj1->getPosition();
+    objDim1 = obj1->getObjectDimensions();
+    objPos2 = obj2->getPosition();
+    objDim2 = obj2->getObjectDimensions();
+
+    return boxCollision(objPos1, objDim1, objPos2, objDim2);
+}
+
+
 bool GLScene::collisionProjectileToWall(uintptr_t inpID1, uintptr_t inpID2)
 {
     cartesian2d objPos1;
