@@ -292,7 +292,6 @@ void GLScene::clearEnemies()
     for (int i = 0; i < currEnemyCount; i++)
     {
         delete e191Array[i];
-        //delete e191Array[i];
     }
     for (int i = 0; i < currProjCount; i++)
     {
