@@ -9,6 +9,8 @@
 #include <Enemy191T.h>
 #include <ParticleEngine.h>
 #include <Levels.h>
+#include <Menu.h>
+#include <Fonts.h>
 
 //Model *modelTeapot = new Model();
 Inputs *KbMs = new Inputs();
@@ -18,9 +20,10 @@ LoadShader *shader = new LoadShader();
 ParticleEngine *particle = new ParticleEngine();
 //skyBox *sky = new skyBox;
 Levels *lvl = new Levels();
+Menu * men = new Menu();
+Fonts *F= new Fonts();
 int xLvl = 0;
 int yLvl = 2;
-
 
 
 Enemy191T *e191Array[10];
@@ -33,6 +36,8 @@ GLScene::GLScene()
     screenWidth = GetSystemMetrics(SM_CXSCREEN);
     //e191Array = new Enemy191T[10];
 //    e191Array = NULL;
+     men->state =0;
+
 }
 
 GLScene::~GLScene()
@@ -53,6 +58,7 @@ GLint GLScene::initGL()
    // glEnable(GL_COLOR_MATERIAL);
     GLLight SetLight(GL_LIGHT0);
     GLLight Light(GL_LIGHT0);
+   // men.state = 0;
 
 
     //modelTeapot->modelInit("images/player/player0.png",true);
@@ -61,8 +67,12 @@ GLint GLScene::initGL()
     //sky->loadTextures();
     lvl->LevelInit();
 
+
+   // F->initFonts("images/font.png");
+   // F->buildFont("Harkaran");
     return true;
 }
+
 
 GLint GLScene::drawGLScene()
 {
@@ -70,10 +80,38 @@ GLint GLScene::drawGLScene()
 	glLoadIdentity();									// Reset The Current Modelview Matrix
 
 
-    glPushMatrix();
-      glScaled(3.33,3.33,1.0);
-         plx->drawSquare(screenWidth,screenHeight);
-     glPopMatrix();
+	if(men->state==0)                           //Landing page at start of game
+    {
+         men->MenuInit("images/land.jpg"); //landing page
+           // cout<<"Landing Page"<<endl;
+
+            glPushMatrix();
+            glScaled(3.33,3.33,1.0);
+            men->DrawMenu(screenWidth,screenHeight);
+            glPopMatrix();
+
+
+    }
+    else if (men->state == 1)                   // Menu Page
+    {
+        men->MenuInit("images/mainmenu.jpg"); //landing page
+
+             glPushMatrix();
+            glScaled(3.33,3.33,1.0);
+            men->DrawMenu(screenWidth,screenHeight);
+            glPopMatrix();
+       // cout<<" Main Menu"<<endl;
+       // cout<<" Press N for New Game"<<endl;
+        //cout<<" Press O for Option"<<endl;
+        //cout<< "Press H for How to Play"<<endl;
+        //cout<< "Press ESC to quit"<<endl;
+    }
+    else if (men->state == 2)                   //
+    {
+            glPushMatrix();
+            glScaled(3.33,3.33,1.0);
+            plx->drawSquare(screenWidth,screenHeight);
+            glPopMatrix();
        //plx->scroll(true,"right",0.005);
 /*
     glPushMatrix();
@@ -154,7 +192,34 @@ GLint GLScene::drawGLScene()
 */
 	glPopMatrix();
 
+    }
+    else if(men->state == 3)
+    {
+        cout<<"Options"<<endl;
+    }
+    else if(men->state == 4)
+    {
+       // cout<<"How to Play"<<endl;
+         men->MenuInit("images/how.jpg");
 
+            glPushMatrix();
+            glScaled(3.33,3.33,1.0);
+            men->DrawMenu(screenWidth,screenHeight);
+            glPopMatrix();
+
+    }
+    else if (men->state== 5)
+    {
+
+        //cout<<"Pause Menu"<<endl;
+         men->MenuInit("images/paused.jpg");
+
+            glPushMatrix();
+            glScaled(3.33,3.33,1.0);
+            men->DrawMenu(screenWidth,screenHeight);
+            glPopMatrix();
+
+    }
 }
 
 void GLScene::transition(char dir)
@@ -250,7 +315,9 @@ int GLScene::windMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	        //KbMs->keyPressed(modelTeapot);
 	        //KbMs->keyEnv(plx, 0.005);
 	        KbMs->keyPressed(ply);
+	        KbMs->keyPressed(men);
 	        //KbMs->keyPressed(sky);
+	       // KbMs->key
 
 	    break;
 
