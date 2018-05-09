@@ -48,36 +48,35 @@ bool Map::isGraphCollisionGeneric(vector < grid2d > inpPositions, int inpID, int
     int count00 = 0;
 	bool done = false;
 
-	if (inpType != cmpType)
-	{
-		while (count00 < inpPositions.size() && !done)
-		{
-			if (classMainMap00.at(inpPositions.at(count00).y).at(inpPositions.at(count00).x).at(cmpType).size() > 0)
-			{
-				done = true;
-			}
-			count00++;
-		}
-	}
-	else
-	{
-		int tempInt;
-		while (count00 < inpPositions.size() && !done)
-		{
-			tempInt = classMainMap00.at(inpPositions.at(count00).y).at(inpPositions.at(count00).x).at(cmpType).size();
-			if (tempInt > 0)
-			{
-				if (searchVector(classMainMap00.at(inpPositions.at(count00).y).at(inpPositions.at(count00).x).at(cmpType), inpID) != -1)
-				{
-					if (tempInt > 1)
-					{
-						done = true;
-					}
-				}
-			}
-			count00++;
-		}
-	}
+	while (count00 < inpPositions.size() && !done)
+    {
+        done = isGraphSquareCollisionGeneric(inpPositions.at(count00), inpID, inpType, cmpType);
+        count00++;
+    }
+	return done;
+}
+
+bool Map::isGraphSquareCollisionGeneric(grid2d inpPos, int inpID, int inpType, int cmpType)
+{
+    int count00 = 0;
+	bool done = false;
+
+    int tempInt;
+    tempInt = classMainMap00.at(inpPos.y).at(inpPos.x).at(cmpType).size();
+    if (tempInt > 0)
+    {
+        if (inpType != cmpType)
+        {
+            done = true;
+        }
+        else if (searchVector(classMainMap00.at(inpPos.y).at(inpPos.x).at(cmpType), inpID) != -1)
+        {
+            if (tempInt > 1)
+            {
+                done = true;
+            }
+        }
+    }
 	return done;
 }
 
@@ -544,4 +543,40 @@ void Map::display1DPriorQueue(priority_queue<T>inpQueue, string inpDelim)
 		inpQueue.pop();
 	}
 	cout << endl;
+}
+
+void Map::displayMap()
+{
+    for (int i = 0; i < classMainMap00.size(); i++)
+    {
+        for (int j = 0; j < classMainMap00.at(i).size(); j++)
+        {
+            int k = 0;
+            int tempInt = -1;
+            bool done = false;
+            while (k < classMainMap00.at(i).at(j).size() && !done)
+            {
+                if (classMainMap00.at(i).at(j).at(k).size() > 0)
+                {
+                    tempInt = k;
+                    done = true;
+                }
+                k++;
+            }
+            cout << tempInt << "\t";
+        }
+        cout << endl;
+    }
+    //cout << endl;
+}
+
+void Map::displayElement(grid2d inpCoord)
+{
+    for (int i = 0; i < classMainMap00.at(inpCoord.y).at(inpCoord.x).size(); i++)
+    {
+        cout << i << " ";
+        //cout << classMainMap00.at(inpCoord.y).at(inpCoord.x).at(i).size() << " ";
+        display1DVec(classMainMap00.at(inpCoord.y).at(inpCoord.x).at(i), " ");
+    }
+    //cout << endl;
 }

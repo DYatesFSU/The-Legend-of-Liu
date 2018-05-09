@@ -54,9 +54,13 @@ class Map
         void initMap(grid2dDim inpDim, int elementVariety);
 		void getMapElementGeneric(grid2d inpCoord, vector < vector < int > > &retElement);
 		bool isGraphCollisionGeneric(vector < grid2d > inpPositions, int inpID, int inpType, int cmpType);
+		bool isGraphSquareCollisionGeneric(grid2d inpPos, int inpID, int inpType, int cmpType);
 		void addGenericElement(int inpID, int inpType, vector < grid2d > inpPositions);
         void removeGenericElement(int inpID, int inpType, vector < grid2d > inpPositions);
         void updateGenericElement(int inpID, int inpType, vector < grid2d > oldPositions, vector < grid2d > newPositions);
+
+        void displayMap();
+        void displayElement(grid2d inpCoord);
 
     protected:
 
