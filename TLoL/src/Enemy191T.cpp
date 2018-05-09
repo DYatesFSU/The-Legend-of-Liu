@@ -35,6 +35,10 @@ Enemy191T::Enemy191T()
     objectTexture = new textureLoader[11]();
     objectTimer = new timer();
 
+
+    objectTimer->start();
+
+    isDead = false;
 }
 
 Enemy191T::~Enemy191T()
@@ -259,4 +263,14 @@ void Enemy191T::getDestGridPos(vector<grid2d>& retPos)
 void Enemy191T::setDestGridPos(vector<grid2d>inpPos)
 {
     classTestGridCoords = inpPos;
+}
+
+void Enemy191T::setIsDead(bool inpBool)
+{
+    isDead = inpBool;
+}
+
+bool Enemy191T::getIsDead()
+{
+    return isDead;
 }

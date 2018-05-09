@@ -6,6 +6,7 @@ using namespace std;
 Projectile::Projectile()
 {
     //ctor
+    isDead = false;
 }
 
 Projectile::~Projectile()
@@ -13,7 +14,7 @@ Projectile::~Projectile()
     //dtor
 }
 
-void Projectile::projInit(float x, float y, char s)
+void Projectile::projInit(float x, float y, char s, int inpProjTeam)
 {
 
     xPos = x;
@@ -53,6 +54,8 @@ void Projectile::projInit(float x, float y, char s)
 
 
     objectTexture[0].bindTexture("images/player/play.png");
+
+    objectTeam = inpProjTeam;
 
 }
 
@@ -156,4 +159,23 @@ void Projectile::getCurrGridPos(vector<grid2d>& retPos)
 void Projectile::setCurrGridPos(vector<grid2d>inpPos)
 {
     classCurrentGridCoords = inpPos;
+}
+void Projectile::setIsDead(bool inpBool)
+{
+    isDead = inpBool;
+}
+
+bool Projectile::getIsDead()
+{
+    return isDead;
+}
+
+void Projectile::setObjectTeam(int inpTeam)
+{
+    objectTeam = inpTeam;
+}
+
+int Projectile::getObjectTeam()
+{
+    return objectTeam;
 }

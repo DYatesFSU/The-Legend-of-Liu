@@ -62,6 +62,9 @@ class Enemy191T
         void getDestGridPos(std::vector <grid2d> &retPos);
         void setDestGridPos(std::vector <grid2d> inpPos);
 
+        void setIsDead(bool inpBool);
+        bool getIsDead();
+
     protected:
 
     private:
@@ -78,7 +81,9 @@ class Enemy191T
         std::vector <grid2d> classTestGridCoords;
 
         //for box and graph collisions
-        cart2dDim objectDimensions = {.99, .99};
+        cart2dDim objectDimensions = {.50, .50};
+
+        bool isDead;
 
 };
 

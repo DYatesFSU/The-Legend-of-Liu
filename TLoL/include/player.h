@@ -98,6 +98,12 @@ class player:Model
         char getFiringDir();
         void setFiringDir(char x);
 
+        void setIsDead(bool inpBool);
+        bool getIsDead();
+
+        void modifyHealth(int inpModifier);
+        int getHealth();
+
     protected:
 
     private:
@@ -121,8 +127,11 @@ class player:Model
         std::vector <grid2d> classTestGridCoords;
 
         //for box and graph collisions
-        cart2dDim objectDimensions = {.99, .99};
+        cart2dDim objectDimensions = {.50, .50};
         cartesian2d destPosition;
+
+        bool isDead;
+        int objectHealth = 5;
 
         /*
         char checkDoor;

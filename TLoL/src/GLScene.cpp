@@ -30,6 +30,9 @@ const int PROJECTILETYPE = 3;
 const int TYPEVARIETY = 4;
 const int PLAYERID = 0;
 
+const int TEAMPLAYER = 0;
+const int NOTTEAMPLAYER = 1;
+
 
 //Model *modelTeapot = new Model();
 Inputs *KbMs = new Inputs();
@@ -51,6 +54,7 @@ Enemy191T *e191Array[10];
 int currEnemyCount = 0;
 
 Boss *boss[2];
+int currBossCount = 0;
 
 Projectile *projArray[100];
 int currProjCount = 0;
@@ -175,7 +179,9 @@ GLint GLScene::drawGLScene()
         }
          else   ply->checkDoor = '0';
     }
-    checkProj();
+
+    checkProj(TEAMPLAYER);
+
     manageProj();
     manageEnemies();
     manageKeys();
@@ -202,6 +208,20 @@ GLint GLScene::drawGLScene()
     else if (men->state== 5)
     {
 
+	collisionListPlayerToEnemy();
+    collisionListProjectileToEnemy();
+    collisionListProjectileToProjectile();
+    collisionListProjectileToPlayer();
+
+    collisionListProjectileToBoss();
+    collisionListPlayerToBoss();
+
+    cleanEnemyList();
+    cleanProjectileList();
+    cleanPlayerList();
+    cleanBossList();
+
+
         //cout<<"Pause Menu"<<endl;
          men->MenuInit("images/paused.jpg");
 
@@ -211,6 +231,7 @@ GLint GLScene::drawGLScene()
             glPopMatrix();
 
     }
+
 }
 
 void GLScene::manageEnemies()
@@ -228,22 +249,22 @@ void GLScene::manageEnemies()
     }
 }
 
-void GLScene::checkProj()
+void GLScene::checkProj(int inpTeam)
 {
      if (projTimer->getTicks() >= 300 && ply->getFiring())
     {
         projTimer->reset();
         projArray[currProjCount] = new Projectile();
-        projArray[currProjCount]->projInit(ply->getxPos(), ply->getyPos(), ply->getFiringDir());
+        projArray[currProjCount]->projInit(ply->getxPos(), ply->getyPos(), ply->getFiringDir(), inpTeam);
         currProjCount++;
     }
 }
 
 void GLScene::manageBoss()
 {
-    if (currEnemyCount)
+    if (currBossCount)
     {
-        for (int i = 0; i < currEnemyCount; i++)
+        for (int i = 0; i < currBossCount; i++)
         {
             boss[i]->drawObject();
             if (boss[i]->getShooting())
@@ -251,7 +272,7 @@ void GLScene::manageBoss()
                 projArray[currProjCount] = new Projectile();
                 projArray[currProjCount]->projInit(boss[i]->getxPos(),
                                                    boss[i]->getyPos(),
-                                                   boss[i]->getFiringDir());
+                                                   boss[i]->getFiringDir(), NOTTEAMPLAYER);
                 currProjCount++;
                 boss[i]->setShooting(false);
             }
@@ -336,11 +357,11 @@ void GLScene::generateEnemies()
     if (lvl->roomHasBoss(xLvl, yLvl))
     {
         boss[0] = new Boss();
-        currEnemyCount++;
+        currBossCount++;
         boss[0]->bossInit(-3, 'e');
 
         boss[1] = new Boss();
-        currEnemyCount++;
+        currBossCount++;
         boss[1]->bossInit(3, 'w');
     }
     else
@@ -476,153 +497,165 @@ bool GLScene::boxCollision (cartesian2d objectLoc0, cart2dDim objectDim0, cartes
 	return retIsCollision;
 }
 
-bool GLScene::collisionEnemyToEnemy(uintptr_t inpID1, uintptr_t inpID2)
+void GLScene::collisionListProjectileToEnemy()
+{
+    //uintptr_t objID1;
+    //uintptr_t objID2;
+    bool tempIsCollision;
+    for (int i = 0; i < currEnemyCount; i++)
+    {
+        //objID1 = pointerToInt(e191Array[i]);
+
+        for (int j = 0; j < currProjCount; j++)
+        {
+            //objID2 = pointerToInt(projArray[j]);
+            //tempIsCollision = collisionEnemyToProjectile(objID1, objID2);
+            tempIsCollision = collisionObjectToObject(projArray[j], e191Array[i]);
+            if (tempIsCollision)
+            {
+                projArray[j]->setIsDead(tempIsCollision);
+                e191Array[i]->setIsDead(tempIsCollision);
+            }
+        }
+    }
+}
+
+
+void GLScene::collisionListPlayerToEnemy()
+{
+    //uintptr_t objID1;
+    //uintptr_t objID2 = pointerToInt(ply);
+    bool tempIsCollision;
+    for (int i = 0; i < currEnemyCount; i++)
+    {
+        //objID1 = pointerToInt(e191Array[i]);
+        //tempIsCollision = collisionEnemyToPlayer(objID1, objID2);
+
+        tempIsCollision = collisionObjectToObject(ply, e191Array[i]);
+
+        if (tempIsCollision)
+        {
+            ply->setIsDead(tempIsCollision);
+            e191Array[i]->setIsDead(tempIsCollision);
+        }
+    }
+    //collisionEnemyToPlayer(uintptr_t inpID1, uintptr_t inpID2);
+}
+
+void GLScene::collisionListProjectileToProjectile()
+{
+    //uintptr_t objID1;
+    //uintptr_t objID2;
+    bool tempIsCollision;
+    for (int i = 0; i < currProjCount; i++)
+    {
+        //objID1 = pointerToInt(projArray[i]);
+
+        for (int j = i+1; j < currProjCount; j++)
+        {
+            //objID2 = pointerToInt(projArray[j]);
+            //tempIsCollision = collisionProjectileToProjectile(objID1, objID2);
+            tempIsCollision = collisionObjectToObject(projArray[j], projArray[i]);
+            if (tempIsCollision)
+            {
+                projArray[j]->setIsDead(tempIsCollision);
+                projArray[i]->setIsDead(tempIsCollision);
+            }
+        }
+    }
+}
+
+void GLScene::collisionListProjectileToPlayer()
+{
+    //uintptr_t objID1;
+    //uintptr_t objID2 = pointerToInt(ply);
+    bool tempIsCollision;
+    for (int i = 0; i < currProjCount; i++)
+    {
+        if (projArray[i]->getObjectTeam() != TEAMPLAYER)
+        {
+        //objID1 = pointerToInt(projArray[i]);
+        //tempIsCollision = collisionPlayerToProjectile(objID2, objID1);
+        tempIsCollision = collisionObjectToObject(ply, projArray[i]);
+        if (tempIsCollision)
+        {
+            ply->setIsDead(tempIsCollision);
+            projArray[i]->setIsDead(tempIsCollision);
+        }
+        }
+    }
+    //collisionEnemyToPlayer(uintptr_t inpID1, uintptr_t inpID2);
+}
+
+void GLScene::collisionListProjectileToBoss()
+{
+    bool tempIsCollision;
+    for (int i = 0; i < currProjCount; i++)
+    {
+        for (int j = 0; j < currBossCount; j++)
+        {
+            if (projArray[i]->getObjectTeam() != NOTTEAMPLAYER)
+            {
+            //tempIsCollision = collisionProjectileToProjectile(objID1, objID2);
+            tempIsCollision = collisionObjectToObject(projArray[i], boss[j]);
+            if (tempIsCollision)
+            {
+                projArray[i]->setIsDead(tempIsCollision);
+                boss[j]->setIsDead(tempIsCollision);
+            }
+            }
+        }
+    }
+}
+
+void GLScene::collisionListPlayerToBoss()
+{
+    bool tempIsCollision;
+    for (int i = 0; i < currBossCount; i++)
+    {
+        tempIsCollision = collisionObjectToObject(ply, boss[i]);
+
+        if (tempIsCollision)
+        {
+            ply->setIsDead(tempIsCollision);
+            boss[i]->setIsDead(tempIsCollision);
+        }
+    }
+}
+
+template <class T, class U>
+bool GLScene::collisionObjectToObject(T* inpObj1, U* inpObj2)
 {
     cartesian2d objPos1;
     cart2dDim objDim1;
     cartesian2d objPos2;
     cart2dDim objDim2;
 
-    Enemy191T *obj1 = (Enemy191T *) inpID1;
-    Enemy191T *obj2 = (Enemy191T *) inpID2;
+    objPos1 = inpObj1->getPosition();
+    objDim1 = inpObj1->getObjectDimensions();
+    objPos2 = inpObj2->getPosition();
+    objDim2 = inpObj2->getObjectDimensions();
 
-    objPos1 = obj1->getDestPosition();
-    objDim1 = obj1->getObjectDimensions();
-    objPos2 = obj2->getPosition();
-    objDim2 = obj2->getObjectDimensions();
-
-    /*
-    objPos1 = e191Array[inpID1]->getDestPosition();
-    objDim1 = e191Array[inpID1]->getObjectDimensions();
-    objPos2 = e191Array[inpID2]->getPosition();
-    objDim2 = e191Array[inpID2]->getObjectDimensions();
-    */
     return boxCollision(objPos1, objDim1, objPos2, objDim2);
 }
 
-bool GLScene::collisionEnemyToProjectile(uintptr_t inpID1, uintptr_t inpID2)
+template <class T, class U>
+bool GLScene::collisionObjectBlockedByObject(T* inpObj1, U* inpObj2)
 {
     cartesian2d objPos1;
     cart2dDim objDim1;
     cartesian2d objPos2;
     cart2dDim objDim2;
 
-    Enemy191T *obj1 = (Enemy191T *) inpID1;
-    Projectile *obj2 = (Projectile *) inpID2;
-
-    objPos1 = obj1->getPosition();
-    objDim1 = obj1->getObjectDimensions();
-    objPos2 = obj2->getPosition();
-    objDim2 = obj2->getObjectDimensions();
-
-    /*
-    objPos1 = e191Array[inpID1]->getPosition();
-    objDim1 = e191Array[inpID1]->getObjectDimensions();
-    objPos2 = projArray[inpID2]->getPosition();
-    objDim2 = projArray[inpID2]->getObjectDimensions();
-    */
-    return boxCollision(objPos1, objDim1, objPos2, objDim2);
-}
-
-bool GLScene::collisionEnemyToPlayer(uintptr_t inpID1, uintptr_t inpID2)
-{
-    cartesian2d objPos1;
-    cart2dDim objDim1;
-    cartesian2d objPos2;
-    cart2dDim objDim2;
-
-    Enemy191T *obj1 = (Enemy191T *) inpID1;
-    player *obj2 = (player *) inpID2;
-
-    objPos1 = obj1->getPosition();
-    objDim1 = obj1->getObjectDimensions();
-    objPos2 = obj2->getPosition();
-    objDim2 = obj2->getObjectDimensions();
-
-    /*
-    objPos1 = e191Array[inpID1]->getPosition();
-    objDim1 = e191Array[inpID1]->getObjectDimensions();
-    objPos2 = ply->getPosition();
-    objDim2 = ply->getObjectDimensions();
-    */
+    objPos1 = inpObj1->getDestPosition();
+    objDim1 = inpObj1->getObjectDimensions();
+    objPos2 = inpObj2->getPosition();
+    objDim2 = inpObj2->getObjectDimensions();
 
     return boxCollision(objPos1, objDim1, objPos2, objDim2);
 }
 
-bool GLScene::collisionEnemyToWall(uintptr_t inpID1, uintptr_t inpID2)
-{
-    cartesian2d objPos1;
-    cart2dDim objDim1;
-    cartesian2d objPos2;
-    cart2dDim objDim2;
 
-    Enemy191T *obj1 = (Enemy191T *) inpID1;
-    Wall *obj2 = (Wall *) inpID2;
-
-    objPos1 = obj1->getDestPosition();
-    objDim1 = obj1->getObjectDimensions();
-    objPos2 = obj2->getPosition();
-    objDim2 = obj2->getObjectDimensions();
-
-    /*
-    objPos1 = e191Array[inpID1]->getDestPosition();
-    objDim1 = e191Array[inpID1]->getObjectDimensions();
-    objPos2 = wallArray[inpID2]->getPosition();
-    objDim2 = wallArray[inpID2]->getObjectDimensions();
-    */
-
-    return boxCollision(objPos1, objDim1, objPos2, objDim2);
-}
-
-bool GLScene::collisionPlayerToWall(uintptr_t inpID1, uintptr_t inpID2)
-{
-    cartesian2d objPos1;
-    cart2dDim objDim1;
-    cartesian2d objPos2;
-    cart2dDim objDim2;
-
-    player *obj1 = (player *) inpID1;
-    Wall *obj2 = (Wall *) inpID2;
-
-    objPos1 = obj1->getDestPosition();
-    objDim1 = obj1->getObjectDimensions();
-    objPos2 = obj2->getPosition();
-    objDim2 = obj2->getObjectDimensions();
-
-    /*
-    objPos1 = ply->getDestPosition();
-    objDim1 = ply->getObjectDimensions();
-    objPos2 = wallArray[inpID2]->getPosition();
-    objDim2 = wallArray[inpID2]->getObjectDimensions();
-    */
-
-    return boxCollision(objPos1, objDim1, objPos2, objDim2);
-}
-
-bool GLScene::collisionProjectileToWall(uintptr_t inpID1, uintptr_t inpID2)
-{
-    cartesian2d objPos1;
-    cart2dDim objDim1;
-    cartesian2d objPos2;
-    cart2dDim objDim2;
-
-    Projectile *obj1 = (Projectile *) inpID1;
-    Wall *obj2 = (Wall *) inpID2;
-
-    objPos1 = obj1->getPosition();
-    objDim1 = obj1->getObjectDimensions();
-    objPos2 = obj2->getPosition();
-    objDim2 = obj2->getObjectDimensions();
-
-    /*
-    objPos1 = projArray[inpID1]->getPosition();
-    objDim1 = projArray[inpID1]->getObjectDimensions();
-    objPos2 = wallArray[inpID2]->getPosition();
-    objDim2 = wallArray[inpID2]->getObjectDimensions();
-    */
-
-    return boxCollision(objPos1, objDim1, objPos2, objDim2);
-}
 
 void GLScene::addEnemyListToGridMap()
 {
@@ -752,16 +785,69 @@ void GLScene::generateMazeRandom(grid2dDim inpDim, grid2d inpStartPos, vector<gr
     vector <grid2d> tempLocs;
     grid2d tempLoc;
     //tempGridMaze = new Map();
+    tempGridMaze.initMap(inpDim, TYPEVARIETY);
     for (int i = 0; i < inpDim.width; i++)
     {
+        tempLocs.clear();
         tempLoc = {i, 0};
         tempLocs.push_back(tempLoc);
 
         //if not end position or start positions
-        tempGridMaze.addGenericElement(0, WALLTYPE, tempLocs);
-
-        tempLocs.clear();
+        if (searchVector(inpEndPoss, tempLoc) == -1 && !(tempLoc == inpStartPos) )
+            tempGridMaze.addGenericElement(WALLTYPE, 0, tempLocs);
     }
+    tempLocs.clear();
+
+    for (int i = 0; i < inpDim.width; i++)
+    {
+        tempLocs.clear();
+        tempLoc = {i, inpDim.height - 1};
+        tempLocs.push_back(tempLoc);
+
+        //if not end position or start positions
+        if (searchVector(inpEndPoss, tempLoc) == -1 && !(tempLoc == inpStartPos) )
+            tempGridMaze.addGenericElement(WALLTYPE, 0, tempLocs);
+    }
+    tempLocs.clear();
+
+    for (int i = 1; i < inpDim.height - 1; i++)
+    {
+        tempLocs.clear();
+        tempLoc = {0, i};
+        tempLocs.push_back(tempLoc);
+
+        //if not end position or start positions
+        if (searchVector(inpEndPoss, tempLoc) == -1 && !(tempLoc == inpStartPos) )
+            tempGridMaze.addGenericElement(WALLTYPE, 0, tempLocs);
+    }
+    tempLocs.clear();
+
+    for (int i = 1; i < inpDim.height - 1; i++)
+    {
+        tempLocs.clear();
+        tempLoc = {inpDim.width - 1, i};
+        tempLocs.push_back(tempLoc);
+
+        //if not end position or start positions
+        if (searchVector(inpEndPoss, tempLoc) == -1 && !(tempLoc == inpStartPos) )
+            tempGridMaze.addGenericElement(WALLTYPE, 0, tempLocs);
+    }
+    tempLocs.clear();
+
+    /*
+    for (int i = 1; i < inpDim.height - 1; i++)
+    {
+        tempLocs.clear();
+        tempLoc = {inpDim.width - 1, i};
+        tempLocs.push_back(tempLoc);
+
+        //if not end position or start positions
+        if (searchVector(inpEndPoss, tempLoc) == -1 && tempLoc != inpStartPos )
+            tempGridMaze.addGenericElement(WALLTYPE, 0, tempLocs);
+    }
+    tempLocs.clear();
+    */
+
     //tempGridMaze.addGenericElement(0, WALLTYPE, tempLocs);
 }
 
@@ -803,4 +889,72 @@ int GLScene::searchVector(std::vector<T>vecToSearch, T varToFind)
 	}
 
 	return retIndex;
+}
+
+void GLScene::cleanEnemyList()
+{
+    for (int i = 0; i < currEnemyCount; i++)
+    {
+        if (e191Array[i]->getIsDead())
+        {
+            delete e191Array[i];
+            removeArrayElement(e191Array, i, currEnemyCount);
+            currEnemyCount--;
+        }
+    }
+}
+
+void GLScene::cleanProjectileList()
+{
+    for (int i = 0; i < currProjCount; i++)
+    {
+        if (projArray[i]->getIsDead())
+        {
+            delete projArray[i];
+            removeArrayElement(projArray, i, currProjCount);
+            currProjCount--;
+        }
+    }
+}
+
+void GLScene::cleanPlayerList()
+{
+    if(ply->getIsDead())
+    {
+        ui->setHealth(-1);
+        ply->setIsDead(false);
+        ply->modifyHealth(-1);
+        if (ply->getHealth() < 0)
+        {
+            exit(0);
+        }
+    }
+}
+
+void GLScene::cleanBossList()
+{
+    for (int i = 0; i < currBossCount; i++)
+    {
+        if (boss[i]->getIsDead())
+        {
+            boss[i]->setIsDead(false);
+            boss[i]->modifyHealth(-1);
+            if (boss[i]->getHealth() < 0)
+            {
+                delete boss[i];
+                removeArrayElement(boss, i, currBossCount);
+                currBossCount--;
+            }
+        }
+    }
+}
+
+
+template <class T>
+void GLScene::removeArrayElement(T inpArr[], int inpIndex, int inpLength)
+{
+    for (int i = inpIndex + 1; i < inpLength; i++)
+    {
+        inpArr[i-1] = inpArr[i];
+    }
 }
