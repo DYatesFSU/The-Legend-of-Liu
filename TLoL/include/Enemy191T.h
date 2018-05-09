@@ -28,7 +28,7 @@ class Enemy191T
         double Xpos;
         double Ypos;
         double Zpos;
-        double destXPos, destYPos;
+
         double xVel, yVel;
 
         double getxVel();
@@ -71,6 +71,9 @@ class Enemy191T
         double scaleSizeX;
         double scaleSizeY;
         double scaleSizeZ;
+
+        double destXPos;
+        double destYPos;
 
         std::vector <grid2d> classCurrentGridCoords;
         //This is to test if an object can move in a direction

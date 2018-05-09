@@ -7,6 +7,7 @@
 #include <parallax.h>
 #include <player.h>
 #include <skyBox.h>
+#include <Menu.h>
 
 class Inputs
 {
@@ -17,6 +18,7 @@ class Inputs
         void keyPressed(Model *);
         void keyPressed(player *);
         void keyPressed(skyBox *);
+        void keyPressed(Menu *);
 
         void keyUp(player *);
         void keyEnv(parallax *, float); // movements of my background
