@@ -1,12 +1,12 @@
 # depslib dependency file v1.0
-1525845093 source:c:\users\idb\documents\github\the-legend-of-liu\tlol\main.cpp
+1525854056 source:c:\users\idb\documents\github\the-legend-of-liu\tlol\main.cpp
 	<windows.h>
 	<GLScene.h>
 	<stdlib.h>
 	<iostream>
 	<windows.h>
 
-1525845093 c:\users\idb\documents\github\the-legend-of-liu\tlol\include\glscene.h
+1525856217 c:\users\idb\documents\github\the-legend-of-liu\tlol\include\glscene.h
 	<windows.h>
 	<string.h>
 	<GL/glew.h>
@@ -37,7 +37,7 @@
 1525307233 c:\users\idb\documents\github\the-legend-of-liu\tlol\include\gllight.h
 	<GLScene.h>
 
-1525847667 source:c:\users\idb\documents\github\the-legend-of-liu\tlol\src\glscene.cpp
+1525857345 source:c:\users\idb\documents\github\the-legend-of-liu\tlol\src\glscene.cpp
 	"GLScene.h"
 	<GLLight.h>
 	<Model.h>
@@ -55,6 +55,7 @@
 	<Projectile.h>
 	<timer.h>
 	<UI.h>
+	<Boss.h>
 
 1525307233 c:\users\idb\documents\github\the-legend-of-liu\tlol\include\model.h
 	<windows.h>
@@ -153,7 +154,7 @@
 	<cstdlib>
 	<ctime>
 
-1525845093 source:c:\users\idb\documents\github\the-legend-of-liu\tlol\src\levels.cpp
+1525853612 source:c:\users\idb\documents\github\the-legend-of-liu\tlol\src\levels.cpp
 	"Levels.h"
 	<cstdlib>
 	<ctime>
@@ -176,11 +177,22 @@
 	"textureLoader.h"
 	<GlobalDataStructures.h>
 
-1525847593 source:c:\users\idb\documents\github\the-legend-of-liu\tlol\src\ui.cpp
+1525848255 source:c:\users\idb\documents\github\the-legend-of-liu\tlol\src\ui.cpp
 	"UI.h"
 	"textureLoader.h"
 
 1525846990 c:\users\idb\documents\github\the-legend-of-liu\tlol\include\ui.h
 	<GlobalDataStructures.h>
+	<textureLoader.h>
+
+1525857408 source:c:\users\idb\documents\github\the-legend-of-liu\tlol\src\boss.cpp
+	"Boss.h"
+	<ctime>
+	<cstdlib>
+	<iostream>
+
+1525853426 c:\users\idb\documents\github\the-legend-of-liu\tlol\include\boss.h
+	<GlobalDataStructures.h>
+	<timer.h>
 	<textureLoader.h>
 

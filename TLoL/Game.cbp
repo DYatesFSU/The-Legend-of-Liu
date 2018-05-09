@@ -44,6 +44,7 @@
 			<Add library="gdi32" />
 			<Add library="../Common/lib/glut32.lib" />
 		</Linker>
+		<Unit filename="include/Boss.h" />
 		<Unit filename="include/Enemy191T.h" />
 		<Unit filename="include/GLLight.h" />
 		<Unit filename="include/GLScene.h" />
@@ -62,6 +63,7 @@
 		<Unit filename="include/textureLoader.h" />
 		<Unit filename="include/timer.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Boss.cpp" />
 		<Unit filename="src/Enemy191T.cpp" />
 		<Unit filename="src/GLLight.cpp" />
 		<Unit filename="src/GLScene.cpp" />

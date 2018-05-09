@@ -15,6 +15,7 @@
 #include <Projectile.h>
 #include <timer.h>
 #include <UI.h>
+#include <Boss.h>
 
 
 
@@ -36,6 +37,8 @@ int yLvl = 2;
 
 Enemy191T *e191Array[10];
 int currEnemyCount = 0;
+
+Boss *boss[2];
 
 Projectile *projArray[100];
 int currProjCount = 0;
@@ -104,97 +107,89 @@ GLint GLScene::drawGLScene()
     glPopMatrix();
 */
     glPushMatrix();
-        //glTranslated(0,0,modelTeapot->Zoom);
-        if (ply->checkMoving())
-            ply->actions(1);
-        else
-            ply->actions(0);
+    //glTranslated(0,0,modelTeapot->Zoom);
+    if (ply->checkMoving())
+        ply->actions(1);
+    else
+        ply->actions(0);
 
-        if (ply->checkDoor != '0')
-        {
-            if (ply->checkDoor == 'w' && lvl->getwDoor(xLvl, yLvl))
-            {
-                transition('w');
-
-            }
-            else if (ply->checkDoor == 'e' && lvl->geteDoor(xLvl, yLvl))
-            {
-                transition('e');
-            }
-            else if (ply->checkDoor == 's' && lvl->getsDoor(xLvl, yLvl))
-            {
-                transition('s');
-            }
-            else if (ply->checkDoor == 'n' && lvl->getnDoor(xLvl, yLvl))
-            {
-                transition('n');
-            }
-             else   ply->checkDoor = '0';
-        }
-
-        if (projTimer->getTicks() >= 300 && ply->getFiring())
-        {
-
-            projTimer->reset();
-            projArray[currProjCount] = new Projectile();
-
-            projArray[currProjCount]->projInit(ply->getxPos(), ply->getyPos(), ply->getFiringDir());
-            currProjCount++;
-
-        }
-
-        manageProj();
-
-
-
-        /*if (ply->getxPos() > 4.5)
-        {
-            //cout << "xPos: " << ply->getxPos() << ", yPos: " << ply->getyPos() << endl;
-            ply->setxPos(-8.5);
-            plx->xLevel++;
-            //cout << "xPos: " << ply->getxPos() << ", yPos: " << ply->getyPos() << endl;
-        }
-        if (ply->getxPos() < -5.5)
-        {
-            ply->setxPos(8.5);
-            plx->xLevel--;
-        }
-        if (ply->getyPos() > 2.5)
-        {
-            ply->setyPos(-4.5);
-            plx->yLevel++;
-        }
-        if (ply->getyPos() < -3.5)
-        {
-            ply->setyPos(4.5);
-            plx->yLevel--;
-        }*/
-    //glPopMatrix();
-    for (int i = 0; i < currEnemyCount; i++)
+    if (ply->checkDoor != '0')
     {
-        e191Array[i]->updateEnemy(ply);
-        e191Array[i]->drawObject();
+        if (ply->checkDoor == 'w' && lvl->getwDoor(xLvl, yLvl))
+        {
+            transition('w');
+        }
+        else if (ply->checkDoor == 'e' && lvl->geteDoor(xLvl, yLvl))
+        {
+            transition('e');
+        }
+        else if (ply->checkDoor == 's' && lvl->getsDoor(xLvl, yLvl))
+        {
+            transition('s');
+        }
+        else if (ply->checkDoor == 'n' && lvl->getnDoor(xLvl, yLvl))
+        {
+            transition('n');
+        }
+         else   ply->checkDoor = '0';
     }
 
+    checkProj();
+    manageProj();
+    manageEnemies();
+    manageKeys();
 
-    	/*glPushMatrix();
-        glUseProgram(shader->program);
-        glTranslated(0.70,-2.5,-2.0);
-        particle->generateParticle();
-        particle->drawParticle();
-        particle->lifeTime();
-        glUseProgram(0);*/
-    if (lvl->roomHasKey(xLvl, yLvl))
-    {
-        floorKey->drawKey();
-        if (ply->getxPos() < .5 && ply->getxPos() > -.5 && ply->getyPos() < .5 && ply->getyPos() > -.5)
-        {
-            lvl->gotKey(xLvl, yLvl);
-            ui->addKey();
-        }
-    }
+    ui->drawUI();
 
+	glPopMatrix();
+
+}
+
+void GLScene::manageEnemies()
+{
     if (lvl->roomHasBoss(xLvl, yLvl))
+        manageBoss();
+    else
+    {
+
+        for (int i = 0; i < currEnemyCount; i++)
+        {
+            e191Array[i]->updateEnemy(ply);
+            e191Array[i]->drawObject();
+        }
+    }
+}
+
+void GLScene::checkProj()
+{
+     if (projTimer->getTicks() >= 300 && ply->getFiring())
+    {
+        projTimer->reset();
+        projArray[currProjCount] = new Projectile();
+        projArray[currProjCount]->projInit(ply->getxPos(), ply->getyPos(), ply->getFiringDir());
+        currProjCount++;
+    }
+}
+
+void GLScene::manageBoss()
+{
+    if (currEnemyCount)
+    {
+        for (int i = 0; i < currEnemyCount; i++)
+        {
+            boss[i]->drawObject();
+            if (boss[i]->getShooting())
+            {
+                projArray[currProjCount] = new Projectile();
+                projArray[currProjCount]->projInit(boss[i]->getxPos(),
+                                                   boss[i]->getyPos(),
+                                                   boss[i]->getFiringDir());
+                currProjCount++;
+                boss[i]->setShooting(false);
+            }
+        }
+    }
+    else
     {
         if (ui->getKeys() >= 3)
         {
@@ -204,11 +199,19 @@ GLint GLScene::drawGLScene()
             }
         }
     }
-    ui->drawUI();
+}
 
-	glPopMatrix();
-
-
+void GLScene::manageKeys()
+{
+     if (lvl->roomHasKey(xLvl, yLvl))
+    {
+        floorKey->drawKey();
+        if (ply->getxPos() < .5 && ply->getxPos() > -.5 && ply->getyPos() < .5 && ply->getyPos() > -.5)
+        {
+            lvl->gotKey(xLvl, yLvl);
+            ui->addKey();
+        }
+    }
 }
 
 void GLScene::manageProj()
@@ -222,9 +225,7 @@ void GLScene::manageProj()
                 projArray[j - 1] = projArray[j];
             currProjCount--;
         }
-        projArray[i]->drawProj();
-
-
+    projArray[i]->drawProj();
     }
 }
 
@@ -235,51 +236,54 @@ case 'w':
     cout << "Going West\n";
                 ply->setxPos(6.8);
                 plx->xLevel--;
-                ply->checkDoor = '0';
                 xLvl--;
-                clearEnemies();
-                generateEnemies();
                 break;
 case 'e':
     cout << "Going East\n";
                 ply->setxPos(-6.8);
                 plx->xLevel++;
-                ply->checkDoor = '0';
                 xLvl++;
-                clearEnemies();
-                generateEnemies();
                 break;
 case 'n':
     cout << "Going North\n";
                 ply->setyPos(-2.7);
                 plx->yLevel++;
-                ply->checkDoor = '0';
                 yLvl++;
-                clearEnemies();
-                generateEnemies();
                 break;
 case 's':
     cout << "Going South\n";
                 ply->setyPos(2.7);
                 plx->yLevel--;
-                ply->checkDoor = '0';
                 yLvl--;
-                clearEnemies();
-                generateEnemies();
                 break;
     }
+    ply->checkDoor = '0';
+    clearEnemies();
+    generateEnemies();
 }
 
 void GLScene::generateEnemies()
 {
-    //e191Array = new Enemy191T[lvl->getMaxE(xLvl, yLvl)];
-    for (int i = 0; i < lvl->getMaxE(xLvl, yLvl); i++)
+    if (lvl->roomHasBoss(xLvl, yLvl))
     {
-        e191Array[i] = new Enemy191T;
-        //e191Array = new Enemy191T[];
+        boss[0] = new Boss();
         currEnemyCount++;
-        e191Array[i]->objectInit();
-        //e191Array[i].objectInit();
+        boss[0]->bossInit(-3, 'e');
+
+        boss[1] = new Boss();
+        currEnemyCount++;
+        boss[1]->bossInit(3, 'w');
+    }
+    else
+    {
+        for (int i = 0; i < lvl->getMaxE(xLvl, yLvl); i++)
+        {
+            e191Array[i] = new Enemy191T;
+            //e191Array = new Enemy191T[];
+            currEnemyCount++;
+            e191Array[i]->objectInit();
+            //e191Array[i].objectInit();
+        }
     }
 }
 
@@ -290,13 +294,12 @@ void GLScene::clearEnemies()
         delete e191Array[i];
         //delete e191Array[i];
     }
-    /*
-    if (e191Array != NULL)
+    for (int i = 0; i < currProjCount; i++)
     {
-    delete []e191Array;*/
+        delete projArray[i];
+    }
+    currProjCount = 0;
     currEnemyCount = 0;
-    //e191Array = NULL;
-
 }
 
 GLvoid GLScene::resizeGLScene(GLsizei width, GLsizei height)
