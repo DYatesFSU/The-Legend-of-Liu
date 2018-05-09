@@ -2,6 +2,7 @@
 #include <timer.h>
 #include <textureLoader.h>
 #include <iostream>
+#include <Levels.h>
 
 using namespace std;
 
@@ -36,6 +37,7 @@ player::player()
 
     objectTexture = new textureLoader[1]();
     objectTimer = new timer();
+    checkDoor = '0';
 }
 
 player::~player()
@@ -71,8 +73,20 @@ void player::playerInit()
     runText[9].bindTexture("images/player/player9.png");
 
     objectTexture[0].bindTexture("images/playerSprites00.png");
+
+    playerKeys = 0;
     //playerSprites00.png
 
+}
+
+int player::getKeys()
+{
+    return playerKeys;
+}
+
+void player::addKey()
+{
+    playerKeys++;
 }
 
 void player::actions(int action)
@@ -82,8 +96,41 @@ void player::actions(int action)
     if (action >= 1)
         {
             moveObject();
-            setxPos(getxVel());
-            setyPos(getyVel());
+
+            if (getxVel() + getxPos() < -3.9)
+             {
+                 if (getyVel() + getyPos() > -.1 && getyVel() + getyPos() < .1)
+                    checkDoor = 'w';
+             }
+            else if (getxVel() + getxPos() > 2.9)
+            {
+                if (getyVel() + getyPos() > -.1 && getyVel() + getyPos() < .1)
+                {
+                    checkDoor = 'e';
+                }
+
+            }
+            else
+            {
+
+                setxPos(getxVel());
+            }
+
+            if (getyVel() + getyPos() < -1.9)
+             {
+                 if (getxVel() + getxPos() > -.2 && getxVel() + getxPos() < .2)
+                    checkDoor = 's';
+             }
+            else if (getyVel() + getyPos() > .9)
+            {
+                if (getxVel() + getxPos() > -.2 && getxVel() + getxPos() < .2)
+                    checkDoor = 'n';
+            }
+            else
+            {
+                setyPos(getyVel());
+            }
+
         }
        glTranslated(getxPos(),getyPos(),-5.0);
 
@@ -152,6 +199,26 @@ float player::getyVel()
 bool player::checkMoving()
 {
     return (movingLeft || movingRight || movingUp || movingDown);
+}
+
+bool player::getFiring()
+{
+    return isFiring;
+}
+
+void player::setFiring(bool x)
+{
+    isFiring = x;
+}
+
+void player::setFiringDir(char x)
+{
+    firingDir = x;
+}
+
+char player::getFiringDir()
+{
+    return firingDir;
 }
 
 void player::calcSprite()

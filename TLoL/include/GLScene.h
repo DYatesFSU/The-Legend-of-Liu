@@ -20,9 +20,13 @@
 
 using namespace std;
 
+
 class Enemy191T;
 class player;
 class Wall;
+
+//class Enemy191T;
+
 
 class GLScene
 {
@@ -35,14 +39,22 @@ class GLScene
 
         int windMsg(HWND,UINT, WPARAM,LPARAM);
 
-        bool boxCollision (cartesian2d objectLoc0, cart2dDim objectDim0, cartesian2d objectLoc1, cart2dDim objectDim1);
+        void transition(char);
+
+        void clearEnemies();
+
+        void generateEnemies();
 
         WPARAM wParam;
         float screenHeight;
         float screenWidth;
+
+        void manageProj();
     protected:
 
     private:
+        //Enemy191T *e191Array;
+        bool boxCollision (cartesian2d objectLoc0, cart2dDim objectDim0, cartesian2d objectLoc1, cart2dDim objectDim1);
 };
 
 #endif // GLSCENE_H

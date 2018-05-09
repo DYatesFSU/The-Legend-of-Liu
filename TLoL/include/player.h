@@ -94,8 +94,6 @@ class player:Model
         textureLoader *objectTexture;
         timer *objectTimer;
 
-        float xPos = 0, yPos = 0, xVel = 0, yVel = 0;
-
         std::vector <grid2d> classCurrentGridCoords;
         //This is to test if an object can move in a direction
         //I.E. if these coordinates turn out to be bad, then don't update the current grid coordinates
@@ -104,8 +102,23 @@ class player:Model
         //for box and graph collisions
         cart2dDim objectDimensions = {.99, .99};
 
+        char checkDoor;
+        int playerKeys;
+        void addKey();
+        int getKeys();
+
+        bool getFiring();
+        void setFiring(bool);
+        char getFiringDir();
+        void setFiringDir(char x);
 
 
+    protected:
+
+    private:
+        float xPos = 0, yPos = 0, xVel = 0, yVel = 0;
+        bool isFiring;
+        char firingDir;
 };
 
 #endif // PLAYER_H

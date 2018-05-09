@@ -3,6 +3,8 @@
 #include <timer.h>
 #include <iostream>
 #include <player.h>
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
@@ -17,11 +19,12 @@ Enemy191T::Enemy191T()
 
     runspeed  = 0.001;
 
-    Xpos = 0;
-    Ypos = 0;
+    Xpos = (rand() % 6) - 3;
+    Ypos = (rand() % 3) - 1.5;
     Zpos = -5.0;
-    srand(time(NULL));
-    destXPos = (double)rand();
+
+    destXPos = (rand() % 10) - 5;
+    destYPos = (rand() % 5) - 3;
 
     //destYPos = (double)rand() % 6.0 - 3.0);
 
@@ -85,6 +88,7 @@ void Enemy191T::objectInit()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     objectTimer->start();
+    waitTime = (rand() % 2000) + 2000;
 
     objectTexture[0].bindTexture("images/player/play.png");
     objectTexture[1].bindTexture("images/player/player0.png");
@@ -102,11 +106,13 @@ void Enemy191T::objectInit()
 void Enemy191T::updateEnemy(player* ply)
 {
     objectTimer->getTicks();
-    if (objectTimer->getTicks() >= 3000)
+
+    if (objectTimer->getTicks() >= waitTime)
     {
         objectTimer->reset();
         destXPos = ply->getxPos();
         destYPos = ply->getyPos();
+        waitTime = (rand() % 2000 + 2000);
     }
 
     if (destXPos - Xpos > 0)
