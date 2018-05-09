@@ -14,6 +14,7 @@
 #include <ctime>
 #include <Projectile.h>
 #include <timer.h>
+#include <UI.h>
 
 
 
@@ -26,6 +27,7 @@ ParticleEngine *particle = new ParticleEngine();
 //skyBox *sky = new skyBox;
 Levels *lvl = new Levels();
 key *floorKey = new key();
+UI *ui = new UI();
 
 int xLvl = 0;
 int yLvl = 2;
@@ -77,6 +79,7 @@ GLint GLScene::initGL()
     //sky->loadTextures();
     lvl->LevelInit();
     floorKey->keyInit();
+    ui->uiInit();
 
     return true;
 }
@@ -187,13 +190,13 @@ GLint GLScene::drawGLScene()
         if (ply->getxPos() < .5 && ply->getxPos() > -.5 && ply->getyPos() < .5 && ply->getyPos() > -.5)
         {
             lvl->gotKey(xLvl, yLvl);
-            ply->addKey();
+            ui->addKey();
         }
     }
 
     if (lvl->roomHasBoss(xLvl, yLvl))
     {
-        if (ply->getKeys() >= 3)
+        if (ui->getKeys() >= 3)
         {
             if (ply->getxPos() < .5 && ply->getxPos() > -.5 && ply->getyPos() < .5 && ply->getyPos() > -.5)
             {
@@ -201,6 +204,7 @@ GLint GLScene::drawGLScene()
             }
         }
     }
+    ui->drawUI();
 
 	glPopMatrix();
 

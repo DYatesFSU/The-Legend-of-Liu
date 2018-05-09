@@ -54,6 +54,7 @@
 		<Unit filename="include/Model.h" />
 		<Unit filename="include/ParticleEngine.h" />
 		<Unit filename="include/Projectile.h" />
+		<Unit filename="include/UI.h" />
 		<Unit filename="include/key.h" />
 		<Unit filename="include/parallax.h" />
 		<Unit filename="include/player.h" />
@@ -70,6 +71,7 @@
 		<Unit filename="src/Model.cpp" />
 		<Unit filename="src/ParticleEngine.cpp" />
 		<Unit filename="src/Projectile.cpp" />
+		<Unit filename="src/UI.cpp" />
 		<Unit filename="src/key.cpp" />
 		<Unit filename="src/parallax.cpp" />
 		<Unit filename="src/player.cpp" />
