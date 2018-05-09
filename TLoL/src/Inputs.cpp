@@ -181,7 +181,6 @@ void Inputs::keyUp(player* ply)
 }
 void Inputs::keyPressed(Menu* menu)
 {
-
      switch(wParam)
     {
     case 0x20:                       // Space to move forward from landing page

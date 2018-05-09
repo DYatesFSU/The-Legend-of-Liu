@@ -135,29 +135,20 @@ GLint GLScene::drawGLScene()
             glScaled(3.33,3.33,1.0);
             men->DrawMenu(screenWidth,screenHeight);
             glPopMatrix();
-       // cout<<" Main Menu"<<endl;
-       // cout<<" Press N for New Game"<<endl;
+     //  cout<<" Main Menu"<<endl;
+        //cout<<" Press N for New Game"<<endl;
         //cout<<" Press O for Option"<<endl;
         //cout<< "Press H for How to Play"<<endl;
         //cout<< "Press ESC to quit"<<endl;
     }
-    else if (men->state == 2)  
+    else if (men->state == 2)
     {
     glPushMatrix();
-      glScaled(3.33,3.33,1.0);
-         plx->drawSquare(screenWidth,screenHeight);
-     glPopMatrix();
-       //plx->scroll(true,"right",0.005);
-/*
-    glPushMatrix();
-        glDisable(GL_LIGHTING);
-        glScaled(200,200,200);
-        sky->drawBox();
-        glEnable(GL_LIGHTING);
+    glScaled(3.33,3.33,1.0);
+    plx->drawSquare(screenWidth,screenHeight);
     glPopMatrix();
-*/
+
     glPushMatrix();
-    //glTranslated(0,0,modelTeapot->Zoom);
     if (ply->checkMoving())
         ply->actions(1);
     else
@@ -183,6 +174,15 @@ GLint GLScene::drawGLScene()
             transition('n');
         }
          else   ply->checkDoor = '0';
+    }
+    checkProj();
+    manageProj();
+    manageEnemies();
+    manageKeys();
+
+    ui->drawUI();
+
+	glPopMatrix();
     }
       else if(men->state == 3)
     {
@@ -211,16 +211,6 @@ GLint GLScene::drawGLScene()
             glPopMatrix();
 
     }
-
-    checkProj();
-    manageProj();
-    manageEnemies();
-    manageKeys();
-
-    ui->drawUI();
-
-	glPopMatrix();
-
 }
 
 void GLScene::manageEnemies()
@@ -387,8 +377,8 @@ void GLScene::clearEnemies()
     currProjCount = 0;
     currEnemyCount = 0;
 }
-  
-  
+
+
 GLvoid GLScene::resizeGLScene(GLsizei width, GLsizei height)
 {
    GLfloat aspectRatio = (GLfloat)width/(GLfloat)height;
@@ -411,6 +401,7 @@ int GLScene::windMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	        //KbMs->keyPressed(modelTeapot);
 	        //KbMs->keyEnv(plx, 0.005);
 	        KbMs->keyPressed(ply);
+	        KbMs->keyPressed(men);
 	        //KbMs->keyPressed(sky);
 
 	    break;
