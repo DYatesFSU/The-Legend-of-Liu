@@ -194,6 +194,7 @@ GLint GLScene::drawGLScene()
     cleanEnemyList();
     cleanProjectileList();
     cleanPlayerList();
+    cleanBossList();
 
 }
 
@@ -225,9 +226,9 @@ void GLScene::checkProj(int inpTeam)
 
 void GLScene::manageBoss()
 {
-    if (currEnemyCount)
+    if (currBossCount)
     {
-        for (int i = 0; i < currEnemyCount; i++)
+        for (int i = 0; i < currBossCount; i++)
         {
             boss[i]->drawObject();
             if (boss[i]->getShooting())
@@ -319,11 +320,11 @@ void GLScene::generateEnemies()
     if (lvl->roomHasBoss(xLvl, yLvl))
     {
         boss[0] = new Boss();
-        currEnemyCount++;
+        currBossCount++;
         boss[0]->bossInit(-3, 'e');
 
         boss[1] = new Boss();
-        currEnemyCount++;
+        currBossCount++;
         boss[1]->bossInit(3, 'w');
     }
     else
@@ -575,228 +576,6 @@ void GLScene::collisionListPlayerToBoss()
     }
 }
 
-
-bool GLScene::collisionEnemyToEnemy(uintptr_t inpID1, uintptr_t inpID2)
-{
-    cartesian2d objPos1;
-    cart2dDim objDim1;
-    cartesian2d objPos2;
-    cart2dDim objDim2;
-
-    Enemy191T *obj1 = (Enemy191T *) inpID1;
-    Enemy191T *obj2 = (Enemy191T *) inpID2;
-
-    objPos1 = obj1->getDestPosition();
-    objDim1 = obj1->getObjectDimensions();
-    objPos2 = obj2->getPosition();
-    objDim2 = obj2->getObjectDimensions();
-
-    /*
-    objPos1 = e191Array[inpID1]->getDestPosition();
-    objDim1 = e191Array[inpID1]->getObjectDimensions();
-    objPos2 = e191Array[inpID2]->getPosition();
-    objDim2 = e191Array[inpID2]->getObjectDimensions();
-    */
-    return boxCollision(objPos1, objDim1, objPos2, objDim2);
-}
-
-bool GLScene::collisionEnemyToProjectile(uintptr_t inpID1, uintptr_t inpID2)
-{
-    cartesian2d objPos1;
-    cart2dDim objDim1;
-    cartesian2d objPos2;
-    cart2dDim objDim2;
-
-    Enemy191T *obj1 = (Enemy191T *) inpID1;
-    Projectile *obj2 = (Projectile *) inpID2;
-
-    objPos1 = obj1->getPosition();
-    objDim1 = obj1->getObjectDimensions();
-    objPos2 = obj2->getPosition();
-    objDim2 = obj2->getObjectDimensions();
-
-    /*
-    objPos1 = e191Array[inpID1]->getPosition();
-    objDim1 = e191Array[inpID1]->getObjectDimensions();
-    objPos2 = projArray[inpID2]->getPosition();
-    objDim2 = projArray[inpID2]->getObjectDimensions();
-    */
-    return boxCollision(objPos1, objDim1, objPos2, objDim2);
-}
-
-bool GLScene::collisionEnemyToPlayer(uintptr_t inpID1, uintptr_t inpID2)
-{
-    cartesian2d objPos1;
-    cart2dDim objDim1;
-    cartesian2d objPos2;
-    cart2dDim objDim2;
-
-    Enemy191T *obj1 = (Enemy191T *) inpID1;
-    player *obj2 = (player *) inpID2;
-
-    objPos1 = obj1->getPosition();
-    objDim1 = obj1->getObjectDimensions();
-    objPos2 = obj2->getPosition();
-    objDim2 = obj2->getObjectDimensions();
-
-    /*
-    objPos1 = e191Array[inpID1]->getPosition();
-    objDim1 = e191Array[inpID1]->getObjectDimensions();
-    objPos2 = ply->getPosition();
-    objDim2 = ply->getObjectDimensions();
-    */
-
-    return boxCollision(objPos1, objDim1, objPos2, objDim2);
-}
-
-bool GLScene::collisionEnemyToWall(uintptr_t inpID1, uintptr_t inpID2)
-{
-    cartesian2d objPos1;
-    cart2dDim objDim1;
-    cartesian2d objPos2;
-    cart2dDim objDim2;
-
-    Enemy191T *obj1 = (Enemy191T *) inpID1;
-    Wall *obj2 = (Wall *) inpID2;
-
-    objPos1 = obj1->getDestPosition();
-    objDim1 = obj1->getObjectDimensions();
-    objPos2 = obj2->getPosition();
-    objDim2 = obj2->getObjectDimensions();
-
-    /*
-    objPos1 = e191Array[inpID1]->getDestPosition();
-    objDim1 = e191Array[inpID1]->getObjectDimensions();
-    objPos2 = wallArray[inpID2]->getPosition();
-    objDim2 = wallArray[inpID2]->getObjectDimensions();
-    */
-
-    return boxCollision(objPos1, objDim1, objPos2, objDim2);
-}
-
-bool GLScene::collisionPlayerToWall(uintptr_t inpID1, uintptr_t inpID2)
-{
-    cartesian2d objPos1;
-    cart2dDim objDim1;
-    cartesian2d objPos2;
-    cart2dDim objDim2;
-
-    player *obj1 = (player *) inpID1;
-    Wall *obj2 = (Wall *) inpID2;
-
-    objPos1 = obj1->getDestPosition();
-    objDim1 = obj1->getObjectDimensions();
-    objPos2 = obj2->getPosition();
-    objDim2 = obj2->getObjectDimensions();
-
-    /*
-    objPos1 = ply->getDestPosition();
-    objDim1 = ply->getObjectDimensions();
-    objPos2 = wallArray[inpID2]->getPosition();
-    objDim2 = wallArray[inpID2]->getObjectDimensions();
-    */
-
-    return boxCollision(objPos1, objDim1, objPos2, objDim2);
-}
-
-bool GLScene::collisionPlayerToProjectile(uintptr_t inpID1, uintptr_t inpID2)
-{
-    cartesian2d objPos1;
-    cart2dDim objDim1;
-    cartesian2d objPos2;
-    cart2dDim objDim2;
-
-    player *obj1 = (player *) inpID1;
-    Projectile *obj2 = (Projectile *) inpID2;
-
-    objPos1 = obj1->getPosition();
-    objDim1 = obj1->getObjectDimensions();
-    objPos2 = obj2->getPosition();
-    objDim2 = obj2->getObjectDimensions();
-
-    return boxCollision(objPos1, objDim1, objPos2, objDim2);
-}
-
-bool GLScene::collisionProjectileToProjectile(uintptr_t inpID1, uintptr_t inpID2)
-{
-    cartesian2d objPos1;
-    cart2dDim objDim1;
-    cartesian2d objPos2;
-    cart2dDim objDim2;
-
-    Projectile *obj1 = (Projectile *) inpID1;
-    Projectile *obj2 = (Projectile *) inpID2;
-
-    objPos1 = obj1->getPosition();
-    objDim1 = obj1->getObjectDimensions();
-    objPos2 = obj2->getPosition();
-    objDim2 = obj2->getObjectDimensions();
-
-    return boxCollision(objPos1, objDim1, objPos2, objDim2);
-}
-
-
-bool GLScene::collisionProjectileToWall(uintptr_t inpID1, uintptr_t inpID2)
-{
-    cartesian2d objPos1;
-    cart2dDim objDim1;
-    cartesian2d objPos2;
-    cart2dDim objDim2;
-
-    Projectile *obj1 = (Projectile *) inpID1;
-    Wall *obj2 = (Wall *) inpID2;
-
-    objPos1 = obj1->getPosition();
-    objDim1 = obj1->getObjectDimensions();
-    objPos2 = obj2->getPosition();
-    objDim2 = obj2->getObjectDimensions();
-
-    /*
-    objPos1 = projArray[inpID1]->getPosition();
-    objDim1 = projArray[inpID1]->getObjectDimensions();
-    objPos2 = wallArray[inpID2]->getPosition();
-    objDim2 = wallArray[inpID2]->getObjectDimensions();
-    */
-
-    return boxCollision(objPos1, objDim1, objPos2, objDim2);
-}
-
-bool GLScene::collisionProjectileToBoss(uintptr_t inpID1, uintptr_t inpID2)
-{
-    cartesian2d objPos1;
-    cart2dDim objDim1;
-    cartesian2d objPos2;
-    cart2dDim objDim2;
-
-    Projectile *obj1 = (Projectile *) inpID1;
-    Boss *obj2 = (Boss *) inpID2;
-
-    objPos1 = obj1->getPosition();
-    objDim1 = obj1->getObjectDimensions();
-    objPos2 = obj2->getPosition();
-    objDim2 = obj2->getObjectDimensions();
-
-    return boxCollision(objPos1, objDim1, objPos2, objDim2);
-}
-
-bool GLScene::collisionPlayerToBoss(uintptr_t inpID1, uintptr_t inpID2)
-{
-    cartesian2d objPos1;
-    cart2dDim objDim1;
-    cartesian2d objPos2;
-    cart2dDim objDim2;
-
-    player *obj1 = (player *) inpID1;
-    Boss *obj2 = (Boss *) inpID2;
-
-    objPos1 = obj1->getPosition();
-    objDim1 = obj1->getObjectDimensions();
-    objPos2 = obj2->getPosition();
-    objDim2 = obj2->getObjectDimensions();
-
-    return boxCollision(objPos1, objDim1, objPos2, objDim2);
-}
-
 template <class T, class U>
 bool GLScene::collisionObjectToObject(T* inpObj1, U* inpObj2)
 {
@@ -959,16 +738,69 @@ void GLScene::generateMazeRandom(grid2dDim inpDim, grid2d inpStartPos, vector<gr
     vector <grid2d> tempLocs;
     grid2d tempLoc;
     //tempGridMaze = new Map();
+    tempGridMaze.initMap(inpDim, TYPEVARIETY);
     for (int i = 0; i < inpDim.width; i++)
     {
+        tempLocs.clear();
         tempLoc = {i, 0};
         tempLocs.push_back(tempLoc);
 
         //if not end position or start positions
-        tempGridMaze.addGenericElement(0, WALLTYPE, tempLocs);
-
-        tempLocs.clear();
+        if (searchVector(inpEndPoss, tempLoc) == -1 && !(tempLoc == inpStartPos) )
+            tempGridMaze.addGenericElement(WALLTYPE, 0, tempLocs);
     }
+    tempLocs.clear();
+
+    for (int i = 0; i < inpDim.width; i++)
+    {
+        tempLocs.clear();
+        tempLoc = {i, inpDim.height - 1};
+        tempLocs.push_back(tempLoc);
+
+        //if not end position or start positions
+        if (searchVector(inpEndPoss, tempLoc) == -1 && !(tempLoc == inpStartPos) )
+            tempGridMaze.addGenericElement(WALLTYPE, 0, tempLocs);
+    }
+    tempLocs.clear();
+
+    for (int i = 1; i < inpDim.height - 1; i++)
+    {
+        tempLocs.clear();
+        tempLoc = {0, i};
+        tempLocs.push_back(tempLoc);
+
+        //if not end position or start positions
+        if (searchVector(inpEndPoss, tempLoc) == -1 && !(tempLoc == inpStartPos) )
+            tempGridMaze.addGenericElement(WALLTYPE, 0, tempLocs);
+    }
+    tempLocs.clear();
+
+    for (int i = 1; i < inpDim.height - 1; i++)
+    {
+        tempLocs.clear();
+        tempLoc = {inpDim.width - 1, i};
+        tempLocs.push_back(tempLoc);
+
+        //if not end position or start positions
+        if (searchVector(inpEndPoss, tempLoc) == -1 && !(tempLoc == inpStartPos) )
+            tempGridMaze.addGenericElement(WALLTYPE, 0, tempLocs);
+    }
+    tempLocs.clear();
+
+    /*
+    for (int i = 1; i < inpDim.height - 1; i++)
+    {
+        tempLocs.clear();
+        tempLoc = {inpDim.width - 1, i};
+        tempLocs.push_back(tempLoc);
+
+        //if not end position or start positions
+        if (searchVector(inpEndPoss, tempLoc) == -1 && tempLoc != inpStartPos )
+            tempGridMaze.addGenericElement(WALLTYPE, 0, tempLocs);
+    }
+    tempLocs.clear();
+    */
+
     //tempGridMaze.addGenericElement(0, WALLTYPE, tempLocs);
 }
 

@@ -76,18 +76,6 @@ class GLScene
         void collisionListProjectileToBoss();
         void collisionListPlayerToBoss();
 
-        bool collisionEnemyToEnemy(uintptr_t inpID1, uintptr_t inpID2);
-        bool collisionEnemyToProjectile(uintptr_t inpID1, uintptr_t inpID2);
-        bool collisionEnemyToPlayer(uintptr_t inpID1, uintptr_t inpID2);
-        bool collisionEnemyToWall(uintptr_t inpID1, uintptr_t inpID2);
-        bool collisionPlayerToWall(uintptr_t inpID1, uintptr_t inpID2);
-        bool collisionPlayerToProjectile(uintptr_t inpID1, uintptr_t inpID2);
-        bool collisionProjectileToWall(uintptr_t inpID1, uintptr_t inpID2);
-        bool collisionProjectileToProjectile(uintptr_t inpID1, uintptr_t inpID2);
-
-        bool collisionProjectileToBoss(uintptr_t inpID1, uintptr_t inpID2);
-        bool collisionPlayerToBoss(uintptr_t inpID1, uintptr_t inpID2);
-
         template <class T, class U>
         bool collisionObjectToObject(T *inpObj1, U *inpObj2);
 
