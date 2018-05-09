@@ -13,6 +13,7 @@ class Enemy191T
         Enemy191T();
         virtual ~Enemy191T();
         cartesian3d vertices[4];
+        int waitTime;
 
         double runspeed;
 
@@ -50,10 +51,31 @@ class Enemy191T
         timer *objectTimer;
 
         void updateEnemy(player* ply);
+        cartesian2d getPosition();
+        cartesian2d getDestPosition();
+        void setPosition(cartesian2d inpCoord);
+        void setDestPosition(cartesian2d inpCoord);
+        cart2dDim getObjectDimensions();
+
+        void getCurrGridPos(std::vector <grid2d> &retPos);
+        void setCurrGridPos(std::vector <grid2d> inpPos);
+        void getDestGridPos(std::vector <grid2d> &retPos);
+        void setDestGridPos(std::vector <grid2d> inpPos);
 
     protected:
 
     private:
+        double scaleSizeX;
+        double scaleSizeY;
+        double scaleSizeZ;
+
+        std::vector <grid2d> classCurrentGridCoords;
+        //This is to test if an object can move in a direction
+        //I.E. if these coordinates turn out to be bad, then don't update the current grid coordinates
+        std::vector <grid2d> classTestGridCoords;
+
+        //for box and graph collisions
+        cart2dDim objectDimensions = {.99, .99};
 
 };
 
