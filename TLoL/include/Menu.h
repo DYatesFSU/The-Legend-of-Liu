@@ -1,6 +1,8 @@
 #ifndef MENU_H
 #define MENU_H
 
+#include <textureLoader.h>
+
 
 class Menu
 {
@@ -8,7 +10,9 @@ class Menu
         Menu();
         virtual ~Menu();
 
-        void drawBackground();
+        void DrawMenu(float,float);
+        void MenuInit(char *);
+
 
         int state;
 

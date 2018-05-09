@@ -171,22 +171,25 @@ void Inputs::keyPressed(Menu* menu)
     case 0x4F:                // O key
 
          if (menu->state==1)
-    {cout<<"Key pressed"<<endl;
+    {
          menu->state=3;        // set state to options
     }
         break;
+
     case 0x48:               // H key
         if (menu->state==1)
         {
             menu->state=4;     // How to play state
         }
         break;
+
     case 0x50:               // P key
         if (menu->state==2)
         {
             menu->state=5;     // Set state to pause menu
         }
         break;
+
     case 0x42:                        // B key
         if (menu->state==4)          // if How to state state
         {
@@ -201,6 +204,7 @@ void Inputs::keyPressed(Menu* menu)
             menu->state =2;     // set back to game state
         }
         break;
+
     case 0x51:                    // Q key
         if (menu->state==2)      // if game state
         {
@@ -210,7 +214,14 @@ void Inputs::keyPressed(Menu* menu)
         {
         menu->state =1;      // set it to main menu
         }
+        break;
 
+    case 0x43:                  // C credits
+        if (menu->state ==1)      // if it's in main menu
+        {
+            menu->state =0;     // set back to land page for credits
+        }
+        break;
     }
 }
 

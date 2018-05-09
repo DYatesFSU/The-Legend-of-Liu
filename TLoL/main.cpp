@@ -26,7 +26,7 @@ HINSTANCE	hInstance;		// Holds The Instance Of The Application
 
 bool	keys[256];			// Array Used For The Keyboard Routine
 bool	active=TRUE;		// Window Active Flag Set To TRUE By Default
-bool	fullscreen=FALSE;	// Fullscreen Flag Set To Fullscreen Mode By Default
+bool	fullscreen=TRUE;	// Fullscreen Flag Set To Fullscreen Mode By Default
 
 LRESULT	CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);	// Declaration For WndProc
 
@@ -347,8 +347,9 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
 		}
 		else										// If There Are No Messages
 		{
+		    Scene->drawGLScene();
 			// Draw The Scene.  Watch For ESC Key And Quit Messages From DrawGLScene()
-			if ((active && !Scene->drawGLScene()) || keys[VK_ESCAPE])	// Active?  Was There A Quit Received?
+			if (keys[VK_ESCAPE])	// Active?  Was There A Quit Received?
 			{
 				done=TRUE;							// ESC or DrawGLScene Signalled A Quit
 			}

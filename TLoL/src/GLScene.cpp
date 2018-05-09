@@ -67,8 +67,9 @@ GLint GLScene::initGL()
     //sky->loadTextures();
     lvl->LevelInit();
 
-    F->initFonts("images/font.png");
-    F->buildFont("Harkaran");
+
+   // F->initFonts("images/font.png");
+   // F->buildFont("Harkaran");
     return true;
 }
 
@@ -81,28 +82,32 @@ GLint GLScene::drawGLScene()
 
 	if(men->state==0)                           //Landing page at start of game
     {
-            cout<<"Landing Page"<<endl;
+         men->MenuInit("images/land.jpg"); //landing page
+           // cout<<"Landing Page"<<endl;
 
-        for(int i=0; i<F->cCnt;i++)
-            {
-                glPushMatrix();
-                glTranslated(F->xpos+i/14.0,F->ypos,F->zoom);
-                F->drawFont(i);
-                glPopMatrix();
-            }
+            glPushMatrix();
+            glScaled(3.33,3.33,1.0);
+            men->DrawMenu(screenWidth,screenHeight);
+            glPopMatrix();
+
 
     }
     else if (men->state == 1)                   // Menu Page
     {
-        cout<<" Main Menu"<<endl;
-        cout<<" Press N for New Game"<<endl;
-        cout<<" Press O for Option"<<endl;
-        cout<< "Press H for How to Play"<<endl;
-        cout<< "Press ESC to quit"<<endl;
+        men->MenuInit("images/mainmenu.jpg"); //landing page
+
+             glPushMatrix();
+            glScaled(3.33,3.33,1.0);
+            men->DrawMenu(screenWidth,screenHeight);
+            glPopMatrix();
+       // cout<<" Main Menu"<<endl;
+       // cout<<" Press N for New Game"<<endl;
+        //cout<<" Press O for Option"<<endl;
+        //cout<< "Press H for How to Play"<<endl;
+        //cout<< "Press ESC to quit"<<endl;
     }
     else if (men->state == 2)                   //
     {
-        cout<<" Game State"<<endl;
             glPushMatrix();
             glScaled(3.33,3.33,1.0);
             plx->drawSquare(screenWidth,screenHeight);
@@ -194,12 +199,26 @@ GLint GLScene::drawGLScene()
     }
     else if(men->state == 4)
     {
-        cout<<"How to Play"<<endl;
+       // cout<<"How to Play"<<endl;
+         men->MenuInit("images/how.jpg");
+
+            glPushMatrix();
+            glScaled(3.33,3.33,1.0);
+            men->DrawMenu(screenWidth,screenHeight);
+            glPopMatrix();
+
     }
     else if (men->state== 5)
     {
 
-        cout<<"Pause Menu"<<endl;
+        //cout<<"Pause Menu"<<endl;
+         men->MenuInit("images/paused.jpg");
+
+            glPushMatrix();
+            glScaled(3.33,3.33,1.0);
+            men->DrawMenu(screenWidth,screenHeight);
+            glPopMatrix();
+
     }
 }
 
