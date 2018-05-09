@@ -1,7 +1,7 @@
 #ifndef PARTICLEENGINE_H
 #define PARTICLEENGINE_H
 
-#define MAX_DROPS 500000
+#define MAX_DROPS 5000
 #define PI 3.14159265359
 #define GRAVITY -0.005
 #include <math.h>

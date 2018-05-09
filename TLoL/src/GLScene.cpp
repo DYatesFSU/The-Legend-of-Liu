@@ -13,8 +13,8 @@
 Inputs *KbMs = new Inputs();
 parallax *plx = new parallax();
 player *ply = new player();
-LoadShader *shader = new LoadShader();
-ParticleEngine *particle = new ParticleEngine();
+//LoadShader *shader = new LoadShader();
+//ParticleEngine *particle = new ParticleEngine();
 //skyBox *sky = new skyBox;
 
 Enemy191T *enemy191t = new Enemy191T();
