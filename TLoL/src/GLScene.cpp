@@ -600,7 +600,7 @@ void GLScene::generateMazeRandom(grid2dDim inpDim, grid2d inpStartPos, vector<gr
     //tempGridMaze = new Map();
     for (int i = 0; i < inpDim.width; i++)
     {
-        tempLoc = {i, 0}
+        tempLoc = {i, 0};
         tempLocs.push_back(tempLoc);
 
         //if not end position or start positions

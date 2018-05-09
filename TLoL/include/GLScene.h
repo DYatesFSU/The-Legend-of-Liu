@@ -85,6 +85,9 @@ class GLScene
 
         template <class T>
         uintptr_t pointerToInt(T* inpPtr);
+
+        template <class T>
+        T* pointerToInt(int inpInt);
 };
 
 #endif // GLSCENE_H
