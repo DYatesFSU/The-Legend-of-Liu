@@ -16,6 +16,7 @@
 #include <timer.h>
 
 #include <Wall.h>
+#include <Map.h>
 
 
 
@@ -43,6 +44,8 @@ timer *projTimer = new timer();
 
 Wall *wallArray[100];
 int currWallCount = 0;
+
+Map *gridMap;
 
 GLScene::GLScene()
 {
@@ -404,7 +407,7 @@ bool GLScene::collisionEnemyToEnemy(int inpID1, int inpID2)
 
     objPos1 = e191Array[inpID1]->getDestPosition();
     objDim1 = e191Array[inpID1]->getObjectDimensions();
-    objPos2 = e191Array[inpID2]->getDestPosition();
+    objPos2 = e191Array[inpID2]->getPosition();
     objDim2 = e191Array[inpID2]->getObjectDimensions();
     return boxCollision(objPos1, objDim1, objPos2, objDim2);
 }
@@ -447,7 +450,7 @@ bool GLScene::collisionEnemyToWall(int inpID1, int inpID2)
 
     objPos1 = e191Array[inpID1]->getDestPosition();
     objDim1 = e191Array[inpID1]->getObjectDimensions();
-    objPos2 = wallArray[inpID2]->getDestPosition();
+    objPos2 = wallArray[inpID2]->getPosition();
     objDim2 = wallArray[inpID2]->getObjectDimensions();
     return boxCollision(objPos1, objDim1, objPos2, objDim2);
 }
@@ -461,7 +464,7 @@ bool GLScene::collisionPlayerToWall(int inpID1, int inpID2)
 
     objPos1 = ply->getDestPosition();
     objDim1 = ply->getObjectDimensions();
-    objPos2 = wallArray[inpID2]->getDestPosition();
+    objPos2 = wallArray[inpID2]->getPosition();
     objDim2 = wallArray[inpID2]->getObjectDimensions();
     return boxCollision(objPos1, objDim1, objPos2, objDim2);
 }
