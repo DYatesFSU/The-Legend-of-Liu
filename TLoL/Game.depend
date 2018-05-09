@@ -203,7 +203,7 @@
 	<iostream>
 	<windows.h>
 
-1525905518 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\glscene.h
+1525909242 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\glscene.h
 	<windows.h>
 	<string.h>
 	<GL/glew.h>
@@ -213,6 +213,7 @@
 	<gl/glu.h>
 	<iostream>
 	<GlobalDataStructures.h>
+	<MediaControlsInterface.h>
 	<stdint.h>
 
 1525401405 c:\users\seanr\documents\repos\the-legend-of-liu\common\inc\gl\glew.h
@@ -393,7 +394,7 @@
 	<player.h>
 	<GlobalDataStructures.h>
 
-1525905518 source:c:\users\seanr\documents\repos\the-legend-of-liu\tlol\src\glscene.cpp
+1525909295 source:c:\users\seanr\documents\repos\the-legend-of-liu\tlol\src\glscene.cpp
 	"GLScene.h"
 	<GLLight.h>
 	<Model.h>
@@ -414,12 +415,112 @@
 	<Boss.h>
 	<Wall.h>
 	<Map.h>
+	<AudioComponent.h>
 
-1525906775 source:c:\users\seanr\documents\repos\the-legend-of-liu\tlol\src\audiocomponent.cpp
+1525910769 source:c:\users\seanr\documents\repos\the-legend-of-liu\tlol\src\audiocomponent.cpp
 	"AudioComponent.h"
+	<iostream>
 
-1525906819 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\audiocomponent.h
+1525907635 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\audiocomponent.h
 	"MediaControlsInterface.h"
+	<irrklang.h>
 
 1525906053 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\mediacontrolsinterface.h
+
+1398523410 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\irrklang\irrklang.h
+	"ik_irrKlangTypes.h"
+	"ik_vec3d.h"
+	"ik_IRefCounted.h"
+	"ik_IVirtualRefCounted.h"
+	"ik_ESoundOutputDrivers.h"
+	"ik_ESoundEngineOptions.h"
+	"ik_EStreamModes.h"
+	"ik_SAudioStreamFormat.h"
+	"ik_ISoundEngine.h"
+	"ik_ISoundSource.h"
+	"ik_ISound.h"
+	"ik_IAudioStream.h"
+	"ik_IAudioStreamLoader.h"
+	"ik_ISoundEffectControl.h"
+	"ik_ISoundStopEventReceiver.h"
+	"ik_IFileFactory.h"
+	"ik_IFileReader.h"
+	"ik_ISoundDeviceList.h"
+	"ik_IAudioRecorder.h"
+	"ik_ISoundMixedOutputReceiver.h"
+
+1394127854 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\irrklang\ik_irrklangtypes.h
+	<wchar.h>
+
+1399048338 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\irrklang\ik_vec3d.h
+	<math.h>
+	"ik_irrKlangTypes.h"
+
+1394117694 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\irrklang\ik_irefcounted.h
+	"ik_irrKlangTypes.h"
+
+1394117694 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\irrklang\ik_ivirtualrefcounted.h
+	"ik_irrKlangTypes.h"
+
+1394117700 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\irrklang\ik_esoundoutputdrivers.h
+
+1394117694 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\irrklang\ik_esoundengineoptions.h
+
+1394117694 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\irrklang\ik_estreammodes.h
+
+1394117694 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\irrklang\ik_saudiostreamformat.h
+	"ik_IRefCounted.h"
+
+1394125264 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\irrklang\ik_isoundengine.h
+	"ik_IRefCounted.h"
+	"ik_vec3d.h"
+	"ik_ISoundSource.h"
+	"ik_ISound.h"
+	"ik_EStreamModes.h"
+	"ik_IFileFactory.h"
+	"ik_ISoundMixedOutputReceiver.h"
+
+1394117694 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\irrklang\ik_isoundsource.h
+	"ik_IVirtualRefCounted.h"
+	"ik_vec3d.h"
+	"ik_EStreamModes.h"
+	"ik_SAudioStreamFormat.h"
+
+1394117694 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\irrklang\ik_isound.h
+	"ik_IVirtualRefCounted.h"
+	"ik_ISoundEffectControl.h"
+	"ik_vec3d.h"
+
+1394117694 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\irrklang\ik_isoundeffectcontrol.h
+	"ik_IVirtualRefCounted.h"
+	"ik_vec3d.h"
+
+1394125252 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\irrklang\ik_ifilefactory.h
+	"ik_IRefCounted.h"
+
+1394117694 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\irrklang\ik_isoundmixedoutputreceiver.h
+	"ik_IRefCounted.h"
+	"ik_SAudioStreamFormat.h"
+
+1394117694 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\irrklang\ik_iaudiostream.h
+	"ik_IRefCounted.h"
+	"ik_SAudioStreamFormat.h"
+
+1394117694 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\irrklang\ik_iaudiostreamloader.h
+	"ik_IRefCounted.h"
+	"ik_IFileReader.h"
+
+1394117694 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\irrklang\ik_ifilereader.h
+	"ik_IRefCounted.h"
+
+1394117694 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\irrklang\ik_isoundstopeventreceiver.h
+	"ik_IRefCounted.h"
+	"ik_SAudioStreamFormat.h"
+
+1394117694 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\irrklang\ik_isounddevicelist.h
+	"ik_IRefCounted.h"
+
+1394125248 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\irrklang\ik_iaudiorecorder.h
+	"ik_IRefCounted.h"
+	"ik_ISoundSource.h"
 

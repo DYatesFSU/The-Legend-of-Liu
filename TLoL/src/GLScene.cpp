@@ -19,6 +19,7 @@
 
 #include <Wall.h>
 #include <Map.h>
+#include <AudioComponent.h>
 
 
 const int ENEMYTYPE = 1;
@@ -68,6 +69,7 @@ GLScene::GLScene()
     screenHeight= GetSystemMetrics(SM_CYSCREEN);
     screenWidth = GetSystemMetrics(SM_CXSCREEN);
     srand(time(0));
+    audio_ = new AudioComponent();
     //e191Array = new Enemy191T[10];
 //    e191Array = NULL;
 }
@@ -79,6 +81,7 @@ GLScene::~GLScene()
 
 GLint GLScene::initGL()
 {
+    audio_->play();
     projTimer->start();
     glShadeModel(GL_SMOOTH);
     glClearColor(0.0f,0.0f,0.0f,0.0f);

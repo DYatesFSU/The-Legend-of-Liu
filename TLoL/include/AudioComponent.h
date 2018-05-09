@@ -1,6 +1,7 @@
 #ifndef AUDIOCOMPONENT_H
 #define AUDIOCOMPONENT_H
 #include "MediaControlsInterface.h"
+#include <irrklang.h>
 
 class AudioComponent : public MediaControlsInterface
 {
@@ -15,6 +16,7 @@ class AudioComponent : public MediaControlsInterface
     protected:
 
     private:
+        irrklang::ISoundEngine* engine_;
 };
 
 #endif // AUDIOCOMPONENT_H

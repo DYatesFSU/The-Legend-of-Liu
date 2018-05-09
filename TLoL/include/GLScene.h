@@ -17,6 +17,7 @@
 #include <iostream>
 
 #include <GlobalDataStructures.h>
+#include <MediaControlsInterface.h>
 //#include <cstdint.h>
 extern "C" {
 #include <stdint.h>
@@ -66,6 +67,7 @@ class GLScene
     protected:
 
     private:
+        MediaControlsInterface* audio_;
         //Enemy191T *e191Array;
         bool boxCollision (cartesian2d objectLoc0, cart2dDim objectDim0, cartesian2d objectLoc1, cart2dDim objectDim1);
         void collisionListPlayerToEnemy();
