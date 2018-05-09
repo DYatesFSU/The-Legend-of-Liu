@@ -3,6 +3,8 @@
 #include <timer.h>
 #include <iostream>
 #include <player.h>
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
@@ -17,9 +19,15 @@ Enemy191T::Enemy191T()
 
     runspeed  = 0.001;
 
-    Xpos = 0;
-    Ypos = 0;
+    Xpos = (rand() % 6) - 3;
+    Ypos = (rand() % 3) - 1.5;
     Zpos = -5.0;
+
+
+    destXPos = (rand() % 10) - 5;
+    destYPos = (rand() % 5) - 3;
+
+
 
     xVel = 0;
     yVel = 0;
@@ -80,6 +88,7 @@ void Enemy191T::objectInit()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     objectTimer->start();
+    waitTime = (rand() % 2000) + 2000;
 
     objectTexture[0].bindTexture("images/player/play.png");
     objectTexture[1].bindTexture("images/player/player0.png");
@@ -96,7 +105,19 @@ void Enemy191T::objectInit()
 
 void Enemy191T::updateEnemy(player* ply)
 {
-    if (ply->getxPos() - Xpos > 0)
+
+    objectTimer->getTicks();
+
+    if (objectTimer->getTicks() >= waitTime)
+    {
+        objectTimer->reset();
+        destXPos = ply->getxPos();
+        destYPos = ply->getyPos();
+        waitTime = (rand() % 2000 + 2000);
+    }
+
+    if (destXPos - Xpos > 0)
+
         setxVel(runspeed);
     else if (ply->getxPos() - Xpos < - 0)
         setxVel(-runspeed);
@@ -192,4 +213,50 @@ void Enemy191T::setyVel(double y)
 {
     yVel = y;
 }
+cartesian2d Enemy191T::getPosition()
+{
+    cartesian2d retCoord = {Xpos, Ypos};
+    return retCoord;
+}
 
+cartesian2d Enemy191T::getDestPosition()
+{
+    cartesian2d retCoord = {destXPos, destYPos};
+    return retCoord;
+}
+void Enemy191T::setPosition(cartesian2d inpCoord)
+{
+    Xpos = inpCoord.x;
+    Ypos = inpCoord.y;
+}
+
+void Enemy191T::setDestPosition(cartesian2d inpCoord)
+{
+    destXPos = inpCoord.x;
+    destYPos = inpCoord.y;
+}
+
+cart2dDim Enemy191T::getObjectDimensions()
+{
+    return objectDimensions;
+}
+
+void Enemy191T::getCurrGridPos(vector<grid2d>& retPos)
+{
+    retPos = classCurrentGridCoords;
+}
+
+void Enemy191T::setCurrGridPos(vector<grid2d>inpPos)
+{
+    classCurrentGridCoords = inpPos;
+}
+
+void Enemy191T::getDestGridPos(vector<grid2d>& retPos)
+{
+    retPos = classTestGridCoords;
+}
+
+void Enemy191T::setDestGridPos(vector<grid2d>inpPos)
+{
+    classTestGridCoords = inpPos;
+}
