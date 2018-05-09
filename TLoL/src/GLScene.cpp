@@ -179,6 +179,13 @@ GLint GLScene::drawGLScene()
 
 	glPopMatrix();
 
+	collisionListPlayerToEnemy();
+    collisionListProjectileToEnemy();
+
+    cleanEnemyList();
+    cleanProjectileList();
+    cleanPlayerList();
+
 }
 
 void GLScene::manageEnemies()
@@ -431,6 +438,48 @@ bool GLScene::boxCollision (cartesian2d objectLoc0, cart2dDim objectDim0, cartes
 		retIsCollision = false;
 
 	return retIsCollision;
+}
+
+void GLScene::collisionListProjectileToEnemy()
+{
+    uintptr_t objID1;
+    uintptr_t objID2;
+    bool tempIsCollision;
+    for (int i = 0; i < currEnemyCount; i++)
+    {
+        objID1 = pointerToInt(e191Array[i]);
+
+        for (int j = 0; j < currProjCount; j++)
+        {
+            objID2 = pointerToInt(projArray[j]);
+            tempIsCollision = collisionEnemyToProjectile(objID1, objID2);
+            if (tempIsCollision)
+            {
+                projArray[j]->setIsDead(tempIsCollision);
+                e191Array[i]->setIsDead(tempIsCollision);
+            }
+        }
+    }
+}
+
+
+void GLScene::collisionListPlayerToEnemy()
+{
+    uintptr_t objID1;
+    uintptr_t objID2 = pointerToInt(ply);
+    bool tempIsCollision;
+    for (int i = 0; i < currEnemyCount; i++)
+    {
+        objID1 = pointerToInt(e191Array[i]);
+        tempIsCollision = collisionEnemyToPlayer(objID1, objID2);
+
+        if (tempIsCollision)
+        {
+            ply->setIsDead(tempIsCollision);
+            e191Array[i]->setIsDead(tempIsCollision);
+        }
+    }
+    //collisionEnemyToPlayer(uintptr_t inpID1, uintptr_t inpID2);
 }
 
 bool GLScene::collisionEnemyToEnemy(uintptr_t inpID1, uintptr_t inpID2)
@@ -760,4 +809,54 @@ int GLScene::searchVector(std::vector<T>vecToSearch, T varToFind)
 	}
 
 	return retIndex;
+}
+
+void GLScene::cleanEnemyList()
+{
+    for (int i = 0; i < currEnemyCount; i++)
+    {
+        if (e191Array[i]->getIsDead())
+        {
+            delete e191Array[i];
+            removeArrayElement(e191Array, i, currEnemyCount);
+            currEnemyCount--;
+        }
+    }
+}
+
+void GLScene::cleanProjectileList()
+{
+    for (int i = 0; i < currProjCount; i++)
+    {
+        if (projArray[i]->getIsDead())
+        {
+            delete projArray[i];
+            removeArrayElement(projArray, i, currProjCount);
+            currProjCount--;
+        }
+    }
+}
+
+void GLScene::cleanPlayerList()
+{
+    if(ply->getIsDead())
+    {
+        ui->setHealth(-1);
+        ply->setIsDead(false);
+        ply->modifyHealth(-1);
+        if (ply->getHealth() < 0)
+        {
+            exit(0);
+        }
+    }
+}
+
+
+template <class T>
+void GLScene::removeArrayElement(T inpArr[], int inpIndex, int inpLength)
+{
+    for (int i = inpIndex + 1; i < inpLength; i++)
+    {
+        inpArr[i-1] = inpArr[i];
+    }
 }

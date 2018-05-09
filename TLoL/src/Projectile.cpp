@@ -6,6 +6,7 @@ using namespace std;
 Projectile::Projectile()
 {
     //ctor
+    isDead = false;
 }
 
 Projectile::~Projectile()
@@ -156,4 +157,13 @@ void Projectile::getCurrGridPos(vector<grid2d>& retPos)
 void Projectile::setCurrGridPos(vector<grid2d>inpPos)
 {
     classCurrentGridCoords = inpPos;
+}
+void Projectile::setIsDead(bool inpBool)
+{
+    isDead = inpBool;
+}
+
+bool Projectile::getIsDead()
+{
+    return isDead;
 }

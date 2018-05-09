@@ -68,6 +68,8 @@ class GLScene
     private:
         //Enemy191T *e191Array;
         bool boxCollision (cartesian2d objectLoc0, cart2dDim objectDim0, cartesian2d objectLoc1, cart2dDim objectDim1);
+        void collisionListPlayerToEnemy();
+        void collisionListProjectileToEnemy();
         bool collisionEnemyToEnemy(uintptr_t inpID1, uintptr_t inpID2);
         bool collisionEnemyToProjectile(uintptr_t inpID1, uintptr_t inpID2);
         bool collisionEnemyToPlayer(uintptr_t inpID1, uintptr_t inpID2);
@@ -87,6 +89,12 @@ class GLScene
         //void updateWallOnGridMap(int inpID);
         void updatePlayerOnGridMap();
 
+        void cleanEnemyList();
+        void cleanProjectileList();
+
+        //IMPORANT: this calls exit
+        void cleanPlayerList();
+
         void generateMazeRandom(grid2dDim inpDim, grid2d inpStartPos, vector < grid2d > inpEndPoss, double inpWallToAreaRatio, double inpEnemyToAreaRatio);
 
         template<class T>
@@ -97,6 +105,9 @@ class GLScene
 
         template <class T>
         T* pointerToInt(uintptr_t inpInt);
+
+        template <class T>
+        void removeArrayElement(T inpArr[], int inpIndex, int inpLength);
 };
 
 #endif // GLSCENE_H

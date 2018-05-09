@@ -40,6 +40,9 @@ class Projectile
         void setCurrGridPos(std::vector <grid2d> inpPos);
 
 
+        void setIsDead(bool inpBool);
+        bool getIsDead();
+
     protected:
 
     private:
@@ -47,6 +50,8 @@ class Projectile
 
         std::vector <grid2d> classCurrentGridCoords;
         cart2dDim objectDimensions = {.25, .25};
+
+        bool isDead;
 
 
 };
