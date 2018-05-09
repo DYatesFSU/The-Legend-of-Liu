@@ -1,6 +1,7 @@
 #include "Projectile.h"
 #include <iostream>
 
+using namespace std;
 
 Projectile::Projectile()
 {
@@ -130,3 +131,29 @@ void Projectile::setyVel(float y)
     yVel = y;
 }
 
+cartesian2d Projectile::getPosition()
+{
+    cartesian2d retCoord = {getxPos(), getyPos()};
+    return retCoord;
+}
+
+void Projectile::setPosition(cartesian2d inpCoord)
+{
+    setxPos(inpCoord.x);
+    setyPos(inpCoord.y);
+}
+
+cart2dDim Projectile::getObjectDimensions()
+{
+    return objectDimensions;
+}
+
+void Projectile::getCurrGridPos(vector<grid2d>& retPos)
+{
+    retPos = classCurrentGridCoords;
+}
+
+void Projectile::setCurrGridPos(vector<grid2d>inpPos)
+{
+    classCurrentGridCoords = inpPos;
+}

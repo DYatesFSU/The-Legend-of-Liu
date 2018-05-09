@@ -211,4 +211,50 @@ void Enemy191T::setyVel(double y)
 {
     yVel = y;
 }
+cartesian2d Enemy191T::getPosition()
+{
+    cartesian2d retCoord = {Xpos, Ypos};
+    return retCoord;
+}
 
+cartesian2d Enemy191T::getDestPosition()
+{
+    cartesian2d retCoord = {destXPos, destYPos};
+    return retCoord;
+}
+void Enemy191T::setPosition(cartesian2d inpCoord)
+{
+    Xpos = inpCoord.x;
+    Ypos = inpCoord.y;
+}
+
+void Enemy191T::setDestPosition(cartesian2d inpCoord)
+{
+    destXPos = inpCoord.x;
+    destYPos = inpCoord.y;
+}
+
+cart2dDim Enemy191T::getObjectDimensions()
+{
+    return objectDimensions;
+}
+
+void Enemy191T::getCurrGridPos(vector<grid2d>& retPos)
+{
+    retPos = classCurrentGridCoords;
+}
+
+void Enemy191T::setCurrGridPos(vector<grid2d>inpPos)
+{
+    classCurrentGridCoords = inpPos;
+}
+
+void Enemy191T::getDestGridPos(vector<grid2d>& retPos)
+{
+    retPos = classTestGridCoords;
+}
+
+void Enemy191T::setDestGridPos(vector<grid2d>inpPos)
+{
+    classTestGridCoords = inpPos;
+}
