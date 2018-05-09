@@ -101,6 +101,9 @@ class player:Model
         //I.E. if these coordinates turn out to be bad, then don't update the current grid coordinates
         std::vector <grid2d> classTestGridCoords;
 
+        //for box and graph collisions
+        cart2dDim objectDimensions = {.99, .99};
+
 
 
 };
