@@ -39,6 +39,7 @@ class Projectile
         void getCurrGridPos(std::vector <grid2d> &retPos);
         void setCurrGridPos(std::vector <grid2d> inpPos);
 
+
     protected:
 
     private:

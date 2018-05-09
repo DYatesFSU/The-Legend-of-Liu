@@ -18,6 +18,7 @@ void Map::initMap(grid2dDim inpDim, int elementVariety)
 	//gridElements tempElements;
 	vector < vector < int > > tempElements;
 	vector < vector < vector < int > > > tempElementsList;
+	vector < vector < vector < vector < int > > > > tempMap;
 	classMapDimensions = inpDim;
 
 	for (int i = 0; i < elementVariety; i++)
@@ -30,10 +31,12 @@ void Map::initMap(grid2dDim inpDim, int elementVariety)
 		tempElementsList.push_back(tempElements);
 	}
 
+	//classMainMap00.clear();
 	for (int i = 0; i < classMapDimensions.height; i++)
 	{
-		classMainMap00.push_back(tempElementsList);
+		tempMap.push_back(tempElementsList);
 	}
+	classMainMap00 = tempMap;
 }
 
 void Map::getMapElementGeneric(grid2d inpCoord, vector < vector < int > > &retElement)
@@ -579,4 +582,25 @@ void Map::displayElement(grid2d inpCoord)
         display1DVec(classMainMap00.at(inpCoord.y).at(inpCoord.x).at(i), " ");
     }
     //cout << endl;
+}
+
+
+void Map::clearIDs(int inpType, vector<grid2d>inpPositions)
+{
+    for (int i = 0; i < inpPositions.size(); i++)
+    {
+        classMainMap00.at(inpPositions.at(i).y).at(inpPositions.at(i).x).at(inpType).clear();
+    }
+}
+
+
+void Map::clearIDsWholeMap(int inpType, vector<grid2d>inpPositions)
+{
+    for (int i = 0; i < inpPositions.size(); i++)
+    {
+        for (int j = 0; j < inpPositions.size(); j++)
+        {
+            classMainMap00.at(i).at(j).at(inpType).clear();
+        }
+    }
 }

@@ -61,6 +61,18 @@ class GLScene
         bool collisionEnemyToWall(int inpID1, int inpID2);
         bool collisionPlayerToWall(int inpID1, int inpID2);
         bool collisionProjectileToWall(int inpID1, int inpID2);
+        void addEnemyListToGridMap();
+        void addProjectileListToGridMap();
+        void addWallListToGridMap();
+        void addPlayerToGridMap();
+        void initGridMap(grid2dDim inpDim);
+        void addEnemyToGridMap(int inpID);
+        void addProjectileToGridMap(int inpID);
+        void addWallToGridMap(int inpID);
+        void updateEnemyOnGridMap(int inpID);
+        //void updateProjectileOnGridMap(int inpID);
+        //void updateWallOnGridMap(int inpID);
+        void updatePlayerOnGridMap();
 };
 
 #endif // GLSCENE_H

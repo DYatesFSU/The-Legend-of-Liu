@@ -59,7 +59,8 @@ class Map
         void removeGenericElement(int inpID, int inpType, vector < grid2d > inpPositions);
         void updateGenericElement(int inpID, int inpType, vector < grid2d > oldPositions, vector < grid2d > newPositions);
 
-        void updateIDs();
+        void clearIDs(int inpType, vector < grid2d > inpPositions);
+        void clearIDsWholeMap(int inpType, vector < grid2d > inpPositions);
 
         void displayMap();
         void displayElement(grid2d inpCoord);

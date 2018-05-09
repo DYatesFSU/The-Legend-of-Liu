@@ -19,6 +19,13 @@
 #include <Map.h>
 
 
+const int ENEMYTYPE = 1;
+const int WALLTYPE = 0;
+const int PLAYERTYPE = 2;
+const int PROJECTILETYPE = 3;
+const int TYPEVARIETY = 4;
+const int PLAYERID = 0;
+
 
 //Model *modelTeapot = new Model();
 Inputs *KbMs = new Inputs();
@@ -46,6 +53,9 @@ Wall *wallArray[100];
 int currWallCount = 0;
 
 Map *gridMap;
+//These are used to update the list when an object is destroyed
+bool updateEnemyMapList = false;
+bool updateProjectileMapList = false;
 
 GLScene::GLScene()
 {
@@ -481,4 +491,103 @@ bool GLScene::collisionProjectileToWall(int inpID1, int inpID2)
     objPos2 = wallArray[inpID2]->getPosition();
     objDim2 = wallArray[inpID2]->getObjectDimensions();
     return boxCollision(objPos1, objDim1, objPos2, objDim2);
+}
+
+void GLScene::addEnemyListToGridMap()
+{
+
+    for (int i = 0; i < currEnemyCount; i++)
+    {
+        addEnemyToGridMap(i);
+    }
+}
+
+void GLScene::addProjectileListToGridMap()
+{
+    for (int i = 0; i < currProjCount; i++)
+    {
+        addProjectileToGridMap(i);
+    }
+}
+
+void GLScene::addWallListToGridMap()
+{
+    for (int i = 0; i < currWallCount; i++)
+    {
+        addWallToGridMap(i);
+    }
+}
+
+void GLScene::addPlayerToGridMap()
+{
+    vector < grid2d > gridPosList;
+    ply->getCurrGridPos(gridPosList);
+    gridMap->addGenericElement(PLAYERID, PLAYERTYPE, gridPosList);
+}
+
+
+void GLScene::initGridMap(grid2dDim inpDim)
+{
+    gridMap->initMap(inpDim, TYPEVARIETY);
+    addEnemyListToGridMap();
+    addProjectileListToGridMap();
+    addWallListToGridMap();
+    addPlayerToGridMap();
+}
+void GLScene::addEnemyToGridMap(int inpID)
+{
+    vector < grid2d > gridPosList;
+    e191Array[inpID]->getCurrGridPos(gridPosList);
+    gridMap->addGenericElement(inpID, ENEMYTYPE, gridPosList);
+}
+
+void GLScene::addProjectileToGridMap(int inpID)
+{
+    vector < grid2d > gridPosList;
+    projArray[inpID]->getCurrGridPos(gridPosList);
+    gridMap->addGenericElement(inpID, PROJECTILETYPE, gridPosList);
+}
+
+void GLScene::addWallToGridMap(int inpID)
+{
+    vector < grid2d > gridPosList;
+    wallArray[inpID]->getCurrGridPos(gridPosList);
+    gridMap->addGenericElement(inpID, WALLTYPE, gridPosList);
+}
+
+void GLScene::updateEnemyOnGridMap(int inpID)
+{
+    vector < grid2d > gridPosList;
+    vector < grid2d > gridDestList;
+    e191Array[inpID]->getCurrGridPos(gridPosList);
+    e191Array[inpID]->getDestGridPos(gridDestList);
+    gridMap->updateGenericElement(inpID, ENEMYTYPE, gridPosList, gridDestList);
+}
+
+/*
+void GLScene::updateProjectileOnGridMap(int inpID)
+{
+    vector < grid2d > gridPosList;
+    vector < grid2d > gridDestList;
+    projArray[inpID]->getCurrGridPos(gridPosList);
+    projArray[inpID]->getDestGridPos(gridDestList);
+    gridMap->updateGenericElement(inpID, PROJECTILETYPE, gridPosList, gridDestList);
+}
+
+void GLScene::updateWallOnGridMap(int inpID)
+{
+    vector < grid2d > gridPosList;
+    vector < grid2d > gridDestList;
+    wallArray[inpID]->getCurrGridPos(gridPosList);
+    wallArray[inpID]->getDestGridPos(gridDestList);
+    gridMap->updateGenericElement(inpID, WALLTYPE, gridPosList, gridDestList);
+}
+*/
+void GLScene::updatePlayerOnGridMap()
+{
+    vector < grid2d > gridPosList;
+    vector < grid2d > gridDestList;
+    ply->getCurrGridPos(gridPosList);
+    ply->getDestGridPos(gridDestList);
+    gridMap->updateGenericElement(PLAYERID, PLAYERTYPE, gridPosList, gridDestList);
 }
