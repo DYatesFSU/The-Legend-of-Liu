@@ -211,4 +211,26 @@ void Enemy191T::setyVel(double y)
 {
     yVel = y;
 }
+cartesian2d Enemy191T::getPosition()
+{
+    cartesian2d retCoord = {Xpos, Ypos};
+    return retCoord;
+}
+
+cartesian2d Enemy191T::getDestPosition()
+{
+    cartesian2d retCoord = {destXPos, destYPos};
+    return retCoord;
+}
+void Enemy191T::setPosition(cartesian2d inpCoord)
+{
+    Xpos = inpCoord.x;
+    Ypos = inpCoord.y;
+}
+
+void Enemy191T::setDestPosition(cartesian2d inpCoord)
+{
+    destXPos = inpCoord.x;
+    destYPos = inpCoord.y;
+}
 

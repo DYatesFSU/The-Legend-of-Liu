@@ -55,6 +55,12 @@ class GLScene
     private:
         //Enemy191T *e191Array;
         bool boxCollision (cartesian2d objectLoc0, cart2dDim objectDim0, cartesian2d objectLoc1, cart2dDim objectDim1);
+        bool collisionEnemyToEnemy(int inpID1, int inpID2);
+        bool collisionEnemyToParticle(int inpID1, int inpID2);
+        bool collisionEnemyToPlayer(int inpID1, int inpID2);
+        bool collisionEnemyToWall(int inpID1, int inpID2);
+        bool collisionPlayerToWall(int inpID1, int inpID2);
+        bool collisionParticleToWall(int inpID1, int inpID2);
 };
 
 #endif // GLSCENE_H

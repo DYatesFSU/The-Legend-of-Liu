@@ -390,3 +390,33 @@ bool GLScene::boxCollision (cartesian2d objectLoc0, cart2dDim objectDim0, cartes
 
 	return retIsCollision;
 }
+
+bool GLScene::collisionEnemyToEnemy(int inpID1, int inpID2)
+{
+
+}
+
+bool GLScene::collisionEnemyToParticle(int inpID1, int inpID2)
+{
+
+}
+
+bool GLScene::collisionEnemyToPlayer(int inpID1, int inpID2)
+{
+
+}
+
+bool GLScene::collisionEnemyToWall(int inpID1, int inpID2)
+{
+
+}
+
+bool GLScene::collisionPlayerToWall(int inpID1, int inpID2)
+{
+
+}
+
+bool GLScene::collisionParticleToWall(int inpID1, int inpID2)
+{
+
+}

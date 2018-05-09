@@ -51,6 +51,10 @@ class Enemy191T
         timer *objectTimer;
 
         void updateEnemy(player* ply);
+        cartesian2d getPosition();
+        cartesian2d getDestPosition();
+        void setPosition(cartesian2d inpCoord);
+        void setDestPosition(cartesian2d inpCoord);
 
     protected:
 
