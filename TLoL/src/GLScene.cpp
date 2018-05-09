@@ -325,6 +325,14 @@ void GLScene::generateEnemies()
 
 void GLScene::clearEnemies()
 {
+    if (lvl->roomHasBoss(xLvl, yLvl))
+    {
+        for (int i = 0; i < currEnemyCount; i++)
+        {
+            delete boss[i];
+        }
+        currEnemyCount = 0;
+    }
     for (int i = 0; i < currEnemyCount; i++)
     {
         delete e191Array[i];
