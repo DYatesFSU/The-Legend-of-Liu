@@ -73,13 +73,9 @@ void player::playerInit()
     runText[9].bindTexture("images/player/player9.png");
 
     objectTexture[0].bindTexture("images/playerSprites00.png");
-
-
     //playerSprites00.png
 
 }
-
-
 
 void player::actions(int action)
 {
@@ -193,26 +189,6 @@ bool player::checkMoving()
     return (movingLeft || movingRight || movingUp || movingDown);
 }
 
-bool player::getFiring()
-{
-    return isFiring;
-}
-
-void player::setFiring(bool x)
-{
-    isFiring = x;
-}
-
-void player::setFiringDir(char x)
-{
-    firingDir = x;
-}
-
-char player::getFiringDir()
-{
-    return firingDir;
-}
-
 void player::calcSprite()
 {
 
@@ -307,45 +283,3 @@ void player::moveObject()
     }
     //return (movingLeft || movingRight || movingUp || movingDown);
 }
-
-cartesian2d player::getDestPosition()
-{
-    return destPosition;
-}
-
-cartesian2d player::setDestPosition(cartesian2d inpPos)
-{
-    destPosition = inpPos;
-}
-
-cartesian2d player::getPosition()
-{
-    cartesian2d retPos = {xPos, yPos};
-    return retPos;
-}
-
-cart2dDim player::getObjectDimensions()
-{
-    return objectDimensions;
-}
-
-void player::getCurrGridPos(vector<grid2d>& retPos)
-{
-    retPos = classCurrentGridCoords;
-}
-
-void player::setCurrGridPos(vector<grid2d>inpPos)
-{
-    classCurrentGridCoords = inpPos;
-}
-
-void player::getDestGridPos(vector<grid2d>& retPos)
-{
-    retPos = classTestGridCoords;
-}
-
-void player::setDestGridPos(vector<grid2d>inpPos)
-{
-    classTestGridCoords = inpPos;
-}
-

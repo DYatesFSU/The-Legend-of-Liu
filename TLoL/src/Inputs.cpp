@@ -116,22 +116,6 @@ void Inputs::keyPressed(player* ply)
     case VK_SUBTRACT:
 
         break;
-    case VK_UP:
-        ply->setFiring(true);
-        ply->setFiringDir('n');
-        break;
-    case VK_DOWN:
-        ply->setFiring(true);
-        ply->setFiringDir('s');
-        break;
-    case VK_LEFT:
-        ply->setFiring(true);
-        ply->setFiringDir('w');
-        break;
-    case VK_RIGHT:
-        ply->setFiring(true);
-        ply->setFiringDir('e');
-        break;
     }
 }
 
@@ -163,18 +147,6 @@ void Inputs::keyUp(player* ply)
        ply->movingDown = false;
 
         break;
-         case VK_UP:
-            ply->setFiring(false);
-            break;
-         case VK_DOWN:
-            ply->setFiring(false);
-            break;
-         case VK_LEFT:
-            ply->setFiring(false);
-            break;
-         case VK_RIGHT:
-            ply->setFiring(false);
-            break;
                 default:
                 break;
             }
