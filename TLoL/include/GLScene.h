@@ -16,9 +16,17 @@
 #include <gl/glu.h>			// Header File For The GLu32 Library
 #include <iostream>
 
+#include <GlobalDataStructures.h>
+
 using namespace std;
 
+
+class Enemy191T;
+class player;
+class Wall;
+
 //class Enemy191T;
+
 
 class GLScene
 {
@@ -37,7 +45,6 @@ class GLScene
 
         void generateEnemies();
 
-
         WPARAM wParam;
         float screenHeight;
         float screenWidth;
@@ -47,6 +54,7 @@ class GLScene
 
     private:
         //Enemy191T *e191Array;
+        bool boxCollision (cartesian2d objectLoc0, cart2dDim objectDim0, cartesian2d objectLoc1, cart2dDim objectDim1);
 };
 
 #endif // GLSCENE_H

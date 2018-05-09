@@ -5,6 +5,8 @@
 #include<gl/gl.h>
 //#include<textureLoader.h>
 
+#include <GlobalDataStructures.h>
+
 typedef struct
 {
    float x;
@@ -64,6 +66,7 @@ class player:Model
 
         void moveObject();
 
+        /*
         int spriteX, spriteY;
         const int sprHeight = 8;
         const int sprWidth = 10;
@@ -72,6 +75,32 @@ class player:Model
 
         textureLoader *objectTexture;
         timer *objectTimer;
+        */
+
+    protected:
+
+    private:
+
+        double scaleSizeX;
+        double scaleSizeY;
+        double scaleSizeZ;
+
+        int spriteX, spriteY;
+        const int sprHeight = 8;
+        const int sprWidth = 10;
+        int sprRenderCount;
+        bool sprPrevMovUp, sprPrevMovDown, sprPrevMovLeft, sprPrevMovRight;
+
+        textureLoader *objectTexture;
+        timer *objectTimer;
+
+        std::vector <grid2d> classCurrentGridCoords;
+        //This is to test if an object can move in a direction
+        //I.E. if these coordinates turn out to be bad, then don't update the current grid coordinates
+        std::vector <grid2d> classTestGridCoords;
+
+        //for box and graph collisions
+        cart2dDim objectDimensions = {.99, .99};
 
         char checkDoor;
         int playerKeys;
