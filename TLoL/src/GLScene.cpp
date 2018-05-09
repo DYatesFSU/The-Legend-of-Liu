@@ -94,7 +94,11 @@ GLint GLScene::drawGLScene()
     }
     else if (men->state == 1)                   // Menu Page
     {
-        cout<<" Main menu"<<endl;
+        cout<<" Main Menu"<<endl;
+        cout<<" Press N for New Game"<<endl;
+        cout<<" Press O for Option"<<endl;
+        cout<< "Press H for How to Play"<<endl;
+        cout<< "Press ESC to quit"<<endl;
     }
     else if (men->state == 2)                   //
     {
@@ -183,6 +187,19 @@ GLint GLScene::drawGLScene()
 */
 	glPopMatrix();
 
+    }
+    else if(men->state == 3)
+    {
+        cout<<"Options"<<endl;
+    }
+    else if(men->state == 4)
+    {
+        cout<<"How to Play"<<endl;
+    }
+    else if (men->state== 5)
+    {
+
+        cout<<"Pause Menu"<<endl;
     }
 }
 
