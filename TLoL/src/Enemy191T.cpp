@@ -23,10 +23,11 @@ Enemy191T::Enemy191T()
     Ypos = (rand() % 3) - 1.5;
     Zpos = -5.0;
 
+
     destXPos = (rand() % 10) - 5;
     destYPos = (rand() % 5) - 3;
 
-    //destYPos = (double)rand() % 6.0 - 3.0);
+
 
     xVel = 0;
     yVel = 0;
@@ -34,7 +35,6 @@ Enemy191T::Enemy191T()
     objectTexture = new textureLoader[11]();
     objectTimer = new timer();
 
-    objectTimer->start();
 }
 
 Enemy191T::~Enemy191T()
@@ -105,6 +105,7 @@ void Enemy191T::objectInit()
 
 void Enemy191T::updateEnemy(player* ply)
 {
+
     objectTimer->getTicks();
 
     if (objectTimer->getTicks() >= waitTime)
@@ -116,12 +117,13 @@ void Enemy191T::updateEnemy(player* ply)
     }
 
     if (destXPos - Xpos > 0)
+
         setxVel(runspeed);
-    else if (destXPos - Xpos < - 0)
+    else if (ply->getxPos() - Xpos < - 0)
         setxVel(-runspeed);
-    if (destYPos - Ypos > 0)
+    if (ply->getyPos() - Ypos > 0)
         setyVel(runspeed);
-    else if (destYPos - Ypos < -0)
+    else if (ply->getyPos() - Ypos < -0)
         setyVel(-runspeed);
 
     Xpos += getxVel();
