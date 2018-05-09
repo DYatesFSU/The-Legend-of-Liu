@@ -5,6 +5,8 @@
 #include<gl/gl.h>
 //#include<textureLoader.h>
 
+#include <GlobalDataStructures.h>
+
 typedef struct
 {
    float x;
@@ -93,6 +95,11 @@ class player:Model
         timer *objectTimer;
 
         float xPos = 0, yPos = 0, xVel = 0, yVel = 0;
+
+        std::vector <grid2d> classCurrentGridCoords;
+        //This is to test if an object can move in a direction
+        //I.E. if these coordinates turn out to be bad, then don't update the current grid coordinates
+        std::vector <grid2d> classTestGridCoords;
 
 
 

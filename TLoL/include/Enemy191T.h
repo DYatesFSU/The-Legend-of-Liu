@@ -58,6 +58,11 @@ class Enemy191T
         double scaleSizeY;
         double scaleSizeZ;
 
+        std::vector <grid2d> classCurrentGridCoords;
+        //This is to test if an object can move in a direction
+        //I.E. if these coordinates turn out to be bad, then don't update the current grid coordinates
+        std::vector <grid2d> classTestGridCoords;
+
 };
 
 
