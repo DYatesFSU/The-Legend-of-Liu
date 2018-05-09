@@ -591,3 +591,54 @@ void GLScene::updatePlayerOnGridMap()
     ply->getDestGridPos(gridDestList);
     gridMap->updateGenericElement(PLAYERID, PLAYERTYPE, gridPosList, gridDestList);
 }
+
+void GLScene::generateMazeRandom(grid2dDim inpDim, grid2d inpStartPos, vector<grid2d>inpEndPoss, double inpWallToAreaRatio, double inpEnemyToAreaRatio)
+{
+    Map tempGridMaze;
+    vector <grid2d> tempLocs;
+    grid2d tempLoc;
+    //tempGridMaze = new Map();
+    for (int i = 0; i < inpDim.width; i++)
+    {
+        tempLoc = {i, 0}
+        tempLocs.push_back(tempLoc);
+
+        //if not end position or start positions
+        tempGridMaze.addGenericElement(0, WALLTYPE, tempLocs);
+
+        tempLocs.clear();
+    }
+    //tempGridMaze.addGenericElement(0, WALLTYPE, tempLocs);
+}
+
+
+template <class T>
+uintptr_t GLScene::pointerToInt(T* inpPtr)
+{
+    return uintptr_t(inpPtr);
+}
+
+template <class T>
+int GLScene::searchVector(std::vector<T>vecToSearch, T varToFind)
+{
+    bool done;
+	int count00;
+	int retIndex;
+
+	retIndex = -1;
+
+	done = false;
+	count00 = 0;
+
+	while (!done && count00 < vecToSearch.size())
+	{
+		if (vecToSearch.at(count00) == varToFind)
+		{
+			done = true;
+			retIndex = count00;
+		}
+		count00++;
+	}
+
+	return retIndex;
+}

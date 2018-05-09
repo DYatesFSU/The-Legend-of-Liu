@@ -17,6 +17,10 @@
 #include <iostream>
 
 #include <GlobalDataStructures.h>
+//#include <cstdint.h>
+extern "C" {
+#include <stdint.h>
+}
 
 using namespace std;
 
@@ -73,6 +77,14 @@ class GLScene
         //void updateProjectileOnGridMap(int inpID);
         //void updateWallOnGridMap(int inpID);
         void updatePlayerOnGridMap();
+
+        void generateMazeRandom(grid2dDim inpDim, grid2d inpStartPos, vector < grid2d > inpEndPoss, double inpWallToAreaRatio, double inpEnemyToAreaRatio);
+
+        template<class T>
+        int searchVector(std::vector <T> vecToSearch, T varToFind);
+
+        template <class T>
+        uintptr_t pointerToInt(T* inpPtr);
 };
 
 #endif // GLSCENE_H
