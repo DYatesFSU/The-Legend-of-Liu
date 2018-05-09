@@ -19,18 +19,22 @@ void Levels::LevelInit()
 {
     rooms[1][0].nDoor = true;
     rooms[1][0].exists = true;
+    rooms[1][0].maxEnemies = rand() % 10;
 
     rooms[0][1].eDoor = true;
     rooms[0][1].exists = true;
+    rooms[0][1].maxEnemies = rand() % 10;
 
     rooms[1][1].nDoor = true;
     rooms[1][1].sDoor = true;
     rooms[1][1].eDoor = true;
     rooms[1][1].wDoor = true;
     rooms[1][1].exists = true;
+    rooms[1][1].maxEnemies = rand() % 10;
 
     rooms[2][1].wDoor = true;
     rooms[2][1].exists = true;
+    rooms[2][1].maxEnemies = rand() % 10;
 
     rooms[0][2].eDoor = true;
     rooms[0][2].exists = true;
@@ -39,30 +43,34 @@ void Levels::LevelInit()
     rooms[1][2].wDoor = true;
     rooms[1][2].sDoor = true;
     rooms[1][2].eDoor = true;
-    rooms[1][2].maxEnemies = 3;
     rooms[1][2].exists = true;
+    rooms[1][2].maxEnemies = rand() % 10;
 
     rooms[2][2].wDoor = true;
     rooms[2][2].nDoor = true;
-    rooms[2][2].maxEnemies = 4;
     rooms[2][2].exists = true;
+    rooms[2][2].maxEnemies = rand() % 10;
 
     rooms[1][3].eDoor = true;
     rooms[1][3].exists = true;
+    rooms[1][3].maxEnemies = rand() % 10;
 
     rooms[2][3].wDoor = true;
     rooms[2][3].sDoor = true;
     rooms[2][3].eDoor = true;
     rooms[2][3].exists = true;
+    rooms[2][3].maxEnemies = rand() % 10;
 
     rooms[3][3].wDoor = true;
     rooms[3][3].eDoor = true;
     rooms[3][3].exists = true;
+    rooms[3][3].maxEnemies = rand() % 10;
 
     rooms[4][3].wDoor = true;
     rooms[4][3].nDoor = true;
     rooms[4][3].sDoor = true;
     rooms[4][3].exists = true;
+    rooms[4][3].maxEnemies = rand() % 10;
 
     rooms[4][2].nDoor = true;
     rooms[4][2].isBoss = true;
@@ -70,6 +78,7 @@ void Levels::LevelInit()
 
     rooms[4][4].sDoor = true;
     rooms[4][4].exists = true;
+    rooms[4][4].maxEnemies = rand() % 10;
 
     int keysPlanted = 0;
     while(keysPlanted < 3)

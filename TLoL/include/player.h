@@ -126,9 +126,7 @@ class player:Model
 
         /*
         char checkDoor;
-        int playerKeys;
-        void addKey();
-        int getKeys();
+
 
         bool getFiring();
         void setFiring(bool);

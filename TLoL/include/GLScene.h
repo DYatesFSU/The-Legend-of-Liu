@@ -50,6 +50,14 @@ class GLScene
 
         void generateEnemies();
 
+        void manageKeys();
+
+        void manageBoss();
+
+        void checkProj();
+
+        void manageEnemies();
+
         WPARAM wParam;
         float screenHeight;
         float screenWidth;
