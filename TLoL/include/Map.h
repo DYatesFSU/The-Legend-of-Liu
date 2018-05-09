@@ -9,6 +9,10 @@
 #include <string>
 #include <iostream>
 
+extern "C" {
+#include <stdint.h>
+}
+
 using namespace std;
 
 struct priorityCoordObject
@@ -52,12 +56,12 @@ class Map
         void getRealToGraphCoords(cartesian2d inpObjectCoord, cart2dDim inpObjectDim, cart2dDim inpWorldDim, std::vector < grid2d > &retGraphCoords);
 
         void initMap(grid2dDim inpDim, int elementVariety);
-		void getMapElementGeneric(grid2d inpCoord, vector < vector < int > > &retElement);
-		bool isGraphCollisionGeneric(vector < grid2d > inpPositions, int inpID, int inpType, int cmpType);
-		bool isGraphSquareCollisionGeneric(grid2d inpPos, int inpID, int inpType, int cmpType);
-		void addGenericElement(int inpID, int inpType, vector < grid2d > inpPositions);
-        void removeGenericElement(int inpID, int inpType, vector < grid2d > inpPositions);
-        void updateGenericElement(int inpID, int inpType, vector < grid2d > oldPositions, vector < grid2d > newPositions);
+		void getMapElementGeneric(grid2d inpCoord, vector < vector < uintptr_t > > &retElement);
+		bool isGraphCollisionGeneric(vector < grid2d > inpPositions, uintptr_t inpID, int inpType, int cmpType);
+		bool isGraphSquareCollisionGeneric(grid2d inpPos, uintptr_t inpID, int inpType, int cmpType);
+		void addGenericElement(uintptr_t inpID, int inpType, vector < grid2d > inpPositions);
+        void removeGenericElement(uintptr_t inpID, int inpType, vector < grid2d > inpPositions);
+        void updateGenericElement(uintptr_t inpID, int inpType, vector < grid2d > oldPositions, vector < grid2d > newPositions);
 
         void clearIDs(int inpType, vector < grid2d > inpPositions);
         void clearIDsWholeMap(int inpType, vector < grid2d > inpPositions);
@@ -77,10 +81,12 @@ class Map
         int calcMinDiagTaxiDist(grid2d inpStartPos, vector < grid2d > inpEndPos);
         bool isInPriorQueue(priority_queue < priorityCoordObject > inpQueue, grid2d inpElement);
 
-		void basicDijkstrasGeneric(vector < vector < vector < vector < int > > > > inpGraph, grid2d startPos, vector < grid2d > endPos, vector < int > blockList, queue < grid2d > &retSolution);
-        void basicAStarGeneric(vector < vector < vector < vector < int > > > > inpGraph, grid2d startPos, vector < grid2d > endPos, vector < int > blockList, queue < grid2d > &retSolution);
-		void expandMapLocGeneric(vector < vector < vector < vector < int > > > > inpGraph, grid2d inpCoord, vector < grid2d > &retExpansion);
-		bool doesIntersect1DList2DList(vector < vector < int > > inp2DList, vector < int > inp1DList);
+		void basicDijkstrasGeneric(vector < vector < vector < vector < uintptr_t > > > > inpGraph, grid2d startPos, vector < grid2d > endPos, vector < int > blockList, queue < grid2d > &retSolution);
+        void basicAStarGeneric(vector < vector < vector < vector < uintptr_t > > > > inpGraph, grid2d startPos, vector < grid2d > endPos, vector < int > blockList, queue < grid2d > &retSolution);
+		void expandMapLocGeneric(vector < vector < vector < vector < uintptr_t > > > > inpGraph, grid2d inpCoord, vector < grid2d > &retExpansion);
+
+		template <class T>
+		bool doesIntersect1DList2DList(vector < vector < T > > inp2DList, vector < int > inp1DList);
 
         template <class T>
         bool isInQueue(queue <T> inpQueue, T inpElement);
@@ -107,7 +113,7 @@ class Map
         void display1DPriorQueue(priority_queue <T> inpQueue, string inpDelim = "");
 
         grid2dDim classMapDimensions;
-        vector < vector < vector < vector < int > > > > classMainMap00;
+        vector < vector < vector < vector < uintptr_t > > > > classMainMap00;
 
         /*
         struct cartesian2d

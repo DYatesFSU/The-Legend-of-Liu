@@ -16,14 +16,14 @@ Map::~Map()
 void Map::initMap(grid2dDim inpDim, int elementVariety)
 {
 	//gridElements tempElements;
-	vector < vector < int > > tempElements;
-	vector < vector < vector < int > > > tempElementsList;
-	vector < vector < vector < vector < int > > > > tempMap;
+	vector < vector < uintptr_t > > tempElements;
+	vector < vector < vector < uintptr_t > > > tempElementsList;
+	vector < vector < vector < vector < uintptr_t > > > > tempMap;
 	classMapDimensions = inpDim;
 
 	for (int i = 0; i < elementVariety; i++)
 	{
-		tempElements.push_back(vector < int > ());
+		tempElements.push_back(vector < uintptr_t > ());
 	}
 
 	for (int i = 0; i < classMapDimensions.width; i++)
@@ -39,14 +39,14 @@ void Map::initMap(grid2dDim inpDim, int elementVariety)
 	classMainMap00 = tempMap;
 }
 
-void Map::getMapElementGeneric(grid2d inpCoord, vector < vector < int > > &retElement)
+void Map::getMapElementGeneric(grid2d inpCoord, vector < vector < uintptr_t > > &retElement)
 {
-    vector < vector < int > > tempElement;
+    vector < vector < uintptr_t > > tempElement;
     tempElement = classMainMap00.at(inpCoord.y).at(inpCoord.x);
     retElement = tempElement;
 }
 
-bool Map::isGraphCollisionGeneric(vector < grid2d > inpPositions, int inpID, int inpType, int cmpType)
+bool Map::isGraphCollisionGeneric(vector < grid2d > inpPositions, uintptr_t inpID, int inpType, int cmpType)
 {
     int count00 = 0;
 	bool done = false;
@@ -59,7 +59,7 @@ bool Map::isGraphCollisionGeneric(vector < grid2d > inpPositions, int inpID, int
 	return done;
 }
 
-bool Map::isGraphSquareCollisionGeneric(grid2d inpPos, int inpID, int inpType, int cmpType)
+bool Map::isGraphSquareCollisionGeneric(grid2d inpPos, uintptr_t inpID, int inpType, int cmpType)
 {
     int count00 = 0;
 	bool done = false;
@@ -83,7 +83,7 @@ bool Map::isGraphSquareCollisionGeneric(grid2d inpPos, int inpID, int inpType, i
 	return done;
 }
 
-void Map::addGenericElement(int inpID, int inpType, vector < grid2d > inpPositions)
+void Map::addGenericElement(uintptr_t inpID, int inpType, vector < grid2d > inpPositions)
 {
     vector < grid2d > tempGraphCoords;
     //getRealToGraphCoords(inpPos, inpDimensions, cart2dDim inpWorldDim, std::vector < grid2d > &retGraphCoords);
@@ -94,7 +94,7 @@ void Map::addGenericElement(int inpID, int inpType, vector < grid2d > inpPositio
     }
 }
 
-void Map::removeGenericElement(int inpID, int inpType, vector<grid2d>inpPositions)
+void Map::removeGenericElement(uintptr_t inpID, int inpType, vector<grid2d>inpPositions)
 {
     int tempLocIndex;
     for (int i = 0; i < inpPositions.size(); i++)
@@ -105,7 +105,7 @@ void Map::removeGenericElement(int inpID, int inpType, vector<grid2d>inpPosition
     }
 }
 
-void Map::updateGenericElement(int inpID, int inpType, vector < grid2d > oldPositions, vector < grid2d > newPositions)
+void Map::updateGenericElement(uintptr_t inpID, int inpType, vector < grid2d > oldPositions, vector < grid2d > newPositions)
 {
     removeGenericElement(inpID, inpType, oldPositions);
     addGenericElement(inpID, inpType, newPositions);
@@ -261,7 +261,7 @@ bool Map::isInPriorQueue(priority_queue<priorityCoordObject>inpQueue, grid2d inp
 	return found;
 }
 
-void Map::basicDijkstrasGeneric(vector < vector < vector < vector < int > > > > inpGraph, grid2d startPos, vector < grid2d > endPos, vector < int > blockList, queue < grid2d > &retSolution)
+void Map::basicDijkstrasGeneric(vector < vector < vector < vector < uintptr_t > > > > inpGraph, grid2d startPos, vector < grid2d > endPos, vector < int > blockList, queue < grid2d > &retSolution)
 {
 	priority_queue < priorityCoordObject > frontier;
 	queue <grid2d> explored;
@@ -319,7 +319,7 @@ void Map::basicDijkstrasGeneric(vector < vector < vector < vector < int > > > > 
 	}
 }
 
-void Map::basicAStarGeneric(vector < vector < vector < vector < int > > > > inpGraph, grid2d startPos, vector < grid2d > endPos, vector < int > blockList, queue < grid2d > &retSolution)
+void Map::basicAStarGeneric(vector < vector < vector < vector < uintptr_t > > > > inpGraph, grid2d startPos, vector < grid2d > endPos, vector < int > blockList, queue < grid2d > &retSolution)
 {
 
 	priority_queue < priorityCoordObject > frontier;
@@ -386,7 +386,7 @@ void Map::basicAStarGeneric(vector < vector < vector < vector < int > > > > inpG
 	}
 }
 
-void Map::expandMapLocGeneric(vector < vector < vector < vector < int > > > > inpGraph, grid2d inpCoord, vector < grid2d > &retExpansion)
+void Map::expandMapLocGeneric(vector < vector < vector < vector < uintptr_t > > > > inpGraph, grid2d inpCoord, vector < grid2d > &retExpansion)
 {
     vector < grid2d > tempVec;
 	for (int i = inpCoord.y - 1; i <= inpCoord.y + 1; i++)
@@ -412,7 +412,8 @@ void Map::expandMapLocGeneric(vector < vector < vector < vector < int > > > > in
 	retExpansion = tempVec;
 }
 
-bool Map::doesIntersect1DList2DList(vector < vector < int > > inp2DList, vector < int > inp1DList)
+template <class T>
+bool Map::doesIntersect1DList2DList(vector < vector < T > > inp2DList, vector < int > inp1DList)
 {
     int tempInt = inp2DList.size();
     for (int i = 0; i < inp1DList.size(); i++)

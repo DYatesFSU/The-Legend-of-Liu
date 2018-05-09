@@ -28,6 +28,7 @@ using namespace std;
 class Enemy191T;
 class player;
 class Wall;
+class Projectile;
 
 //class Enemy191T;
 
@@ -87,7 +88,7 @@ class GLScene
         uintptr_t pointerToInt(T* inpPtr);
 
         template <class T>
-        T* pointerToInt(int inpInt);
+        T* pointerToInt(uintptr_t inpInt);
 };
 
 #endif // GLSCENE_H

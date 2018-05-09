@@ -95,6 +95,17 @@ GLint GLScene::initGL()
     lvl->LevelInit();
     floorKey->keyInit();
 
+    /*
+    dealing with just pointers
+    string *tmpString = new string;
+    string *tmpString00;
+    uintptr_t tmpUIntPtr = pointerToInt(tmpString);
+    cout << tmpString << endl;
+    cout << tmpUIntPtr << endl;
+    tmpString00 = (string *)tmpUIntPtr;
+    cout << tmpString00 << endl;
+    */
+
     return true;
 }
 
@@ -615,8 +626,16 @@ void GLScene::generateMazeRandom(grid2dDim inpDim, grid2d inpStartPos, vector<gr
 template <class T>
 uintptr_t GLScene::pointerToInt(T* inpPtr)
 {
-    return uintptr_t(inpPtr);
+    //return uintptr_t(inpPtr);
+    return reinterpret_cast<uintptr_t>(inpPtr);
 }
+
+template <class T>
+T* GLScene::pointerToInt(uintptr_t inpInt)
+{
+    return (T*) inpInt;
+}
+
 
 template <class T>
 int GLScene::searchVector(std::vector<T>vecToSearch, T varToFind)
