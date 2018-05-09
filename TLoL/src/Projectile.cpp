@@ -14,7 +14,7 @@ Projectile::~Projectile()
     //dtor
 }
 
-void Projectile::projInit(float x, float y, char s)
+void Projectile::projInit(float x, float y, char s, int inpProjTeam)
 {
 
     xPos = x;
@@ -54,6 +54,8 @@ void Projectile::projInit(float x, float y, char s)
 
 
     objectTexture[0].bindTexture("images/player/play.png");
+
+    objectTeam = inpProjTeam;
 
 }
 
@@ -166,4 +168,14 @@ void Projectile::setIsDead(bool inpBool)
 bool Projectile::getIsDead()
 {
     return isDead;
+}
+
+void Projectile::setObjectTeam(int inpTeam)
+{
+    objectTeam = inpTeam;
+}
+
+int Projectile::getObjectTeam()
+{
+    return objectTeam;
 }
