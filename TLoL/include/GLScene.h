@@ -70,6 +70,8 @@ class GLScene
         bool boxCollision (cartesian2d objectLoc0, cart2dDim objectDim0, cartesian2d objectLoc1, cart2dDim objectDim1);
         void collisionListPlayerToEnemy();
         void collisionListProjectileToEnemy();
+        void collisionListProjectileToProjectile();
+        void collisionListProjectileToPlayer();
         bool collisionEnemyToEnemy(uintptr_t inpID1, uintptr_t inpID2);
         bool collisionEnemyToProjectile(uintptr_t inpID1, uintptr_t inpID2);
         bool collisionEnemyToPlayer(uintptr_t inpID1, uintptr_t inpID2);
