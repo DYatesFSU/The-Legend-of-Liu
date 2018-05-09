@@ -451,17 +451,18 @@ bool GLScene::boxCollision (cartesian2d objectLoc0, cart2dDim objectDim0, cartes
 
 void GLScene::collisionListProjectileToEnemy()
 {
-    uintptr_t objID1;
-    uintptr_t objID2;
+    //uintptr_t objID1;
+    //uintptr_t objID2;
     bool tempIsCollision;
     for (int i = 0; i < currEnemyCount; i++)
     {
-        objID1 = pointerToInt(e191Array[i]);
+        //objID1 = pointerToInt(e191Array[i]);
 
         for (int j = 0; j < currProjCount; j++)
         {
-            objID2 = pointerToInt(projArray[j]);
-            tempIsCollision = collisionEnemyToProjectile(objID1, objID2);
+            //objID2 = pointerToInt(projArray[j]);
+            //tempIsCollision = collisionEnemyToProjectile(objID1, objID2);
+            tempIsCollision = collisionObjectToObject(projArray[j], e191Array[i]);
             if (tempIsCollision)
             {
                 projArray[j]->setIsDead(tempIsCollision);
@@ -474,13 +475,15 @@ void GLScene::collisionListProjectileToEnemy()
 
 void GLScene::collisionListPlayerToEnemy()
 {
-    uintptr_t objID1;
-    uintptr_t objID2 = pointerToInt(ply);
+    //uintptr_t objID1;
+    //uintptr_t objID2 = pointerToInt(ply);
     bool tempIsCollision;
     for (int i = 0; i < currEnemyCount; i++)
     {
-        objID1 = pointerToInt(e191Array[i]);
-        tempIsCollision = collisionEnemyToPlayer(objID1, objID2);
+        //objID1 = pointerToInt(e191Array[i]);
+        //tempIsCollision = collisionEnemyToPlayer(objID1, objID2);
+
+        tempIsCollision = collisionObjectToObject(ply, e191Array[i]);
 
         if (tempIsCollision)
         {
@@ -493,17 +496,18 @@ void GLScene::collisionListPlayerToEnemy()
 
 void GLScene::collisionListProjectileToProjectile()
 {
-    uintptr_t objID1;
-    uintptr_t objID2;
+    //uintptr_t objID1;
+    //uintptr_t objID2;
     bool tempIsCollision;
     for (int i = 0; i < currProjCount; i++)
     {
-        objID1 = pointerToInt(projArray[i]);
+        //objID1 = pointerToInt(projArray[i]);
 
         for (int j = i+1; j < currProjCount; j++)
         {
-            objID2 = pointerToInt(projArray[j]);
-            tempIsCollision = collisionProjectileToProjectile(objID1, objID2);
+            //objID2 = pointerToInt(projArray[j]);
+            //tempIsCollision = collisionProjectileToProjectile(objID1, objID2);
+            tempIsCollision = collisionObjectToObject(projArray[j], projArray[i]);
             if (tempIsCollision)
             {
                 projArray[j]->setIsDead(tempIsCollision);
@@ -515,16 +519,16 @@ void GLScene::collisionListProjectileToProjectile()
 
 void GLScene::collisionListProjectileToPlayer()
 {
-    uintptr_t objID1;
-    uintptr_t objID2 = pointerToInt(ply);
+    //uintptr_t objID1;
+    //uintptr_t objID2 = pointerToInt(ply);
     bool tempIsCollision;
     for (int i = 0; i < currProjCount; i++)
     {
         if (projArray[i]->getObjectTeam() != TEAMPLAYER)
         {
-        objID1 = pointerToInt(projArray[i]);
-        tempIsCollision = collisionPlayerToProjectile(objID2, objID1);
-
+        //objID1 = pointerToInt(projArray[i]);
+        //tempIsCollision = collisionPlayerToProjectile(objID2, objID1);
+        tempIsCollision = collisionObjectToObject(ply, projArray[i]);
         if (tempIsCollision)
         {
             ply->setIsDead(tempIsCollision);
