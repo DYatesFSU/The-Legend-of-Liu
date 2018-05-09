@@ -106,6 +106,13 @@ GLint GLScene::initGL()
     cout << tmpString00 << endl;
     */
 
+    /*
+    string *tempString01[10];
+    tempString01[0] = new string;
+    cout << "00" << endl;
+    cout << tempString01[0] << endl;
+    */
+
     return true;
 }
 
@@ -419,112 +426,182 @@ bool GLScene::boxCollision (cartesian2d objectLoc0, cart2dDim objectDim0, cartes
 	return retIsCollision;
 }
 
-bool GLScene::collisionEnemyToEnemy(int inpID1, int inpID2)
+bool GLScene::collisionEnemyToEnemy(uintptr_t inpID1, uintptr_t inpID2)
 {
     cartesian2d objPos1;
     cart2dDim objDim1;
     cartesian2d objPos2;
     cart2dDim objDim2;
 
+    Enemy191T *obj1 = (Enemy191T *) inpID1;
+    Enemy191T *obj2 = (Enemy191T *) inpID2;
+
+    objPos1 = obj1->getDestPosition();
+    objDim1 = obj1->getObjectDimensions();
+    objPos2 = obj2->getPosition();
+    objDim2 = obj2->getObjectDimensions();
+
+    /*
     objPos1 = e191Array[inpID1]->getDestPosition();
     objDim1 = e191Array[inpID1]->getObjectDimensions();
     objPos2 = e191Array[inpID2]->getPosition();
     objDim2 = e191Array[inpID2]->getObjectDimensions();
+    */
     return boxCollision(objPos1, objDim1, objPos2, objDim2);
 }
 
-bool GLScene::collisionEnemyToProjectile(int inpID1, int inpID2)
+bool GLScene::collisionEnemyToProjectile(uintptr_t inpID1, uintptr_t inpID2)
 {
     cartesian2d objPos1;
     cart2dDim objDim1;
     cartesian2d objPos2;
     cart2dDim objDim2;
 
+    Enemy191T *obj1 = (Enemy191T *) inpID1;
+    Projectile *obj2 = (Projectile *) inpID2;
+
+    objPos1 = obj1->getPosition();
+    objDim1 = obj1->getObjectDimensions();
+    objPos2 = obj2->getPosition();
+    objDim2 = obj2->getObjectDimensions();
+
+    /*
     objPos1 = e191Array[inpID1]->getPosition();
     objDim1 = e191Array[inpID1]->getObjectDimensions();
     objPos2 = projArray[inpID2]->getPosition();
     objDim2 = projArray[inpID2]->getObjectDimensions();
+    */
     return boxCollision(objPos1, objDim1, objPos2, objDim2);
 }
 
-bool GLScene::collisionEnemyToPlayer(int inpID1, int inpID2)
+bool GLScene::collisionEnemyToPlayer(uintptr_t inpID1, uintptr_t inpID2)
 {
     cartesian2d objPos1;
     cart2dDim objDim1;
     cartesian2d objPos2;
     cart2dDim objDim2;
 
+    Enemy191T *obj1 = (Enemy191T *) inpID1;
+    player *obj2 = (player *) inpID2;
+
+    objPos1 = obj1->getPosition();
+    objDim1 = obj1->getObjectDimensions();
+    objPos2 = obj2->getPosition();
+    objDim2 = obj2->getObjectDimensions();
+
+    /*
     objPos1 = e191Array[inpID1]->getPosition();
     objDim1 = e191Array[inpID1]->getObjectDimensions();
     objPos2 = ply->getPosition();
     objDim2 = ply->getObjectDimensions();
+    */
 
     return boxCollision(objPos1, objDim1, objPos2, objDim2);
 }
 
-bool GLScene::collisionEnemyToWall(int inpID1, int inpID2)
+bool GLScene::collisionEnemyToWall(uintptr_t inpID1, uintptr_t inpID2)
 {
     cartesian2d objPos1;
     cart2dDim objDim1;
     cartesian2d objPos2;
     cart2dDim objDim2;
 
+    Enemy191T *obj1 = (Enemy191T *) inpID1;
+    Wall *obj2 = (Wall *) inpID2;
+
+    objPos1 = obj1->getDestPosition();
+    objDim1 = obj1->getObjectDimensions();
+    objPos2 = obj2->getPosition();
+    objDim2 = obj2->getObjectDimensions();
+
+    /*
     objPos1 = e191Array[inpID1]->getDestPosition();
     objDim1 = e191Array[inpID1]->getObjectDimensions();
     objPos2 = wallArray[inpID2]->getPosition();
     objDim2 = wallArray[inpID2]->getObjectDimensions();
+    */
+
     return boxCollision(objPos1, objDim1, objPos2, objDim2);
 }
 
-bool GLScene::collisionPlayerToWall(int inpID1, int inpID2)
+bool GLScene::collisionPlayerToWall(uintptr_t inpID1, uintptr_t inpID2)
 {
     cartesian2d objPos1;
     cart2dDim objDim1;
     cartesian2d objPos2;
     cart2dDim objDim2;
 
+    player *obj1 = (player *) inpID1;
+    Wall *obj2 = (Wall *) inpID2;
+
+    objPos1 = obj1->getDestPosition();
+    objDim1 = obj1->getObjectDimensions();
+    objPos2 = obj2->getPosition();
+    objDim2 = obj2->getObjectDimensions();
+
+    /*
     objPos1 = ply->getDestPosition();
     objDim1 = ply->getObjectDimensions();
     objPos2 = wallArray[inpID2]->getPosition();
     objDim2 = wallArray[inpID2]->getObjectDimensions();
+    */
+
     return boxCollision(objPos1, objDim1, objPos2, objDim2);
 }
 
-bool GLScene::collisionProjectileToWall(int inpID1, int inpID2)
+bool GLScene::collisionProjectileToWall(uintptr_t inpID1, uintptr_t inpID2)
 {
     cartesian2d objPos1;
     cart2dDim objDim1;
     cartesian2d objPos2;
     cart2dDim objDim2;
 
+    Projectile *obj1 = (Projectile *) inpID1;
+    Wall *obj2 = (Wall *) inpID2;
+
+    objPos1 = obj1->getPosition();
+    objDim1 = obj1->getObjectDimensions();
+    objPos2 = obj2->getPosition();
+    objDim2 = obj2->getObjectDimensions();
+
+    /*
     objPos1 = projArray[inpID1]->getPosition();
     objDim1 = projArray[inpID1]->getObjectDimensions();
     objPos2 = wallArray[inpID2]->getPosition();
     objDim2 = wallArray[inpID2]->getObjectDimensions();
+    */
+
     return boxCollision(objPos1, objDim1, objPos2, objDim2);
 }
 
 void GLScene::addEnemyListToGridMap()
 {
 
+    uintptr_t tempID;
+
     for (int i = 0; i < currEnemyCount; i++)
     {
-        addEnemyToGridMap(i);
+        tempID = pointerToInt(e191Array[i]);
+        addEnemyToGridMap(tempID);
     }
 }
 
 void GLScene::addProjectileListToGridMap()
 {
+    uintptr_t tempID;
     for (int i = 0; i < currProjCount; i++)
     {
+        tempID = pointerToInt(projArray[i]);
         addProjectileToGridMap(i);
     }
 }
 
 void GLScene::addWallListToGridMap()
 {
+    uintptr_t tempID;
     for (int i = 0; i < currWallCount; i++)
     {
+        tempID = pointerToInt(wallArray[i]);
         addWallToGridMap(i);
     }
 }
@@ -545,33 +622,49 @@ void GLScene::initGridMap(grid2dDim inpDim)
     addWallListToGridMap();
     addPlayerToGridMap();
 }
-void GLScene::addEnemyToGridMap(int inpID)
+void GLScene::addEnemyToGridMap(uintptr_t inpID)
 {
     vector < grid2d > gridPosList;
-    e191Array[inpID]->getCurrGridPos(gridPosList);
+
+    Enemy191T *obj1 = (Enemy191T *) inpID;
+    obj1->getCurrGridPos(gridPosList);
+    //e191Array[inpID]->getCurrGridPos(gridPosList);
     gridMap->addGenericElement(inpID, ENEMYTYPE, gridPosList);
 }
 
-void GLScene::addProjectileToGridMap(int inpID)
+void GLScene::addProjectileToGridMap(uintptr_t inpID)
 {
     vector < grid2d > gridPosList;
-    projArray[inpID]->getCurrGridPos(gridPosList);
+
+    Projectile *obj1 = (Projectile*) inpID;
+    obj1->getCurrGridPos(gridPosList);
+
+    //projArray[inpID]->getCurrGridPos(gridPosList);
     gridMap->addGenericElement(inpID, PROJECTILETYPE, gridPosList);
 }
 
-void GLScene::addWallToGridMap(int inpID)
+void GLScene::addWallToGridMap(uintptr_t inpID)
 {
     vector < grid2d > gridPosList;
-    wallArray[inpID]->getCurrGridPos(gridPosList);
+
+    Wall *obj1 = (Wall*) inpID;
+    obj1->getCurrGridPos(gridPosList);
+
+    //wallArray[inpID]->getCurrGridPos(gridPosList);
     gridMap->addGenericElement(inpID, WALLTYPE, gridPosList);
 }
 
-void GLScene::updateEnemyOnGridMap(int inpID)
+void GLScene::updateEnemyOnGridMap(uintptr_t inpID)
 {
     vector < grid2d > gridPosList;
     vector < grid2d > gridDestList;
-    e191Array[inpID]->getCurrGridPos(gridPosList);
-    e191Array[inpID]->getDestGridPos(gridDestList);
+
+    Enemy191T *obj1 = (Enemy191T*) inpID;
+    obj1->getCurrGridPos(gridPosList);
+    obj1->getDestGridPos(gridDestList);
+
+    //e191Array[inpID]->getCurrGridPos(gridPosList);
+    //e191Array[inpID]->getDestGridPos(gridDestList);
     gridMap->updateGenericElement(inpID, ENEMYTYPE, gridPosList, gridDestList);
 }
 
