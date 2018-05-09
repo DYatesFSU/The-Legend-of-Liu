@@ -195,3 +195,22 @@ int GLScene::windMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         }
 }
 }
+
+bool GLScene::boxCollision (cartesian2d objectLoc0, cart2dDim objectDim0, cartesian2d objectLoc1, cart2dDim objectDim1)
+{
+	//do box collision calculations
+	bool retIsCollision;
+
+	cartesian2d obj0MinBounds = objectLoc0;
+	cartesian2d obj0MaxBounds = {objectLoc0.x+objectDim0.width, objectLoc0.y+objectDim0.height};
+	cartesian2d obj1MinBounds = objectLoc1;
+	cartesian2d obj1MaxBounds = {objectLoc1.x+objectDim1.width, objectLoc1.y+objectDim1.height};
+
+	retIsCollision = true;
+	if (obj0MaxBounds.x < obj1MinBounds.x || obj0MinBounds.x > obj1MaxBounds.x)
+		retIsCollision = false;
+	if (obj0MaxBounds.y < obj1MinBounds.y || obj0MinBounds.y > obj1MaxBounds.y)
+		retIsCollision = false;
+
+	return retIsCollision;
+}
