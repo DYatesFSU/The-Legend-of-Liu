@@ -319,6 +319,16 @@ void GLScene::drawDoors()
             plx->drawDoor('s', currEnemyCount);
         glPopMatrix();
     }
+    if (lvl->roomIsExit(xLvl, yLvl))
+    {
+         glPushMatrix();
+        glScaled(1.0,1.0,1.0);
+        if (currBossCount > currEnemyCount)
+            plx->drawDoor('d', currBossCount);
+        else
+            plx->drawDoor('d', currEnemyCount);
+        glPopMatrix();
+    }
 }
 
 void GLScene::manageEnemies()
@@ -465,11 +475,11 @@ void GLScene::generateEnemies()
     {
         boss[0] = new Boss();
         currBossCount++;
-        boss[0]->bossInit(-3, 'e');
+        boss[0]->bossInit(-3, 'e', 0);
 
         boss[1] = new Boss();
         currBossCount++;
-        boss[1]->bossInit(3, 'w');
+        boss[1]->bossInit(3, 'w', 1);
     }
     else if (!lvl->roomIsStart(xLvl, yLvl))
     {
