@@ -38,6 +38,8 @@ player::player()
     objectTexture = new textureLoader[1]();
     objectTimer = new timer();
     checkDoor = '0';
+
+    isDead = false;
 }
 
 player::~player()
@@ -348,4 +350,24 @@ void player::setDestGridPos(vector<grid2d>inpPos)
 {
     classTestGridCoords = inpPos;
 }
+void player::setIsDead(bool inpBool)
+{
+    isDead = inpBool;
+}
+
+bool player::getIsDead()
+{
+    return isDead;
+}
+
+void player::modifyHealth(int inpModifier)
+{
+    objectHealth += inpModifier;
+}
+
+int player::getHealth()
+{
+    return objectHealth;
+}
+
 
