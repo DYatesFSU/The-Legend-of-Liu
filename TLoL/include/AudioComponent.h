@@ -9,16 +9,19 @@ class AudioComponent : public AudioControlsInterface
     public:
         AudioComponent();
         ~AudioComponent();
-        void play();
+        void play();                            ///
+        bool play(std::string);
         void playOnce();
+        bool playOnce(std::string);
         void restart();
         void pause();
-        bool addAudioSource(std::string, bool);
+        bool registerAudioSource(std::string);
+        //bool setActiveAudio(std::string);
 
     protected:
 
     private:
-        std::string now_playing_;
+        std::string last_played_;
         irrklang::ISoundEngine* engine_;
         std::unordered_map<std::string, irrklang::ISound*> audio_sources;
 };

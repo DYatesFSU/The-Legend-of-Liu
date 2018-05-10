@@ -214,6 +214,18 @@ void parallax::drawDoor(char c, int x)
         glTexCoord2f(Xmin,Ymax);
         glVertex3f(-.25,-2.3,-5.5f);
         break;
+    case 'd':
+        glTexCoord2f(Xmin, Ymin);
+        glVertex3f(-.5, -.5, -7.9f);
+
+        glTexCoord2f(Xmax, Ymin);
+        glVertex3f(.5, -.5, -7.9f);
+
+        glTexCoord2f(Xmax, Ymax);
+        glVertex3f(.5, .5, -7.9f);
+
+        glTexCoord2f(Xmin, Ymax);
+        glVertex3f(-.5, .5, -7.9f);
     }
 
 

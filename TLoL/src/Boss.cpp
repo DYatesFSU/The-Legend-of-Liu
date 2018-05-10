@@ -26,7 +26,7 @@ Boss::~Boss()
 
 
 
-void Boss::bossInit(double x, char s)
+void Boss::bossInit(double x, char s, int i)
 {
 
     setxPos(x);
@@ -54,7 +54,10 @@ void Boss::bossInit(double x, char s)
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
 
-    objectTexture[0].bindTexture("images/player/play.png");
+    if (i == 0)
+    objectTexture[0].bindTexture("images/banarjee.png");
+    else
+        objectTexture[0].bindTexture("images/carlos.png");
 }
 
 void Boss::drawObject()
@@ -106,10 +109,10 @@ void Boss::drawObject()
     glTexCoord3f(1, 1, 0);
     glVertex3f(vertices[1].x,vertices[1].y,vertices[1].z);
 
-    glTexCoord3f(1, 0, 0);
+    glTexCoord3f(1, 1, 0);
     glVertex3f(vertices[2].x,vertices[2].y,vertices[2].z);
 
-    glTexCoord3f(0, 0, 0);
+    glTexCoord3f(1, 0, 0);
     glVertex3f(vertices[3].x,vertices[3].y,vertices[3].z);
 
 
