@@ -92,6 +92,7 @@ class player:Model
         int playerKeys;
         void addKey();
         int getKeys();
+        void resetPos();
 
         bool getFiring();
         void setFiring(bool);
@@ -111,6 +112,8 @@ class player:Model
         double scaleSizeX;
         double scaleSizeY;
         double scaleSizeZ;
+
+
 
         int spriteX, spriteY;
         const int sprHeight = 8;

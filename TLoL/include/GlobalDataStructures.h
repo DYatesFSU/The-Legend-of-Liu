@@ -4,6 +4,12 @@
 //#include <vector>
 #include <queue>
 
+const int ENEMYTYPE = 1;
+const int WALLTYPE = 0;
+const int PLAYERTYPE = 2;
+const int PROJECTILETYPE = 3;
+const int TYPEVARIETY = 4;
+
 struct cartesian3d
 {
     double x;
