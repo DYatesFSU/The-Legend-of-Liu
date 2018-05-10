@@ -38,6 +38,10 @@ const int PLAYERID = 0;
 const int TEAMPLAYER = 0;
 const int NOTTEAMPLAYER = 1;
 
+const int MAXPLAYERHEALTH = 7;
+const int MAXBOSSHEALTH = 10;
+const int KILLSTREAKLIMIT = 15;
+
 
 //Model *modelTeapot = new Model();
 Inputs *KbMs = new Inputs();
@@ -258,6 +262,9 @@ void GLScene::mainGameLogic()
     cleanProjectileList();
     cleanPlayerList();
     cleanBossList();
+
+    managePlayerKill();
+    ui->setHealth(ply->getHealth());
 }
 
 
@@ -364,7 +371,8 @@ void GLScene::manageBoss()
                     delete floor1;
                     xLvl = 0;
                     yLvl = 2;
-                    ui->setHealth(2);
+                    ply->modifyHealth(2);
+                    ui->setHealth(ply->getHealth());
                     ui->resetKeys();
                     ply->resetPos();
 
@@ -400,7 +408,9 @@ void GLScene::manageProj()
                 projArray[j - 1] = projArray[j];
             currProjCount--;
         }
-    projArray[i]->drawProj();
+        projArray[i]->doObjectLogic();
+        projArray[i]->drawObject();
+    //projArray[i]->drawProj();
     }
 }
 
@@ -931,6 +941,7 @@ void GLScene::cleanEnemyList()
             delete e191Array[i];
             removeArrayElement(e191Array, i, currEnemyCount);
             currEnemyCount--;
+            ply->setDidKill(true);
         }
     }
 }
@@ -952,9 +963,9 @@ void GLScene::cleanPlayerList()
 {
     if(ply->getIsDead())
     {
-        ui->setHealth(-1);
         ply->setIsDead(false);
         ply->modifyHealth(-1);
+        ui->setHealth(ply->getHealth());
         if (ply->getHealth() < 0)
         {
            men->state = 7;
@@ -975,10 +986,31 @@ void GLScene::cleanBossList()
                 delete boss[i];
                 removeArrayElement(boss, i, currBossCount);
                 currBossCount--;
+                ply->setDidKill(true);
+            }
+        }
+    }
+    //managePlayerKill();
+}
+
+void GLScene::managePlayerKill()
+{
+    if (ply->getDidKill())
+    {
+        ply->setDidKill(false);
+        ply->modifyKills(1);
+        if (ply->getKills() > KILLSTREAKLIMIT)
+        {
+            ply->setKills(0);
+            if (ply->getHealth() < MAXPLAYERHEALTH)
+            {
+                ply->modifyHealth(1);
+                ui->setHealth(ply->getHealth());
             }
         }
     }
 }
+
 
 
 template <class T>

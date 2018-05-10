@@ -3,10 +3,14 @@
 
 using namespace std;
 
+const double VELOCITYSCALE = 0.006;
+const double INITIALSIZESCALE = 0.33;
+
 Projectile::Projectile()
 {
     //ctor
     isDead = false;
+    objectRotation = 0;
 }
 
 Projectile::~Projectile()
@@ -26,22 +30,19 @@ void Projectile::projInit(float x, float y, char s, int inpProjTeam)
     switch (s)
     {
         case 'n':
-        setyVel(0.006);
+        setyVel(VELOCITYSCALE);
         break;
         case 's':
-        setyVel(-0.006);
+        setyVel(-VELOCITYSCALE);
         break;
         case 'e':
-        setxVel(0.006);
+        setxVel(VELOCITYSCALE);
         break;
         case 'w':
-        setxVel(-0.006);
+        setxVel(-VELOCITYSCALE);
         break;
     }
     lifeTime->start();
-
-
-
 
     vertices[0].x = 0.0;vertices[0].y = 0.0;vertices[0].z = -1.0;
     vertices[1].x = 1.0;vertices[1].y = 0.0;vertices[1].z = -1.0;
@@ -54,23 +55,44 @@ void Projectile::projInit(float x, float y, char s, int inpProjTeam)
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
 
-    objectTexture[0].bindTexture("images/player/play.png");
+    objectTexture[0].bindTexture("images/projectile.png");
 
     objectTeam = inpProjTeam;
+    objectRotation = 0;
+    isDead = false;
 
 }
 
-void Projectile::drawProj()
+void Projectile::doObjectLogic()
 {
     setxPos(getxVel());
     setyPos(getyVel());
+    rotateObject();
+}
 
-
+void Projectile::drawObject()
+{
     glPushMatrix();
 
-    glTranslated(getxPos(), getyPos(), -5);
+    //glRotated(objectRotation, 0, 0, 1);
 
-    glScaled(.33, .33, .33);
+    glTranslated(getxPos(), getyPos(), -5);
+    //glTranslated(objectDimensions.width/2, objectDimensions.height/2, -5);
+
+    glTranslated(INITIALSIZESCALE/2, INITIALSIZESCALE/2, 0);
+
+    glRotated(objectRotation, 0, 0, 1);
+    //glRotated(objectRotation, 0, 1, 0);
+    //glRotated(objectRotation, 1, 0, 0);
+
+    //glTranslated(INITIALSIZESCALE/2 * VELOCITYSCALE, INITIALSIZESCALE/2 * VELOCITYSCALE, -5);
+    //glTranslated(VELOCITYSCALE, VELOCITYSCALE, 0);
+    //double xthing = -0.15;
+    //double ything = -0.15;
+    //glTranslated(xthing, ything, 0);
+    glTranslated(-INITIALSIZESCALE/2, -INITIALSIZESCALE/2, 0);
+
+    glScaled(INITIALSIZESCALE, INITIALSIZESCALE, INITIALSIZESCALE);
 
     objectTexture[0].binder();
 
@@ -179,4 +201,13 @@ void Projectile::setObjectTeam(int inpTeam)
 int Projectile::getObjectTeam()
 {
     return objectTeam;
+}
+
+void Projectile::rotateObject()
+{
+    objectRotation -= 1.5;
+    if (objectRotation > 360)
+        objectRotation -= 360;
+    if (objectRotation < -360)
+        objectRotation += 360;
 }

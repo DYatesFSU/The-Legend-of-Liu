@@ -83,6 +83,8 @@ class GLScene
         void collisionListProjectileToBoss();
         void collisionListPlayerToBoss();
 
+        void managePlayerKill();
+
         template <class T, class U>
         bool collisionObjectToObject(T *inpObj1, U *inpObj2);
 
