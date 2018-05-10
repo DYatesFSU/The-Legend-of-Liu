@@ -66,6 +66,7 @@ timer *projTimer = new timer();
 Wall *wallArray[100];
 int currWallCount = 0;
 
+
 Map *gridMap;
 //These are used to update the list when an object is destroyed
 bool updateEnemyMapList = false;
@@ -153,38 +154,30 @@ GLint GLScene::drawGLScene()
     }
     else if (men->state == 2)
     {
-    glPushMatrix();
-    glScaled(3.33,3.33,1.0);
-    plx->drawSquare(screenWidth,screenHeight);
-    glPopMatrix();
+        glPushMatrix();
+        glScaled(3.33,3.33,1.0);
+        plx->drawSquare(screenWidth,screenHeight);
+        glPopMatrix();
 
-    glPushMatrix();
-    if (ply->checkMoving())
-        ply->actions(1);
-    else
-        ply->actions(0);
+        glPushMatrix();
+        if (ply->checkMoving())
+            ply->actions(1);
+        else
+            ply->actions(0);
 
-    if (ply->checkDoor != '0')
-    {
-        if (ply->checkDoor == 'w' && lvl->getwDoor(xLvl, yLvl))
+        if (!currEnemyCount && !currBossCount)
+        {
+            if (ply->checkDoor == 'w' && lvl->getwDoor(xLvl, yLvl))
+                transition('w');
+            else if (ply->checkDoor == 'e' && lvl->geteDoor(xLvl, yLvl))
+                transition('e');
+            else if (ply->checkDoor == 's' && lvl->getsDoor(xLvl, yLvl))
+                transition('s');
+            else if (ply->checkDoor == 'n' && lvl->getnDoor(xLvl, yLvl))
+                transition('n');
+            else ply->checkDoor = '0';
+        } else ply->checkDoor = '0';
 
-        {
-            transition('w');
-        }
-        else if (ply->checkDoor == 'e' && lvl->geteDoor(xLvl, yLvl))
-        {
-            transition('e');
-        }
-        else if (ply->checkDoor == 's' && lvl->getsDoor(xLvl, yLvl))
-        {
-            transition('s');
-        }
-        else if (ply->checkDoor == 'n' && lvl->getnDoor(xLvl, yLvl))
-        {
-            transition('n');
-        }
-         else   ply->checkDoor = '0';
-    }
 
     checkProj(TEAMPLAYER);
 
@@ -198,7 +191,7 @@ GLint GLScene::drawGLScene()
 
 	collisionListPlayerToEnemy();
     collisionListProjectileToEnemy();
-    collisionListProjectileToProjectile();
+    //collisionListProjectileToProjectile();
     collisionListProjectileToPlayer();
 
     collisionListProjectileToBoss();

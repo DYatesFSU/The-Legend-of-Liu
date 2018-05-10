@@ -98,6 +98,7 @@ void Levels::LevelInit()
 
 }
 
+
 int Levels::getMaxE(int x, int y)
 {
     return rooms[x][y].maxEnemies;

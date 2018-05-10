@@ -110,8 +110,6 @@ void Enemy191T::objectInit()
 void Enemy191T::updateEnemy(player* ply)
 {
 
-    objectTimer->getTicks();
-
     if (objectTimer->getTicks() >= waitTime)
     {
         objectTimer->reset();
@@ -217,6 +215,8 @@ void Enemy191T::setyVel(double y)
 {
     yVel = y;
 }
+
+
 cartesian2d Enemy191T::getPosition()
 {
     cartesian2d retCoord = {Xpos, Ypos};
@@ -228,6 +228,7 @@ cartesian2d Enemy191T::getDestPosition()
     cartesian2d retCoord = {destXPos, destYPos};
     return retCoord;
 }
+
 void Enemy191T::setPosition(cartesian2d inpCoord)
 {
     Xpos = inpCoord.x;
@@ -264,6 +265,7 @@ void Enemy191T::setDestGridPos(vector<grid2d>inpPos)
 {
     classTestGridCoords = inpPos;
 }
+
 
 void Enemy191T::setIsDead(bool inpBool)
 {

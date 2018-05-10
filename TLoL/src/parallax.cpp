@@ -2,7 +2,11 @@
 #include <textureLoader.h>
 
 //textureLoader *bTex = new textureLoader();
-textureLoader levels[5][5];
+int levels[10][10];
+textureLoader floorStyleA;
+textureLoader floorStyleB;
+textureLoader floorStyleC;
+textureLoader floorStyleD;
 
 parallax::parallax()
 {
@@ -21,20 +25,34 @@ parallax::~parallax()
 void parallax::drawSquare(float width, float height)
 {
     glColor3f(1.0,1.0,1.0);
-    levels[xLevel][yLevel].binder();
+    switch (levels[xLevel][yLevel])
+    {
+    case 0:
+        floorStyleA.binder();
+        break;
+    case 1:
+        floorStyleB.binder();
+        break;
+    case 2:
+        floorStyleC.binder();
+        break;
+    case 3:
+        floorStyleD.binder();
+        break;
+    }
     glBegin(GL_POLYGON);
-        glTexCoord2f(Xmin,Ymin);
-        glVertex3f(-width/height,-1,-8.0f);
+    glTexCoord2f(Xmin,Ymin);
+    glVertex3f(-width/height,-1,-8.0f);
 
-        glTexCoord2f(Xmax,Ymin);
-        glVertex3f(width/height,-1,-8.0f);
+    glTexCoord2f(Xmax,Ymin);
+    glVertex3f(width/height,-1,-8.0f);
 
-        glTexCoord2f(Xmax,Ymax);
-        glVertex3f(width/height,1,-8.0f);
+    glTexCoord2f(Xmax,Ymax);
+    glVertex3f(width/height,1,-8.0f);
 
-        glTexCoord2f(Xmin,Ymax);
-        glVertex3f(-width/height,1,-8.0f);
-     glEnd();
+    glTexCoord2f(Xmin,Ymax);
+    glVertex3f(-width/height,1,-8.0f);
+    glEnd();
 }
 
 void parallax::parallaxInit(char *FileName)
@@ -42,13 +60,37 @@ void parallax::parallaxInit(char *FileName)
     //bTex->binder();
    // bTex->bindTexture(FileName);
 
-    levels[2][2].bindTexture("images/bak.jpg");
-    levels[3][2].bindTexture("images/m.png");
-    levels[3][3].bindTexture("images/grass.png");
-    levels[2][3].bindTexture("images/2.jpg");
-    levels[1][2].bindTexture("images/front.jpg");
-    levels[1][1].bindTexture("images/left.jpg");
-    levels[2][1].bindTexture("images/right.jpg");
+   for (int i = 0; i < 10; i++)
+    {
+        for (int j = 0; j < 10; j++)
+        {
+            int x = rand() % 4;
+            switch (x)
+            {
+            case 0:
+                levels[i][j] = 0;
+                break;
+
+            case 1:
+
+                levels[i][j] = 1;
+                break;
+
+            case 2:
+                levels[i][j] = 2;
+                break;
+            case 3:
+                levels[i][j] = 3;
+                break;
+            }
+
+
+        }
+    }
+    floorStyleA.bindTexture("images/wood.jpg");
+    floorStyleB.bindTexture("images/tiles.png");
+    floorStyleC.bindTexture("images/stone.jpg");
+    floorStyleD.bindTexture("images/dirt.jpg");
 }
 
 void parallax::scroll(bool Auto, string dir, float speed)
