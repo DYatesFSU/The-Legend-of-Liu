@@ -53,7 +53,100 @@ void parallax::drawSquare(float width, float height)
     glTexCoord2f(Xmin,Ymax);
     glVertex3f(-width/height,1,-8.0f);
     glEnd();
+
+    glBegin(GL_POLYGON);
+    glTexCoord2f(Xmin,Ymin);
+    glVertex3f(-.5,-1,0.0f);
+
+    glTexCoord2f(Xmax,Ymin);
+    glVertex3f(-.5,1,0.0f);
+
+    glTexCoord2f(Xmax,Ymax);
+    glVertex3f(-1.5,1,-8.0f);
+
+    glTexCoord2f(Xmin,Ymax);
+    glVertex3f(-1.5,-1,-8.0f);
+    glEnd();
+
+    drawWalls();
 }
+
+void parallax::drawWalls()
+{
+    drawSWall();
+    drawNWall();
+    drawEWall();
+    drawWWall();
+}
+
+void parallax::drawWWall()
+{
+    glBegin(GL_POLYGON);
+    glTexCoord2f(Xmin,Ymin);
+    glVertex3f(-.5,-1,0.0f);
+
+    glTexCoord2f(Xmax,Ymin);
+    glVertex3f(-.5,1,0.0f);
+
+    glTexCoord2f(Xmax,Ymax);
+    glVertex3f(-1.5,1,-8.0f);
+
+    glTexCoord2f(Xmin,Ymax);
+    glVertex3f(-1.5,-1,-8.0f);
+    glEnd();
+}
+
+void parallax::drawNWall()
+{
+    glBegin(GL_POLYGON);
+    glTexCoord2f(Xmin,Ymin);
+    glVertex3f(-2,1,0.0f);
+
+    glTexCoord2f(Xmax,Ymin);
+    glVertex3f(2,1,0.0f);
+
+    glTexCoord2f(Xmax,Ymax);
+    glVertex3f(2,.7,-8.0f);
+
+    glTexCoord2f(Xmin,Ymax);
+    glVertex3f(-2,.7,-8.0f);
+    glEnd();
+}
+
+void parallax::drawSWall()
+{
+    glBegin(GL_POLYGON);
+    glTexCoord2f(Xmin,Ymin);
+    glVertex3f(-2,-.8,0.0f);
+
+    glTexCoord2f(Xmax,Ymin);
+    glVertex3f(2,-.8,0.0f);
+
+    glTexCoord2f(Xmax,Ymax);
+    glVertex3f(2,-.8,-8.0f);
+
+    glTexCoord2f(Xmin,Ymax);
+    glVertex3f(-2,-.8,-8.0f);
+    glEnd();
+}
+
+void parallax::drawEWall()
+{
+    glBegin(GL_POLYGON);
+    glTexCoord2f(Xmin,Ymin);
+    glVertex3f(.5,-1,0.0f);
+
+    glTexCoord2f(Xmax,Ymin);
+    glVertex3f(.5,1,0.0f);
+
+    glTexCoord2f(Xmax,Ymax);
+    glVertex3f(1.5,1,-8.0f);
+
+    glTexCoord2f(Xmin,Ymax);
+    glVertex3f(1.5,-1,-8.0f);
+    glEnd();
+}
+
 
 void parallax::parallaxInit(char *FileName)
 {
