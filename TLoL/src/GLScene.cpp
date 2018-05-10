@@ -189,6 +189,19 @@ GLint GLScene::drawGLScene()
     ui->drawUI();
 
 	glPopMatrix();
+
+	collisionListPlayerToEnemy();
+    collisionListProjectileToEnemy();
+    collisionListProjectileToProjectile();
+    collisionListProjectileToPlayer();
+
+    collisionListProjectileToBoss();
+    collisionListPlayerToBoss();
+
+    cleanEnemyList();
+    cleanProjectileList();
+    cleanPlayerList();
+    cleanBossList();
     }
       else if(men->state == 3)
     {
@@ -208,6 +221,7 @@ GLint GLScene::drawGLScene()
     else if (men->state== 5)
     {
 
+    /*
 	collisionListPlayerToEnemy();
     collisionListProjectileToEnemy();
     collisionListProjectileToProjectile();
@@ -220,6 +234,7 @@ GLint GLScene::drawGLScene()
     cleanProjectileList();
     cleanPlayerList();
     cleanBossList();
+    */
 
 
         //cout<<"Pause Menu"<<endl;
