@@ -69,6 +69,9 @@ class Map
         void displayMap();
         void displayElement(grid2d inpCoord);
 
+        Map generateBasicCrudeMap(grid2dDim inpDim, grid2d inpStartPos, vector < grid2d > inpEndPoss, double inpWallToAreaRatio, double inpEnemyToAreaRatio);
+        int getBasicCrudeElement(grid2d inpCoord);
+
     protected:
 
     private:
@@ -111,6 +114,11 @@ class Map
 
         template <class T>
         void display1DPriorQueue(priority_queue <T> inpQueue, string inpDelim = "");
+
+        void expandGridSquare(grid2d inpCoord, grid2dDim inpDim, vector < grid2d > &retExpansion);
+
+        template<class T>
+        void unionVectors(vector <T> frontVec, vector <T> backVec, vector <T> &retVec);
 
         grid2dDim classMapDimensions;
         vector < vector < vector < vector < uintptr_t > > > > classMainMap00;
