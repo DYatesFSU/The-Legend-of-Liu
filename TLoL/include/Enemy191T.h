@@ -50,7 +50,7 @@ class Enemy191T
         textureLoader *objectTexture;
         timer *objectTimer;
 
-        void updateEnemy(player* ply);
+        void updateEnemy(cartesian2d inpTargetLoc);
         cartesian2d getPosition();
         cartesian2d getDestPosition();
         void setPosition(cartesian2d inpCoord);
