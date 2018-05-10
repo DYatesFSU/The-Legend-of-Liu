@@ -230,6 +230,14 @@ void Inputs::keyPressed(Menu* menu)
         {
             menu->state =2;     // set back to game state
         }
+        else if (menu->state == 6)
+        {
+            menu->state = 1;
+        }
+        else if (menu->state == 7)
+        {
+            menu->state = 1;
+        }
         break;
 
     case 0x51:                    // Q key

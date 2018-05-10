@@ -234,6 +234,24 @@ GLint GLScene::drawGLScene()
         men->DrawMenu(screenWidth,screenHeight);
         glPopMatrix();
     }
+    else if (men->state == 6)
+    {
+            men->MenuInit("images/win.jpg");
+
+            glPushMatrix();
+            glScaled(3.33,3.33,1.0);
+            men->DrawMenu(screenWidth,screenHeight);
+            glPopMatrix();
+    }
+    else if(men->state == 7)
+    {
+        men->MenuInit("images/loss.jpg");
+
+            glPushMatrix();
+            glScaled(3.33,3.33,1.0);
+            men->DrawMenu(screenWidth,screenHeight);
+            glPopMatrix();
+    }
 
 }
 
@@ -332,7 +350,8 @@ void GLScene::manageBoss()
             if (ply->getxPos() < .5 && ply->getxPos() > -.5 && ply->getyPos() < .5 && ply->getyPos() > -.5)
             {
                 if (lvl == floor2)
-                    exit(0);
+                  men->state = 6;
+                  //exit(0);
                 else
                 {
                     lvl = floor2;
@@ -344,6 +363,7 @@ void GLScene::manageBoss()
                     ply->resetPos();
 
                 }
+                //men->state = 6;
             }
         }
     }
@@ -931,7 +951,7 @@ void GLScene::cleanPlayerList()
         ply->modifyHealth(-1);
         if (ply->getHealth() < 0)
         {
-            exit(0);
+           men->state = 7;
         }
     }
 }
