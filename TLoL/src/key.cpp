@@ -24,7 +24,7 @@ void key::keyInit()
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
 
-    objectTexture[0].bindTexture("images/player/play.png");
+    objectTexture[0].bindTexture("images/test.png");
 }
 
 void key::drawKey()
