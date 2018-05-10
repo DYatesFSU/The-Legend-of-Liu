@@ -26,11 +26,13 @@
 #include <Menu.h>
 #include <Fonts.h>
 
+/*
 const int ENEMYTYPE = 1;
 const int WALLTYPE = 0;
 const int PLAYERTYPE = 2;
 const int PROJECTILETYPE = 3;
 const int TYPEVARIETY = 4;
+*/
 const int PLAYERID = 0;
 
 const int TEAMPLAYER = 0;
@@ -863,76 +865,16 @@ void GLScene::updatePlayerOnGridMap()
     gridMap->updateGenericElement(PLAYERID, PLAYERTYPE, gridPosList, gridDestList);
 }
 
-void GLScene::generateMazeRandom(grid2dDim inpDim, grid2d inpStartPos, vector<grid2d>inpEndPoss, double inpWallToAreaRatio, double inpEnemyToAreaRatio)
+template<class T>
+void GLScene::unionVectors(vector <T> frontVec, vector <T> backVec, vector <T> &retVec)
 {
-    Map tempGridMaze;
-    vector <grid2d> tempLocs;
-    grid2d tempLoc;
-    //tempGridMaze = new Map();
-    tempGridMaze.initMap(inpDim, TYPEVARIETY);
-    for (int i = 0; i < inpDim.width; i++)
+    for (int i = 0; i < backVec.size(); i++)
     {
-        tempLocs.clear();
-        tempLoc = {i, 0};
-        tempLocs.push_back(tempLoc);
-
-        //if not end position or start positions
-        if (searchVector(inpEndPoss, tempLoc) == -1 && !(tempLoc == inpStartPos) )
-            tempGridMaze.addGenericElement(WALLTYPE, 0, tempLocs);
+        if (searchVector(frontVec, backVec.at(i)) == -1)
+            frontVec.push_back(backVec.at(i));
     }
-    tempLocs.clear();
 
-    for (int i = 0; i < inpDim.width; i++)
-    {
-        tempLocs.clear();
-        tempLoc = {i, inpDim.height - 1};
-        tempLocs.push_back(tempLoc);
-
-        //if not end position or start positions
-        if (searchVector(inpEndPoss, tempLoc) == -1 && !(tempLoc == inpStartPos) )
-            tempGridMaze.addGenericElement(WALLTYPE, 0, tempLocs);
-    }
-    tempLocs.clear();
-
-    for (int i = 1; i < inpDim.height - 1; i++)
-    {
-        tempLocs.clear();
-        tempLoc = {0, i};
-        tempLocs.push_back(tempLoc);
-
-        //if not end position or start positions
-        if (searchVector(inpEndPoss, tempLoc) == -1 && !(tempLoc == inpStartPos) )
-            tempGridMaze.addGenericElement(WALLTYPE, 0, tempLocs);
-    }
-    tempLocs.clear();
-
-    for (int i = 1; i < inpDim.height - 1; i++)
-    {
-        tempLocs.clear();
-        tempLoc = {inpDim.width - 1, i};
-        tempLocs.push_back(tempLoc);
-
-        //if not end position or start positions
-        if (searchVector(inpEndPoss, tempLoc) == -1 && !(tempLoc == inpStartPos) )
-            tempGridMaze.addGenericElement(WALLTYPE, 0, tempLocs);
-    }
-    tempLocs.clear();
-
-    /*
-    for (int i = 1; i < inpDim.height - 1; i++)
-    {
-        tempLocs.clear();
-        tempLoc = {inpDim.width - 1, i};
-        tempLocs.push_back(tempLoc);
-
-        //if not end position or start positions
-        if (searchVector(inpEndPoss, tempLoc) == -1 && tempLoc != inpStartPos )
-            tempGridMaze.addGenericElement(WALLTYPE, 0, tempLocs);
-    }
-    tempLocs.clear();
-    */
-
-    //tempGridMaze.addGenericElement(0, WALLTYPE, tempLocs);
+    retVec = frontVec;
 }
 
 
