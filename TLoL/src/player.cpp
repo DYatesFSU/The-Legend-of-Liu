@@ -40,6 +40,8 @@ player::player()
     checkDoor = '0';
 
     isDead = false;
+    killedObject = false;
+    kills = 0;
 }
 
 player::~player()
@@ -376,4 +378,28 @@ int player::getHealth()
     return objectHealth;
 }
 
+void player::setDidKill(bool inpBool)
+{
+    killedObject = inpBool;
+}
+
+bool player::getDidKill()
+{
+    return killedObject;
+}
+
+int player::getKills()
+{
+    return kills;
+}
+
+void player::modifyKills(int inpModifier)
+{
+    kills += inpModifier;
+}
+
+void player::setKills(int inpSetter)
+{
+    kills = inpSetter;
+}
 

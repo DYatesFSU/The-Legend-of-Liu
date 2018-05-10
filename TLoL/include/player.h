@@ -105,6 +105,13 @@ class player:Model
         void modifyHealth(int inpModifier);
         int getHealth();
 
+        void setDidKill(bool inpBool);
+        bool getDidKill();
+
+        int getKills();
+        void modifyKills(int inpModifier);
+        void setKills(int inpSetter);
+
     protected:
 
     private:
@@ -135,6 +142,8 @@ class player:Model
 
         bool isDead;
         int objectHealth = 5;
+        bool killedObject;
+        int kills;
 
         /*
         char checkDoor;
@@ -145,11 +154,6 @@ class player:Model
         char getFiringDir();
         void setFiringDir(char x);
         */
-
-
-    protected:
-
-    private:
         float xPos = 0, yPos = 0, xVel = 0, yVel = 0;
         bool isFiring;
         char firingDir;

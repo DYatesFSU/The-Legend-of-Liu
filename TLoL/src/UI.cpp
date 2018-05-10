@@ -154,7 +154,8 @@ int UI::getHealth()
 
 void UI::setHealth(int hp)
 {
-    health += hp;
+    //health += hp;
+    health = hp;
 }
 
 void UI::addKey()
