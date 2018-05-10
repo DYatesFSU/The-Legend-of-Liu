@@ -93,7 +93,11 @@ GLScene::GLScene()
     audio_->registerAudioSource("audio/black.ogg");
 
     // Register SoundFX
-    audio_->registerAudioSource("audio/blast.ogg");
+    audio_->registerAudioSource("audio/fx_blast.ogg");
+    audio_->registerAudioSource("audio/fx_damage_taken.mp3");
+    audio_->registerAudioSource("audio/fx_found_key.mp3");
+    audio_->registerAudioSource("audio/fx_you_lose.mp3");
+    audio_->registerAudioSource("audio/fx_zombie_death.mp3");
 
     //e191Array = new Enemy191T[10];
 //    e191Array = NULL;
@@ -217,6 +221,7 @@ GLint GLScene::drawGLScene()
             glScaled(3.33,3.33,1.0);
             men->DrawMenu(screenWidth,screenHeight);
             glPopMatrix();
+            audio_->play("audio/fx_you_lose.mp3");
     }
 
 }
@@ -344,7 +349,7 @@ void GLScene::checkProj(int inpTeam)
         projArray[currProjCount] = new Projectile();
         projArray[currProjCount]->projInit(ply->getxPos(), ply->getyPos(), ply->getFiringDir(), inpTeam);
         currProjCount++;
-        audio_->playOnce("audio/blast.ogg");
+        audio_->playOnce("audio/fx_blast.ogg");
     }
 }
 
@@ -646,6 +651,7 @@ void GLScene::collisionListPlayerToEnemy()
 
         if (tempIsCollision)
         {
+            audio_->play("audio/fx_damage_taken");
             ply->setIsDead(tempIsCollision);
             e191Array[i]->setIsDead(tempIsCollision);
         }
