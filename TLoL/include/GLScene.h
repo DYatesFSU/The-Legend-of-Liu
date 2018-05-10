@@ -71,6 +71,9 @@ class GLScene
     private:
         AudioComponent* audio_;
         //Enemy191T *e191Array;
+
+        void mainGameLogic();
+
         bool boxCollision (cartesian2d objectLoc0, cart2dDim objectDim0, cartesian2d objectLoc1, cart2dDim objectDim1);
         void collisionListPlayerToEnemy();
         void collisionListProjectileToEnemy();
