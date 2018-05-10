@@ -102,6 +102,10 @@ void Levels::Floor2Init()
     rooms[3][2].wDoor = true;
     rooms[3][2].eDoor = true;
 
+    rooms[3][0].exists = true;
+    rooms[3][0].wDoor = true;
+    rooms[3][0].eDoor = true;
+
     rooms[4][2].exists = true;
     rooms[4][2].wDoor = true;
     rooms[4][2].sDoor = true;
