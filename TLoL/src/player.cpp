@@ -93,12 +93,12 @@ void player::actions(int action)
 
             if (getxVel() + getxPos() < -3.9)
              {
-                 if (getyVel() + getyPos() > -.1 && getyVel() + getyPos() < .1)
+                 if (getyVel() + getyPos() > -.3 && getyVel() + getyPos() < .3)
                     checkDoor = 'w';
              }
             else if (getxVel() + getxPos() > 2.9)
             {
-                if (getyVel() + getyPos() > -.1 && getyVel() + getyPos() < .1)
+                if (getyVel() + getyPos() > -.3 && getyVel() + getyPos() < .3)
                 {
                     checkDoor = 'e';
                 }
@@ -112,12 +112,12 @@ void player::actions(int action)
 
             if (getyVel() + getyPos() < -1.9)
              {
-                 if (getxVel() + getxPos() > -.2 && getxVel() + getxPos() < .2)
+                 if (getxVel() + getxPos() > -.3 && getxVel() + getxPos() < .3)
                     checkDoor = 's';
              }
             else if (getyVel() + getyPos() > .9)
             {
-                if (getxVel() + getxPos() > -.2 && getxVel() + getxPos() < .2)
+                if (getxVel() + getxPos() > -.3 && getxVel() + getxPos() < .3)
                     checkDoor = 'n';
             }
             else

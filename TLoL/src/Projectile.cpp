@@ -42,6 +42,7 @@ void Projectile::projInit(float x, float y, char s, int inpProjTeam)
 
 
 
+
     vertices[0].x = 0.0;vertices[0].y = 0.0;vertices[0].z = -1.0;
     vertices[1].x = 1.0;vertices[1].y = 0.0;vertices[1].z = -1.0;
     vertices[2].x = 1.0;vertices[2].y = 1.0;vertices[2].z = -1.0;
