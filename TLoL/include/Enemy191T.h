@@ -7,6 +7,8 @@
 class textureLoader;
 class timer;
 
+using namespace std;
+
 class Enemy191T
 {
     public:
@@ -47,7 +49,11 @@ class Enemy191T
         int sprRenderCount;
         */
 
-        textureLoader *objectTexture;
+        //textureLoader *objectTexture;
+        vector < vector < textureLoader > > *objectTexture;
+        int spriteCharacter;
+        int spriteActionType;
+        int spriteX;
         timer *objectTimer;
 
         void updateEnemy(cartesian2d inpTargetLoc);
@@ -68,6 +74,10 @@ class Enemy191T
     protected:
 
     private:
+        void bindObjectTextures(int inpCharacterType);
+        void manageSprite();
+        void manageGenericTimer();
+
         double scaleSizeX;
         double scaleSizeY;
         double scaleSizeZ;
@@ -84,6 +94,9 @@ class Enemy191T
         cart2dDim objectDimensions = {.50, .50};
 
         bool isDead;
+
+        int objectDirection;
+        int genericTimerCounter;
 
 };
 

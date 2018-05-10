@@ -32,19 +32,25 @@ Enemy191T::Enemy191T()
     xVel = 0;
     yVel = 0;
 
-    objectTexture = new textureLoader[11]();
+    //objectTexture = new textureLoader[11]();
+    //objectTexture = new **textureLoader[2]();
+
+    objectTexture = new vector < vector < textureLoader > > ();
+
     objectTimer = new timer();
 
 
     objectTimer->start();
 
     isDead = false;
+    objectDirection = 0;
 }
 
 Enemy191T::~Enemy191T()
 {
     //dtor
-    delete []objectTexture;
+    //delete []objectTexture;
+    delete objectTexture;
     delete objectTimer;
 }
 
@@ -55,7 +61,7 @@ void Enemy191T::drawObject()
 
     cartesian2d objOrient[4];
 
-    orientDirection(0, objOrient);
+    orientDirection(objectDirection, objOrient);
 
     glPushMatrix();
 
@@ -63,7 +69,11 @@ void Enemy191T::drawObject()
 
     glScaled(1.00, 1.00, 1.00);
 
-    objectTexture[0].binder();
+    //objectTexture[0].binder();
+    objectTexture->back().at(spriteX).binder();
+
+    if (genericTimerCounter % 30 == 0)
+        manageSprite();
 
     glBegin(GL_QUADS);
 
@@ -94,18 +104,75 @@ void Enemy191T::objectInit()
     objectTimer->start();
     waitTime = (rand() % 100) + 200;
 
-    objectTexture[0].bindTexture("images/boy1.png");
-    objectTexture[1].bindTexture("images/girl1.png");
-    objectTexture[2].bindTexture("images/boy1.png");
-    objectTexture[3].bindTexture("images/girl1.png");
-    objectTexture[4].bindTexture("images/girl1.png");
-    objectTexture[5].bindTexture("images/boy1.png");
-    objectTexture[6].bindTexture("images/girl1.png");
-    objectTexture[7].bindTexture("images/boy1.png");
-    objectTexture[8].bindTexture("images/girl1.png");
-    objectTexture[9].bindTexture("images/boy1.png");
-    objectTexture[10].bindTexture("images/girl1.png");
+
+    //srand(time(NULL));
+    spriteCharacter = rand() % 2;
+
+    spriteX = 0;
+    bindObjectTextures(spriteCharacter);
+
+    genericTimerCounter = 0;
+
+
 }
+
+void Enemy191T::bindObjectTextures(int inpCharacterType)
+{
+    string actionType;
+    string suffix;
+    string prefix0;
+    string strIndex;
+
+    string tempCurrentAction;
+
+    int index;
+
+    textureLoader tempTL0;
+    vector < textureLoader > tempTL1;
+
+    //prefix0 = "images/male/Walk (";
+    //prefix1 = "images/female/Walk (";
+    suffix = ").png";
+
+    switch (inpCharacterType)
+    {
+        case 0:
+            prefix0 = "images/male/Walk (";
+            break;
+        case 1:
+            prefix0 = "images/female/Walk (";
+            break;
+    }
+
+    objectTexture->push_back(tempTL1);
+
+    for (int i = 0; i < 10; i++)
+    {
+        strIndex = to_string(i+1);
+        tempCurrentAction = prefix0;
+        tempCurrentAction += strIndex;
+        tempCurrentAction += suffix;
+
+        objectTexture->back().push_back(tempTL0);
+        objectTexture->back().back().bindTexture(const_cast<char*>(tempCurrentAction.c_str()));
+    }
+}
+
+void Enemy191T::manageSprite()
+{
+    spriteX++;
+    if (spriteX >= objectTexture->back().size())
+        spriteX = 0;
+}
+
+void Enemy191T::manageGenericTimer()
+{
+    genericTimerCounter++;
+    if (genericTimerCounter >= 1000000)
+        genericTimerCounter = 0;
+}
+
+
 
 void Enemy191T::updateEnemy(cartesian2d inpTargetLoc)
 {
@@ -115,13 +182,19 @@ void Enemy191T::updateEnemy(cartesian2d inpTargetLoc)
         objectTimer->reset();
         destXPos = inpTargetLoc.x;
         destYPos = inpTargetLoc.y;
-        waitTime = (rand() % 150 + 400);
+        waitTime = (rand() % 1000 + 2000);
     }
 
     if (destXPos - Xpos > 0)
+    {
         setxVel(runspeed);
+        objectDirection = 0;
+    }
     else if (destXPos - Xpos < - 0)
+    {
         setxVel(-runspeed);
+        objectDirection = 2;
+    }
     if (destYPos - Ypos > 0)
         setyVel(runspeed);
     else if (destYPos - Ypos < -0)
@@ -129,6 +202,8 @@ void Enemy191T::updateEnemy(cartesian2d inpTargetLoc)
 
     Xpos += getxVel();
     Ypos += getyVel();
+
+    manageGenericTimer();
 
 }
 
