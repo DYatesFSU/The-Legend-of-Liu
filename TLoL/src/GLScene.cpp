@@ -87,6 +87,14 @@ GLScene::GLScene()
     screenWidth = GetSystemMetrics(SM_CXSCREEN);
     srand(time(0));
     audio_ = new AudioComponent();
+
+    // Register Background Music
+    audio_->registerAudioSource("audio/bieber.ogg");
+    audio_->registerAudioSource("audio/black.ogg");
+
+    // Register SoundFX
+    audio_->registerAudioSource("audio/blast.ogg");
+
     //e191Array = new Enemy191T[10];
 //    e191Array = NULL;
      men->state =0;
@@ -100,8 +108,9 @@ GLScene::~GLScene()
 
 GLint GLScene::initGL()
 {
-    audio_->addAudioSource("audio/bieber.ogg",true);
-    audio_->play();
+
+    audio_->play("audio/black.ogg");
+
     projTimer->start();
     glShadeModel(GL_SMOOTH);
     glClearColor(0.0f,0.0f,0.0f,0.0f);
@@ -335,6 +344,7 @@ void GLScene::checkProj(int inpTeam)
         projArray[currProjCount] = new Projectile();
         projArray[currProjCount]->projInit(ply->getxPos(), ply->getyPos(), ply->getFiringDir(), inpTeam);
         currProjCount++;
+        audio_->playOnce("audio/blast.ogg");
     }
 }
 
