@@ -115,7 +115,7 @@ void Enemy191T::updateEnemy(cartesian2d inpTargetLoc)
         objectTimer->reset();
         destXPos = inpTargetLoc.x;
         destYPos = inpTargetLoc.y;
-        waitTime = (rand() % 100 + 300);
+        waitTime = (rand() % 150 + 400);
     }
 
     if (destXPos - Xpos > 0)
