@@ -102,7 +102,7 @@ void Enemy191T::objectInit()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     objectTimer->start();
-    waitTime = (rand() % 100) + 200;
+    waitTime = (rand() % 2000) + 2000;
 
 
     //srand(time(NULL));
@@ -182,7 +182,7 @@ void Enemy191T::updateEnemy(cartesian2d inpTargetLoc)
         objectTimer->reset();
         destXPos = inpTargetLoc.x;
         destYPos = inpTargetLoc.y;
-        waitTime = (rand() % 1000 + 2000);
+        waitTime = (rand() % 2000 + 2000);
     }
 
     if (destXPos - Xpos > 0)
