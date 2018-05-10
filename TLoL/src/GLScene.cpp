@@ -160,54 +160,7 @@ GLint GLScene::drawGLScene()
     }
     else if (men->state == 2)
     {
-        glPushMatrix();
-        glScaled(3.33,3.33,1.0);
-        plx->drawSquare(screenWidth,screenHeight);
-        glPopMatrix();
-
-        drawDoors();
-
-        glPushMatrix();
-        if (ply->checkMoving())
-        ply->actions(1);
-        else
-        ply->actions(0);
-
-        if (!currEnemyCount && !currBossCount)
-        {
-            if (ply->checkDoor == 'w' && lvl->getwDoor(xLvl, yLvl))
-                transition('w');
-            else if (ply->checkDoor == 'e' && lvl->geteDoor(xLvl, yLvl))
-                transition('e');
-            else if (ply->checkDoor == 's' && lvl->getsDoor(xLvl, yLvl))
-                transition('s');
-            else if (ply->checkDoor == 'n' && lvl->getnDoor(xLvl, yLvl))
-                transition('n');
-            else ply->checkDoor = '0';
-        } else ply->checkDoor = '0';
-
-        checkProj(TEAMPLAYER);
-
-        manageProj();
-        manageEnemies();
-        manageKeys();
-
-        ui->drawUI();
-
-        glPopMatrix();
-
-        collisionListPlayerToEnemy();
-        collisionListProjectileToEnemy();
-        //collisionListProjectileToProjectile();
-        collisionListProjectileToPlayer();
-
-        collisionListProjectileToBoss();
-        collisionListPlayerToBoss();
-
-        cleanEnemyList();
-        cleanProjectileList();
-        cleanPlayerList();
-        cleanBossList();
+        mainGameLogic();
     }
     else if(men->state == 3)
     {
@@ -254,6 +207,59 @@ GLint GLScene::drawGLScene()
     }
 
 }
+
+void GLScene::mainGameLogic()
+{
+    glPushMatrix();
+    glScaled(3.33,3.33,1.0);
+    plx->drawSquare(screenWidth,screenHeight);
+    glPopMatrix();
+
+    drawDoors();
+
+    glPushMatrix();
+    if (ply->checkMoving())
+    ply->actions(1);
+    else
+    ply->actions(0);
+
+    if (!currEnemyCount && !currBossCount)
+    {
+        if (ply->checkDoor == 'w' && lvl->getwDoor(xLvl, yLvl))
+            transition('w');
+        else if (ply->checkDoor == 'e' && lvl->geteDoor(xLvl, yLvl))
+            transition('e');
+        else if (ply->checkDoor == 's' && lvl->getsDoor(xLvl, yLvl))
+            transition('s');
+        else if (ply->checkDoor == 'n' && lvl->getnDoor(xLvl, yLvl))
+            transition('n');
+        else ply->checkDoor = '0';
+    } else ply->checkDoor = '0';
+
+    checkProj(TEAMPLAYER);
+
+    manageProj();
+    manageEnemies();
+    manageKeys();
+
+    ui->drawUI();
+
+    glPopMatrix();
+
+    collisionListPlayerToEnemy();
+    collisionListProjectileToEnemy();
+    //collisionListProjectileToProjectile();
+    collisionListProjectileToPlayer();
+
+    collisionListProjectileToBoss();
+    collisionListPlayerToBoss();
+
+    cleanEnemyList();
+    cleanProjectileList();
+    cleanPlayerList();
+    cleanBossList();
+}
+
 
 void GLScene::drawDoors()
 {
