@@ -133,27 +133,26 @@ GLint GLScene::drawGLScene()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear Screen And Depth Buffer
 	glLoadIdentity();									// Reset The Current Modelview Matrix
 
-  if(men->state==0)                           //Landing page at start of game
+    if(men->state==0)                           //Landing page at start of game
     {
-         men->MenuInit("images/land.jpg"); //landing page
-           // cout<<"Landing Page"<<endl;
+        men->MenuInit("images/land.jpg"); //landing page
+        // cout<<"Landing Page"<<endl;
 
-            glPushMatrix();
-            glScaled(3.33,3.33,1.0);
-            men->DrawMenu(screenWidth,screenHeight);
-            glPopMatrix();
-
+        glPushMatrix();
+        glScaled(3.33,3.33,1.0);
+        men->DrawMenu(screenWidth,screenHeight);
+        glPopMatrix();
 
     }
     else if (men->state == 1)                   // Menu Page
     {
         men->MenuInit("images/mainmenu.jpg"); //landing page
 
-             glPushMatrix();
-            glScaled(3.33,3.33,1.0);
-            men->DrawMenu(screenWidth,screenHeight);
-            glPopMatrix();
-     //  cout<<" Main Menu"<<endl;
+         glPushMatrix();
+        glScaled(3.33,3.33,1.0);
+        men->DrawMenu(screenWidth,screenHeight);
+        glPopMatrix();
+        //  cout<<" Main Menu"<<endl;
         //cout<<" Press N for New Game"<<endl;
         //cout<<" Press O for Option"<<endl;
         //cout<< "Press H for How to Play"<<endl;
@@ -168,12 +167,11 @@ GLint GLScene::drawGLScene()
 
         drawDoors();
 
-
         glPushMatrix();
         if (ply->checkMoving())
-            ply->actions(1);
+        ply->actions(1);
         else
-            ply->actions(0);
+        ply->actions(0);
 
         if (!currEnemyCount && !currBossCount)
         {
@@ -188,72 +186,53 @@ GLint GLScene::drawGLScene()
             else ply->checkDoor = '0';
         } else ply->checkDoor = '0';
 
+        checkProj(TEAMPLAYER);
 
-    checkProj(TEAMPLAYER);
+        manageProj();
+        manageEnemies();
+        manageKeys();
 
-    manageProj();
-    manageEnemies();
-    manageKeys();
+        ui->drawUI();
 
-    ui->drawUI();
+        glPopMatrix();
 
-	glPopMatrix();
+        collisionListPlayerToEnemy();
+        collisionListProjectileToEnemy();
+        //collisionListProjectileToProjectile();
+        collisionListProjectileToPlayer();
 
-	collisionListPlayerToEnemy();
-    collisionListProjectileToEnemy();
-    //collisionListProjectileToProjectile();
-    collisionListProjectileToPlayer();
+        collisionListProjectileToBoss();
+        collisionListPlayerToBoss();
 
-    collisionListProjectileToBoss();
-    collisionListPlayerToBoss();
-
-    cleanEnemyList();
-    cleanProjectileList();
-    cleanPlayerList();
-    cleanBossList();
+        cleanEnemyList();
+        cleanProjectileList();
+        cleanPlayerList();
+        cleanBossList();
     }
-      else if(men->state == 3)
+    else if(men->state == 3)
     {
         cout<<"Options"<<endl;
     }
     else if(men->state == 4)
     {
-       // cout<<"How to Play"<<endl;
-         men->MenuInit("images/how.jpg");
+        // cout<<"How to Play"<<endl;
+        men->MenuInit("images/how.jpg");
 
-            glPushMatrix();
-            glScaled(3.33,3.33,1.0);
-            men->DrawMenu(screenWidth,screenHeight);
-            glPopMatrix();
+        glPushMatrix();
+        glScaled(3.33,3.33,1.0);
+        men->DrawMenu(screenWidth,screenHeight);
+        glPopMatrix();
 
     }
     else if (men->state== 5)
     {
-
-    /*
-	collisionListPlayerToEnemy();
-    collisionListProjectileToEnemy();
-    collisionListProjectileToProjectile();
-    collisionListProjectileToPlayer();
-
-    collisionListProjectileToBoss();
-    collisionListPlayerToBoss();
-
-    cleanEnemyList();
-    cleanProjectileList();
-    cleanPlayerList();
-    cleanBossList();
-    */
-
-
         //cout<<"Pause Menu"<<endl;
-         men->MenuInit("images/paused.jpg");
+        men->MenuInit("images/paused.jpg");
 
-            glPushMatrix();
-            glScaled(3.33,3.33,1.0);
-            men->DrawMenu(screenWidth,screenHeight);
-            glPopMatrix();
-
+        glPushMatrix();
+        glScaled(3.33,3.33,1.0);
+        men->DrawMenu(screenWidth,screenHeight);
+        glPopMatrix();
     }
 
 }
@@ -311,7 +290,7 @@ void GLScene::manageEnemies()
 
         for (int i = 0; i < currEnemyCount; i++)
         {
-            e191Array[i]->updateEnemy(ply);
+            e191Array[i]->updateEnemy(ply->getPosition());
             e191Array[i]->drawObject();
         }
     }

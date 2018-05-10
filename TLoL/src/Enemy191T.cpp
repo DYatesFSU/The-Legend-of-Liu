@@ -92,7 +92,7 @@ void Enemy191T::objectInit()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     objectTimer->start();
-    waitTime = (rand() % 2000) + 2000;
+    waitTime = (rand() % 100) + 200;
 
     objectTexture[0].bindTexture("images/player/play.png");
     objectTexture[1].bindTexture("images/player/player0.png");
@@ -107,25 +107,24 @@ void Enemy191T::objectInit()
     objectTexture[10].bindTexture("images/player/player9.png");
 }
 
-void Enemy191T::updateEnemy(player* ply)
+void Enemy191T::updateEnemy(cartesian2d inpTargetLoc)
 {
 
     if (objectTimer->getTicks() >= waitTime)
     {
         objectTimer->reset();
-        destXPos = ply->getxPos();
-        destYPos = ply->getyPos();
-        waitTime = (rand() % 2000 + 2000);
+        destXPos = inpTargetLoc.x;
+        destYPos = inpTargetLoc.y;
+        waitTime = (rand() % 100 + 300);
     }
 
     if (destXPos - Xpos > 0)
-
         setxVel(runspeed);
-    else if (ply->getxPos() - Xpos < - 0)
+    else if (destXPos - Xpos < - 0)
         setxVel(-runspeed);
-    if (ply->getyPos() - Ypos > 0)
+    if (destYPos - Ypos > 0)
         setyVel(runspeed);
-    else if (ply->getyPos() - Ypos < -0)
+    else if (destYPos - Ypos < -0)
         setyVel(-runspeed);
 
     Xpos += getxVel();
