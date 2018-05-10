@@ -2,7 +2,7 @@
 #define MEDIACONTROLSINTERFACE_H
 
 
-class MediaControlsInterface
+class AudioControlsInterface
 {
     public:
         virtual void play() = 0;

@@ -81,6 +81,7 @@ GLScene::~GLScene()
 
 GLint GLScene::initGL()
 {
+    audio_->addAudioSource("audio/bieber.ogg",true);
     audio_->play();
     projTimer->start();
     glShadeModel(GL_SMOOTH);
@@ -421,7 +422,9 @@ int GLScene::windMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             //KbMs->mouseWheel(modelTeapot,(double)GET_WHEEL_DELTA_WPARAM(wParam));
         break;								// Jump Back
         }
-}
+    }
+
+    return 0;
 }
 
 bool GLScene::boxCollision (cartesian2d objectLoc0, cart2dDim objectDim0, cartesian2d objectLoc1, cart2dDim objectDim1)

@@ -203,7 +203,7 @@
 	<iostream>
 	<windows.h>
 
-1525909242 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\glscene.h
+1525915487 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\glscene.h
 	<windows.h>
 	<string.h>
 	<GL/glew.h>
@@ -213,7 +213,7 @@
 	<gl/glu.h>
 	<iostream>
 	<GlobalDataStructures.h>
-	<MediaControlsInterface.h>
+	<AudioComponent.h>
 	<stdint.h>
 
 1525401405 c:\users\seanr\documents\repos\the-legend-of-liu\common\inc\gl\glew.h
@@ -394,7 +394,7 @@
 	<player.h>
 	<GlobalDataStructures.h>
 
-1525909295 source:c:\users\seanr\documents\repos\the-legend-of-liu\tlol\src\glscene.cpp
+1525915896 source:c:\users\seanr\documents\repos\the-legend-of-liu\tlol\src\glscene.cpp
 	"GLScene.h"
 	<GLLight.h>
 	<Model.h>
@@ -417,12 +417,13 @@
 	<Map.h>
 	<AudioComponent.h>
 
-1525910769 source:c:\users\seanr\documents\repos\the-legend-of-liu\tlol\src\audiocomponent.cpp
+1525915884 source:c:\users\seanr\documents\repos\the-legend-of-liu\tlol\src\audiocomponent.cpp
 	"AudioComponent.h"
 	<iostream>
 
-1525907635 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\audiocomponent.h
-	"MediaControlsInterface.h"
+1525915819 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\audiocomponent.h
+	<audioControlsInterface.h>
+	<unordered_map>
 	<irrklang.h>
 
 1525906053 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\mediacontrolsinterface.h
@@ -523,4 +524,6 @@
 1394125248 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\irrklang\ik_iaudiorecorder.h
 	"ik_IRefCounted.h"
 	"ik_ISoundSource.h"
+
+1525915563 c:\users\seanr\documents\repos\the-legend-of-liu\tlol\include\audiocontrolsinterface.h
 
