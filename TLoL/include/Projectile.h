@@ -19,7 +19,9 @@ class Projectile
         textureLoader *objectTexture;
 
         void projInit(float, float, char, int inpProjTeam);
-        void drawProj();
+
+        void doObjectLogic();
+        void drawObject();
 
         float getxPos();
         float getyPos();
@@ -49,10 +51,16 @@ class Projectile
     protected:
 
     private:
+        void rotateObject();
+
+
         float xPos, yPos, xVel, yVel;
 
         std::vector <grid2d> classCurrentGridCoords;
         cart2dDim objectDimensions = {.20, .20};
+
+        double objectRotation;
+        double travelAngle;
 
         int objectTeam;
 

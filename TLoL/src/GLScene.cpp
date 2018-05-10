@@ -408,7 +408,9 @@ void GLScene::manageProj()
                 projArray[j - 1] = projArray[j];
             currProjCount--;
         }
-    projArray[i]->drawProj();
+        projArray[i]->doObjectLogic();
+        projArray[i]->drawObject();
+    //projArray[i]->drawProj();
     }
 }
 
