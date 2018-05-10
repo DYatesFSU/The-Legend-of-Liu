@@ -24,6 +24,7 @@ class parallax
         void drawNWall();
         void drawEWall();
         void drawWWall();
+        void drawDoor(char, int);
     protected:
 
     private:

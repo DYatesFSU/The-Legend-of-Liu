@@ -159,6 +159,9 @@ GLint GLScene::drawGLScene()
         plx->drawSquare(screenWidth,screenHeight);
         glPopMatrix();
 
+        drawDoors();
+
+
         glPushMatrix();
         if (ply->checkMoving())
             ply->actions(1);
@@ -246,6 +249,50 @@ GLint GLScene::drawGLScene()
 
     }
 
+}
+
+void GLScene::drawDoors()
+{
+    if(lvl->geteDoor(xLvl,yLvl))
+    {
+        glPushMatrix();
+        glScaled(1.0,1.0,1.0);
+        if (currBossCount > currEnemyCount)
+            plx->drawDoor('e', currBossCount);
+        else
+            plx->drawDoor('e', currEnemyCount);
+        glPopMatrix();
+    }
+     if(lvl->getwDoor(xLvl,yLvl))
+    {
+        glPushMatrix();
+        glScaled(1.0,1.0,1.0);
+        if (currBossCount > currEnemyCount)
+            plx->drawDoor('w', currBossCount);
+        else
+            plx->drawDoor('w', currEnemyCount);
+        glPopMatrix();
+    }
+     if(lvl->getnDoor(xLvl,yLvl))
+    {
+        glPushMatrix();
+        glScaled(1.0,1.0,1.0);
+        if (currBossCount > currEnemyCount)
+            plx->drawDoor('n', currBossCount);
+        else
+            plx->drawDoor('n', currEnemyCount);
+        glPopMatrix();
+    }
+     if(lvl->getsDoor(xLvl,yLvl))
+    {
+        glPushMatrix();
+        glScaled(1.0,1.0,1.0);
+        if (currBossCount > currEnemyCount)
+            plx->drawDoor('s', currBossCount);
+        else
+            plx->drawDoor('s', currEnemyCount);
+        glPopMatrix();
+    }
 }
 
 void GLScene::manageEnemies()

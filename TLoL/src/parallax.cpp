@@ -7,6 +7,8 @@ textureLoader floorStyleA;
 textureLoader floorStyleB;
 textureLoader floorStyleC;
 textureLoader floorStyleD;
+textureLoader closedDoor;
+textureLoader openDoor;
 
 parallax::parallax()
 {
@@ -147,6 +149,78 @@ void parallax::drawEWall()
     glEnd();
 }
 
+void parallax::drawDoor(char c, int x)
+{
+    if (x)
+        closedDoor.binder();
+    else
+        openDoor.binder();
+
+    glBegin(GL_POLYGON);
+
+    switch (c)
+    {
+    case 'e':
+        glTexCoord2f(Xmin,Ymin);
+        glVertex3f(4.7,.25,-7.5f);
+
+        glTexCoord2f(Xmax,Ymin);
+        glVertex3f(4.7,-.25,-7.5f);
+
+        glTexCoord2f(Xmax,Ymax);
+        glVertex3f(3.9,-.25,-5.5f);
+
+        glTexCoord2f(Xmin,Ymax);
+        glVertex3f(3.9,.25,-5.5f);
+        break;
+
+    case 'w':
+        glTexCoord2f(Xmin,Ymin);
+        glVertex3f(-4.7,.25,-7.5f);
+
+        glTexCoord2f(Xmax,Ymin);
+        glVertex3f(-4.7,-.25,-7.5f);
+
+        glTexCoord2f(Xmax,Ymax);
+        glVertex3f(-3.9,-.25,-5.5f);
+
+        glTexCoord2f(Xmin,Ymax);
+        glVertex3f(-3.9,.25,-5.5f);
+        break;
+    case 'n':
+        glTexCoord2f(Xmin,Ymin);
+        glVertex3f(-.25,2.2,-7.5f);
+
+        glTexCoord2f(Xmax,Ymin);
+        glVertex3f(.25,2.2,-7.5f);
+
+        glTexCoord2f(Xmax,Ymax);
+        glVertex3f(.25,2.1,-5.5f);
+
+        glTexCoord2f(Xmin,Ymax);
+        glVertex3f(-.25,2.1,-5.5f);
+        break;
+
+    case 's':
+        glTexCoord2f(Xmin,Ymin);
+        glVertex3f(-.25,-2.5,-7.5f);
+
+        glTexCoord2f(Xmax,Ymin);
+        glVertex3f(.25,-2.5,-7.5f);
+
+        glTexCoord2f(Xmax,Ymax);
+        glVertex3f(.25,-2.3,-5.5f);
+
+        glTexCoord2f(Xmin,Ymax);
+        glVertex3f(-.25,-2.3,-5.5f);
+        break;
+    }
+
+
+
+        glEnd();
+}
+
 
 void parallax::parallaxInit(char *FileName)
 {
@@ -184,6 +258,8 @@ void parallax::parallaxInit(char *FileName)
     floorStyleB.bindTexture("images/tiles.png");
     floorStyleC.bindTexture("images/stone.jpg");
     floorStyleD.bindTexture("images/dirt.jpg");
+    closedDoor.bindTexture("images/closedDoor.png");
+    openDoor.bindTexture("images/openDoor.png");
 }
 
 void parallax::scroll(bool Auto, string dir, float speed)

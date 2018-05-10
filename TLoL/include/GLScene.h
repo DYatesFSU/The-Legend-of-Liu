@@ -57,6 +57,8 @@ class GLScene
 
         void checkProj(int inpTeam);
 
+        void drawDoors();
+
         void manageEnemies();
 
         WPARAM wParam;
