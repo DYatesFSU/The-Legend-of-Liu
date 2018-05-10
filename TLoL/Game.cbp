@@ -35,6 +35,7 @@
 			<Add option="-Wall" />
 			<Add directory="../Common" />
 			<Add directory="../Common/inc" />
+			<Add directory="include/irrKlang" />
 		</Compiler>
 		<Linker>
 			<Add library="../Common/lib/glew32s.lib" />
@@ -43,7 +44,9 @@
 			<Add library="glu32" />
 			<Add library="gdi32" />
 			<Add library="../Common/lib/glut32.lib" />
+			<Add library="lib/irrKlang.lib" />
 		</Linker>
+		<Unit filename="include/AudioComponent.h" />
 		<Unit filename="include/Boss.h" />
 		<Unit filename="include/Enemy191T.h" />
 		<Unit filename="include/Fonts.h" />
@@ -55,7 +58,9 @@
 		<Unit filename="include/Levels.h" />
 		<Unit filename="include/LoadShader.h" />
 		<Unit filename="include/Map.h" />
+		<Unit filename="include/MediaControlsInterface.h" />
 		<Unit filename="include/Menu.h" />
+
 		<Unit filename="include/Model.h" />
 		<Unit filename="include/ParticleEngine.h" />
 		<Unit filename="include/Projectile.h" />
@@ -69,6 +74,7 @@
 		<Unit filename="include/textureLoader.h" />
 		<Unit filename="include/timer.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/AudioComponent.cpp" />
 		<Unit filename="src/Boss.cpp" />
 		<Unit filename="src/Enemy191T.cpp" />
 		<Unit filename="src/Fonts.cpp" />
