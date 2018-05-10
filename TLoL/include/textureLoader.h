@@ -9,7 +9,7 @@ class textureLoader
     public:
         textureLoader();
         virtual ~textureLoader();
-        void bindTexture(char *);
+        void bindTexture(char*);
         void binder();
         unsigned char* image;
         int width, height;
