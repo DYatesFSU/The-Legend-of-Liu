@@ -155,6 +155,12 @@ void player::setxPos(float x)
 
 }
 
+void player::resetPos()
+{
+    xPos = 0;
+    yPos = 0;
+}
+
 void player::setyPos(float y)
 {
     yPos += y;

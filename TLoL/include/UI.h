@@ -34,6 +34,7 @@ class UI
         void drawPlayerFrame();
         void drawKeysFrame();
         void drawHeartFrame();
+        void resetKeys();
 
     protected:
 

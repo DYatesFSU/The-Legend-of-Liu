@@ -44,7 +44,9 @@ player *ply = new player();
 LoadShader *shader = new LoadShader();
 ParticleEngine *particle = new ParticleEngine();
 //skyBox *sky = new skyBox;
-Levels *lvl = new Levels();
+Levels *lvl;
+Levels *floor1 = new Levels();
+Levels *floor2 = new Levels();
 key *floorKey = new key();
 UI *ui = new UI();
 Menu * men = new Menu();
@@ -113,7 +115,10 @@ GLint GLScene::initGL()
     plx->parallaxInit("images/bak.jpg");
     ply->playerInit();
     //sky->loadTextures();
-    lvl->LevelInit();
+    floor1->LevelInit();
+    floor2->Floor2Init();
+    lvl = floor1;
+
     floorKey->keyInit();
 
     ui->uiInit();
@@ -297,7 +302,7 @@ void GLScene::drawDoors()
 
 void GLScene::manageEnemies()
 {
-    if (lvl->roomHasBoss(xLvl, yLvl))
+    if (lvl->roomIsExit(xLvl, yLvl))
         manageBoss();
     else
     {
@@ -323,7 +328,7 @@ void GLScene::checkProj(int inpTeam)
 
 void GLScene::manageBoss()
 {
-    if (currBossCount)
+    if (lvl->roomHasBoss(xLvl, yLvl) && currBossCount)
     {
         for (int i = 0; i < currBossCount; i++)
         {
@@ -345,7 +350,19 @@ void GLScene::manageBoss()
         {
             if (ply->getxPos() < .5 && ply->getxPos() > -.5 && ply->getyPos() < .5 && ply->getyPos() > -.5)
             {
-                exit(0);
+                if (lvl == floor2)
+                    exit(0);
+                else
+                {
+                    lvl = floor2;
+                    delete floor1;
+                    xLvl = 0;
+                    yLvl = 2;
+                    ui->setHealth(2);
+                    ui->resetKeys();
+                    ply->resetPos();
+
+                }
             }
         }
     }
@@ -382,6 +399,7 @@ void GLScene::manageProj()
 
 void GLScene::transition(char dir)
 {
+    clearEnemies();
     switch (dir){
 case 'w':
     cout << "Going West\n";
@@ -409,8 +427,9 @@ case 's':
                 break;
     }
     ply->checkDoor = '0';
-    clearEnemies();
-    generateEnemies();
+
+    if (!lvl->getCleared(xLvl, yLvl))
+        generateEnemies();
 }
 
 void GLScene::generateEnemies()
@@ -425,7 +444,7 @@ void GLScene::generateEnemies()
         currBossCount++;
         boss[1]->bossInit(3, 'w');
     }
-    else
+    else if (!lvl->roomIsStart(xLvl, yLvl))
     {
         for (int i = 0; i < lvl->getMaxE(xLvl, yLvl); i++)
         {
@@ -437,6 +456,7 @@ void GLScene::generateEnemies()
         }
     }
 }
+
 
 void GLScene::clearEnemies()
 {
@@ -458,6 +478,7 @@ void GLScene::clearEnemies()
     }
     currProjCount = 0;
     currEnemyCount = 0;
+    lvl->setCleared(xLvl, yLvl);
 }
 
 
