@@ -92,7 +92,7 @@ void Enemy191T::objectInit()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     objectTimer->start();
-    waitTime = (rand() % 2000) + 2000;
+    waitTime = (rand() % 100) + 200;
 
     objectTexture[0].bindTexture("images/player/play.png");
     objectTexture[1].bindTexture("images/player/player0.png");
@@ -107,27 +107,24 @@ void Enemy191T::objectInit()
     objectTexture[10].bindTexture("images/player/player9.png");
 }
 
-void Enemy191T::updateEnemy(player* ply)
+void Enemy191T::updateEnemy(cartesian2d inpTargetLoc)
 {
-
-    objectTimer->getTicks();
 
     if (objectTimer->getTicks() >= waitTime)
     {
         objectTimer->reset();
-        destXPos = ply->getxPos();
-        destYPos = ply->getyPos();
-        waitTime = (rand() % 2000 + 2000);
+        destXPos = inpTargetLoc.x;
+        destYPos = inpTargetLoc.y;
+        waitTime = (rand() % 150 + 400);
     }
 
     if (destXPos - Xpos > 0)
-
         setxVel(runspeed);
-    else if (ply->getxPos() - Xpos < - 0)
+    else if (destXPos - Xpos < - 0)
         setxVel(-runspeed);
-    if (ply->getyPos() - Ypos > 0)
+    if (destYPos - Ypos > 0)
         setyVel(runspeed);
-    else if (ply->getyPos() - Ypos < -0)
+    else if (destYPos - Ypos < -0)
         setyVel(-runspeed);
 
     Xpos += getxVel();
@@ -217,6 +214,8 @@ void Enemy191T::setyVel(double y)
 {
     yVel = y;
 }
+
+
 cartesian2d Enemy191T::getPosition()
 {
     cartesian2d retCoord = {Xpos, Ypos};
@@ -228,6 +227,7 @@ cartesian2d Enemy191T::getDestPosition()
     cartesian2d retCoord = {destXPos, destYPos};
     return retCoord;
 }
+
 void Enemy191T::setPosition(cartesian2d inpCoord)
 {
     Xpos = inpCoord.x;
@@ -264,6 +264,7 @@ void Enemy191T::setDestGridPos(vector<grid2d>inpPos)
 {
     classTestGridCoords = inpPos;
 }
+
 
 void Enemy191T::setIsDead(bool inpBool)
 {

@@ -57,6 +57,8 @@ class GLScene
 
         void checkProj(int inpTeam);
 
+        void drawDoors();
+
         void manageEnemies();
 
         WPARAM wParam;
@@ -104,7 +106,8 @@ class GLScene
         void cleanPlayerList();
         void cleanBossList();
 
-        void generateMazeRandom(grid2dDim inpDim, grid2d inpStartPos, vector < grid2d > inpEndPoss, double inpWallToAreaRatio, double inpEnemyToAreaRatio);
+        template<class T>
+        void unionVectors(vector <T> frontVec, vector <T> backVec, vector <T> &retVec);
 
         template<class T>
         int searchVector(std::vector <T> vecToSearch, T varToFind);

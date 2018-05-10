@@ -166,3 +166,8 @@ int UI::getKeys()
 {
     return playerKeys;
 }
+
+void UI::resetKeys()
+{
+    playerKeys = 0;
+}

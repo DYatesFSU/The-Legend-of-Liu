@@ -15,9 +15,16 @@ class parallax
         void drawSquare(float,float);
         void parallaxInit(char *);
         void scroll(bool,string,float);
+        void drawWalls();
 
         float Xmax,Ymax,Xmin,Ymin;
-        int xLevel = 0, yLevel = 0;
+        int xLevel = 0, yLevel = 0, floorStyle;
+
+        void drawSWall();
+        void drawNWall();
+        void drawEWall();
+        void drawWWall();
+        void drawDoor(char, int);
     protected:
 
     private:

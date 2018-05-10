@@ -26,11 +26,13 @@
 #include <Menu.h>
 #include <Fonts.h>
 
+/*
 const int ENEMYTYPE = 1;
 const int WALLTYPE = 0;
 const int PLAYERTYPE = 2;
 const int PROJECTILETYPE = 3;
 const int TYPEVARIETY = 4;
+*/
 const int PLAYERID = 0;
 
 const int TEAMPLAYER = 0;
@@ -44,7 +46,9 @@ player *ply = new player();
 LoadShader *shader = new LoadShader();
 ParticleEngine *particle = new ParticleEngine();
 //skyBox *sky = new skyBox;
-Levels *lvl = new Levels();
+Levels *lvl;
+Levels *floor1 = new Levels();
+Levels *floor2 = new Levels();
 key *floorKey = new key();
 UI *ui = new UI();
 Menu * men = new Menu();
@@ -65,6 +69,7 @@ timer *projTimer = new timer();
 
 Wall *wallArray[100];
 int currWallCount = 0;
+
 
 Map *gridMap;
 //These are used to update the list when an object is destroyed
@@ -112,7 +117,10 @@ GLint GLScene::initGL()
     plx->parallaxInit("images/bak.jpg");
     ply->playerInit();
     //sky->loadTextures();
-    lvl->LevelInit();
+    floor1->LevelInit();
+    floor2->Floor2Init();
+    lvl = floor1;
+
     floorKey->keyInit();
 
     ui->uiInit();
@@ -125,27 +133,26 @@ GLint GLScene::drawGLScene()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear Screen And Depth Buffer
 	glLoadIdentity();									// Reset The Current Modelview Matrix
 
-  if(men->state==0)                           //Landing page at start of game
+    if(men->state==0)                           //Landing page at start of game
     {
-         men->MenuInit("images/land.jpg"); //landing page
-           // cout<<"Landing Page"<<endl;
+        men->MenuInit("images/land.jpg"); //landing page
+        // cout<<"Landing Page"<<endl;
 
-            glPushMatrix();
-            glScaled(3.33,3.33,1.0);
-            men->DrawMenu(screenWidth,screenHeight);
-            glPopMatrix();
-
+        glPushMatrix();
+        glScaled(3.33,3.33,1.0);
+        men->DrawMenu(screenWidth,screenHeight);
+        glPopMatrix();
 
     }
     else if (men->state == 1)                   // Menu Page
     {
         men->MenuInit("images/mainmenu.jpg"); //landing page
 
-             glPushMatrix();
-            glScaled(3.33,3.33,1.0);
-            men->DrawMenu(screenWidth,screenHeight);
-            glPopMatrix();
-     //  cout<<" Main Menu"<<endl;
+         glPushMatrix();
+        glScaled(3.33,3.33,1.0);
+        men->DrawMenu(screenWidth,screenHeight);
+        glPopMatrix();
+        //  cout<<" Main Menu"<<endl;
         //cout<<" Press N for New Game"<<endl;
         //cout<<" Press O for Option"<<endl;
         //cout<< "Press H for How to Play"<<endl;
@@ -153,104 +160,79 @@ GLint GLScene::drawGLScene()
     }
     else if (men->state == 2)
     {
-    glPushMatrix();
-    glScaled(3.33,3.33,1.0);
-    plx->drawSquare(screenWidth,screenHeight);
-    glPopMatrix();
+        glPushMatrix();
+        glScaled(3.33,3.33,1.0);
+        plx->drawSquare(screenWidth,screenHeight);
+        glPopMatrix();
 
-    glPushMatrix();
-    if (ply->checkMoving())
+        drawDoors();
+
+        glPushMatrix();
+        if (ply->checkMoving())
         ply->actions(1);
-    else
+        else
         ply->actions(0);
 
-    if (ply->checkDoor != '0')
-    {
-        if (ply->checkDoor == 'w' && lvl->getwDoor(xLvl, yLvl))
+        if (!currEnemyCount && !currBossCount)
+        {
+            if (ply->checkDoor == 'w' && lvl->getwDoor(xLvl, yLvl))
+                transition('w');
+            else if (ply->checkDoor == 'e' && lvl->geteDoor(xLvl, yLvl))
+                transition('e');
+            else if (ply->checkDoor == 's' && lvl->getsDoor(xLvl, yLvl))
+                transition('s');
+            else if (ply->checkDoor == 'n' && lvl->getnDoor(xLvl, yLvl))
+                transition('n');
+            else ply->checkDoor = '0';
+        } else ply->checkDoor = '0';
 
-        {
-            transition('w');
-        }
-        else if (ply->checkDoor == 'e' && lvl->geteDoor(xLvl, yLvl))
-        {
-            transition('e');
-        }
-        else if (ply->checkDoor == 's' && lvl->getsDoor(xLvl, yLvl))
-        {
-            transition('s');
-        }
-        else if (ply->checkDoor == 'n' && lvl->getnDoor(xLvl, yLvl))
-        {
-            transition('n');
-        }
-         else   ply->checkDoor = '0';
+        checkProj(TEAMPLAYER);
+
+        manageProj();
+        manageEnemies();
+        manageKeys();
+
+        ui->drawUI();
+
+        glPopMatrix();
+
+        collisionListPlayerToEnemy();
+        collisionListProjectileToEnemy();
+        //collisionListProjectileToProjectile();
+        collisionListProjectileToPlayer();
+
+        collisionListProjectileToBoss();
+        collisionListPlayerToBoss();
+
+        cleanEnemyList();
+        cleanProjectileList();
+        cleanPlayerList();
+        cleanBossList();
     }
-
-    checkProj(TEAMPLAYER);
-
-    manageProj();
-    manageEnemies();
-    manageKeys();
-
-    ui->drawUI();
-
-	glPopMatrix();
-
-	collisionListPlayerToEnemy();
-    collisionListProjectileToEnemy();
-    collisionListProjectileToProjectile();
-    collisionListProjectileToPlayer();
-
-    collisionListProjectileToBoss();
-    collisionListPlayerToBoss();
-
-    cleanEnemyList();
-    cleanProjectileList();
-    cleanPlayerList();
-    cleanBossList();
-    }
-      else if(men->state == 3)
+    else if(men->state == 3)
     {
         cout<<"Options"<<endl;
     }
     else if(men->state == 4)
     {
-       // cout<<"How to Play"<<endl;
-         men->MenuInit("images/how.jpg");
+        // cout<<"How to Play"<<endl;
+        men->MenuInit("images/how.jpg");
 
-            glPushMatrix();
-            glScaled(3.33,3.33,1.0);
-            men->DrawMenu(screenWidth,screenHeight);
-            glPopMatrix();
+        glPushMatrix();
+        glScaled(3.33,3.33,1.0);
+        men->DrawMenu(screenWidth,screenHeight);
+        glPopMatrix();
 
     }
     else if (men->state== 5)
     {
-
-    /*
-	collisionListPlayerToEnemy();
-    collisionListProjectileToEnemy();
-    collisionListProjectileToProjectile();
-    collisionListProjectileToPlayer();
-
-    collisionListProjectileToBoss();
-    collisionListPlayerToBoss();
-
-    cleanEnemyList();
-    cleanProjectileList();
-    cleanPlayerList();
-    cleanBossList();
-    */
-
-
         //cout<<"Pause Menu"<<endl;
-         men->MenuInit("images/paused.jpg");
+        men->MenuInit("images/paused.jpg");
 
-            glPushMatrix();
-            glScaled(3.33,3.33,1.0);
-            men->DrawMenu(screenWidth,screenHeight);
-            glPopMatrix();
-
+        glPushMatrix();
+        glScaled(3.33,3.33,1.0);
+        men->DrawMenu(screenWidth,screenHeight);
+        glPopMatrix();
     }
     else if (men->state == 6)
     {
@@ -273,16 +255,60 @@ GLint GLScene::drawGLScene()
 
 }
 
+void GLScene::drawDoors()
+{
+    if(lvl->geteDoor(xLvl,yLvl))
+    {
+        glPushMatrix();
+        glScaled(1.0,1.0,1.0);
+        if (currBossCount > currEnemyCount)
+            plx->drawDoor('e', currBossCount);
+        else
+            plx->drawDoor('e', currEnemyCount);
+        glPopMatrix();
+    }
+     if(lvl->getwDoor(xLvl,yLvl))
+    {
+        glPushMatrix();
+        glScaled(1.0,1.0,1.0);
+        if (currBossCount > currEnemyCount)
+            plx->drawDoor('w', currBossCount);
+        else
+            plx->drawDoor('w', currEnemyCount);
+        glPopMatrix();
+    }
+     if(lvl->getnDoor(xLvl,yLvl))
+    {
+        glPushMatrix();
+        glScaled(1.0,1.0,1.0);
+        if (currBossCount > currEnemyCount)
+            plx->drawDoor('n', currBossCount);
+        else
+            plx->drawDoor('n', currEnemyCount);
+        glPopMatrix();
+    }
+     if(lvl->getsDoor(xLvl,yLvl))
+    {
+        glPushMatrix();
+        glScaled(1.0,1.0,1.0);
+        if (currBossCount > currEnemyCount)
+            plx->drawDoor('s', currBossCount);
+        else
+            plx->drawDoor('s', currEnemyCount);
+        glPopMatrix();
+    }
+}
+
 void GLScene::manageEnemies()
 {
-    if (lvl->roomHasBoss(xLvl, yLvl))
+    if (lvl->roomIsExit(xLvl, yLvl))
         manageBoss();
     else
     {
 
         for (int i = 0; i < currEnemyCount; i++)
         {
-            e191Array[i]->updateEnemy(ply);
+            e191Array[i]->updateEnemy(ply->getPosition());
             e191Array[i]->drawObject();
         }
     }
@@ -301,7 +327,7 @@ void GLScene::checkProj(int inpTeam)
 
 void GLScene::manageBoss()
 {
-    if (currBossCount)
+    if (lvl->roomHasBoss(xLvl, yLvl) && currBossCount)
     {
         for (int i = 0; i < currBossCount; i++)
         {
@@ -323,7 +349,21 @@ void GLScene::manageBoss()
         {
             if (ply->getxPos() < .5 && ply->getxPos() > -.5 && ply->getyPos() < .5 && ply->getyPos() > -.5)
             {
-                men->state = 6;
+                if (lvl == floor2)
+                  men->state = 6;
+                  //exit(0);
+                else
+                {
+                    lvl = floor2;
+                    delete floor1;
+                    xLvl = 0;
+                    yLvl = 2;
+                    ui->setHealth(2);
+                    ui->resetKeys();
+                    ply->resetPos();
+
+                }
+                //men->state = 6;
             }
         }
     }
@@ -360,6 +400,7 @@ void GLScene::manageProj()
 
 void GLScene::transition(char dir)
 {
+    clearEnemies();
     switch (dir){
 case 'w':
     cout << "Going West\n";
@@ -387,8 +428,9 @@ case 's':
                 break;
     }
     ply->checkDoor = '0';
-    clearEnemies();
-    generateEnemies();
+
+    if (!lvl->getCleared(xLvl, yLvl))
+        generateEnemies();
 }
 
 void GLScene::generateEnemies()
@@ -403,7 +445,7 @@ void GLScene::generateEnemies()
         currBossCount++;
         boss[1]->bossInit(3, 'w');
     }
-    else
+    else if (!lvl->roomIsStart(xLvl, yLvl))
     {
         for (int i = 0; i < lvl->getMaxE(xLvl, yLvl); i++)
         {
@@ -415,6 +457,7 @@ void GLScene::generateEnemies()
         }
     }
 }
+
 
 void GLScene::clearEnemies()
 {
@@ -436,6 +479,7 @@ void GLScene::clearEnemies()
     }
     currProjCount = 0;
     currEnemyCount = 0;
+    lvl->setCleared(xLvl, yLvl);
 }
 
 
@@ -820,76 +864,16 @@ void GLScene::updatePlayerOnGridMap()
     gridMap->updateGenericElement(PLAYERID, PLAYERTYPE, gridPosList, gridDestList);
 }
 
-void GLScene::generateMazeRandom(grid2dDim inpDim, grid2d inpStartPos, vector<grid2d>inpEndPoss, double inpWallToAreaRatio, double inpEnemyToAreaRatio)
+template<class T>
+void GLScene::unionVectors(vector <T> frontVec, vector <T> backVec, vector <T> &retVec)
 {
-    Map tempGridMaze;
-    vector <grid2d> tempLocs;
-    grid2d tempLoc;
-    //tempGridMaze = new Map();
-    tempGridMaze.initMap(inpDim, TYPEVARIETY);
-    for (int i = 0; i < inpDim.width; i++)
+    for (int i = 0; i < backVec.size(); i++)
     {
-        tempLocs.clear();
-        tempLoc = {i, 0};
-        tempLocs.push_back(tempLoc);
-
-        //if not end position or start positions
-        if (searchVector(inpEndPoss, tempLoc) == -1 && !(tempLoc == inpStartPos) )
-            tempGridMaze.addGenericElement(WALLTYPE, 0, tempLocs);
+        if (searchVector(frontVec, backVec.at(i)) == -1)
+            frontVec.push_back(backVec.at(i));
     }
-    tempLocs.clear();
 
-    for (int i = 0; i < inpDim.width; i++)
-    {
-        tempLocs.clear();
-        tempLoc = {i, inpDim.height - 1};
-        tempLocs.push_back(tempLoc);
-
-        //if not end position or start positions
-        if (searchVector(inpEndPoss, tempLoc) == -1 && !(tempLoc == inpStartPos) )
-            tempGridMaze.addGenericElement(WALLTYPE, 0, tempLocs);
-    }
-    tempLocs.clear();
-
-    for (int i = 1; i < inpDim.height - 1; i++)
-    {
-        tempLocs.clear();
-        tempLoc = {0, i};
-        tempLocs.push_back(tempLoc);
-
-        //if not end position or start positions
-        if (searchVector(inpEndPoss, tempLoc) == -1 && !(tempLoc == inpStartPos) )
-            tempGridMaze.addGenericElement(WALLTYPE, 0, tempLocs);
-    }
-    tempLocs.clear();
-
-    for (int i = 1; i < inpDim.height - 1; i++)
-    {
-        tempLocs.clear();
-        tempLoc = {inpDim.width - 1, i};
-        tempLocs.push_back(tempLoc);
-
-        //if not end position or start positions
-        if (searchVector(inpEndPoss, tempLoc) == -1 && !(tempLoc == inpStartPos) )
-            tempGridMaze.addGenericElement(WALLTYPE, 0, tempLocs);
-    }
-    tempLocs.clear();
-
-    /*
-    for (int i = 1; i < inpDim.height - 1; i++)
-    {
-        tempLocs.clear();
-        tempLoc = {inpDim.width - 1, i};
-        tempLocs.push_back(tempLoc);
-
-        //if not end position or start positions
-        if (searchVector(inpEndPoss, tempLoc) == -1 && tempLoc != inpStartPos )
-            tempGridMaze.addGenericElement(WALLTYPE, 0, tempLocs);
-    }
-    tempLocs.clear();
-    */
-
-    //tempGridMaze.addGenericElement(0, WALLTYPE, tempLocs);
+    retVec = frontVec;
 }
 
 

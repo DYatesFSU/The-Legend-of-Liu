@@ -605,3 +605,156 @@ void Map::clearIDsWholeMap(int inpType, vector<grid2d>inpPositions)
         }
     }
 }
+
+Map Map::generateBasicCrudeMap(grid2dDim inpDim, grid2d inpStartPos, vector<grid2d>inpEndPoss, double inpWallToAreaRatio, double inpEnemyToAreaRatio)
+{
+    const int TEMPWALLTYPE = 0;
+    const int TEMPENEMYTYPE = 1;
+
+    Map tempGridMaze;
+    vector <grid2d> tempLocs;
+    grid2d tempLoc;
+    //tempGridMaze = new Map();
+    tempGridMaze.initMap(inpDim, 1);
+    for (int i = 0; i < inpDim.width; i++)
+    {
+        tempLocs.clear();
+        tempLoc = {i, 0};
+        tempLocs.push_back(tempLoc);
+
+        //if not end position or start positions
+        if (searchVector(inpEndPoss, tempLoc) == -1 && !(tempLoc == inpStartPos) )
+            tempGridMaze.addGenericElement(TEMPWALLTYPE, 0, tempLocs);
+    }
+    tempLocs.clear();
+
+    for (int i = 0; i < inpDim.width; i++)
+    {
+        tempLocs.clear();
+        tempLoc = {i, inpDim.height - 1};
+        tempLocs.push_back(tempLoc);
+
+        //if not end position or start positions
+        if (searchVector(inpEndPoss, tempLoc) == -1 && !(tempLoc == inpStartPos) )
+            tempGridMaze.addGenericElement(TEMPWALLTYPE, 0, tempLocs);
+    }
+    tempLocs.clear();
+
+    for (int i = 1; i < inpDim.height - 1; i++)
+    {
+        tempLocs.clear();
+        tempLoc = {0, i};
+        tempLocs.push_back(tempLoc);
+
+        //if not end position or start positions
+        if (searchVector(inpEndPoss, tempLoc) == -1 && !(tempLoc == inpStartPos) )
+            tempGridMaze.addGenericElement(TEMPWALLTYPE, 0, tempLocs);
+    }
+    tempLocs.clear();
+
+    for (int i = 1; i < inpDim.height - 1; i++)
+    {
+        tempLocs.clear();
+        tempLoc = {inpDim.width - 1, i};
+        tempLocs.push_back(tempLoc);
+
+        //if not end position or start positions
+        if (searchVector(inpEndPoss, tempLoc) == -1 && !(tempLoc == inpStartPos) )
+            tempGridMaze.addGenericElement(TEMPWALLTYPE, 0, tempLocs);
+    }
+    tempLocs.clear();
+
+    int gridArea = inpDim.width * inpDim.height;
+    int wallCount = gridArea * inpWallToAreaRatio;
+    int enemyCount = gridArea * inpEnemyToAreaRatio;
+
+    vector <grid2d> safeArea;
+
+    safeArea = inpEndPoss;
+    safeArea.push_back(inpStartPos);
+
+    int safeAreaLength = safeArea.size();
+    for (int i = 0; i < safeAreaLength; i++)
+    {
+        vector <grid2d> tempLocVec;
+        expandGridSquare(safeArea.at(i), inpDim, tempLocVec);
+        unionVectors(safeArea, tempLocVec, safeArea);
+    }
+
+    for (int i = wallCount; i > 0; i--)
+    {
+        tempLocs.clear();
+        tempLoc = {rand() % inpDim.width, rand() % inpDim.height};
+        tempLocs.push_back(tempLoc);
+
+        //if not end position or start positions
+        if (searchVector(safeArea, tempLoc) == -1 && !(tempLoc == inpStartPos ))
+            tempGridMaze.addGenericElement(TEMPWALLTYPE, 0, tempLocs);
+    }
+    tempLocs.clear();
+
+    for (int i = enemyCount; i > 0; i--)
+    {
+        tempLocs.clear();
+        tempLoc = {rand() % inpDim.width, rand() % inpDim.height};
+        tempLocs.push_back(tempLoc);
+
+        //if not end position or start positions
+        if (searchVector(safeArea, tempLoc) == -1 && !(tempLoc == inpStartPos ))
+            tempGridMaze.addGenericElement(TEMPENEMYTYPE, 0, tempLocs);
+    }
+    tempLocs.clear();
+
+    return tempGridMaze;
+}
+
+int Map::getBasicCrudeElement(grid2d inpCoord)
+{
+    int tempElement;
+    int retElement;
+
+    tempElement = (int)classMainMap00.at(inpCoord.y).at(inpCoord.x).at(0).at(0);
+    retElement = tempElement;
+
+    return retElement;
+}
+
+
+void Map::expandGridSquare(grid2d inpCoord, grid2dDim inpDim, vector < grid2d > &retExpansion)
+{
+    vector < grid2d > tempVec;
+	for (int i = inpCoord.y - 1; i <= inpCoord.y + 1; i++)
+	{
+		for (int j = inpCoord.x - 1; j <= inpCoord.x + 1; j++)
+		{
+			if (!(i == inpCoord.y && j == inpCoord.x)) //this makes it so it doesn't include itself
+			{
+                if (i == inpCoord.y || j == inpCoord.x) //this makes it so that it only moves up and down - without out diagonal is valid
+                {
+                    if (i >= 0 && i < inpDim.height)
+                    {
+                        if (j >= 0 && j < inpDim.width)
+                        {
+                            //cout << "push back" << endl;
+                            tempVec.push_back({j, i});
+                        }
+                    }
+                }
+			}
+		}
+	}
+	retExpansion = tempVec;
+}
+
+template<class T>
+void Map::unionVectors(vector <T> frontVec, vector <T> backVec, vector <T> &retVec)
+{
+    for (int i = 0; i < backVec.size(); i++)
+    {
+        if (searchVector(frontVec, backVec.at(i)) == -1)
+            frontVec.push_back(backVec.at(i));
+    }
+
+    retVec = frontVec;
+}
+
