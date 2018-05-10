@@ -20,6 +20,9 @@
 
 #include <Wall.h>
 #include <Map.h>
+#include <AudioComponent.h>
+
+
 #include <Menu.h>
 #include <Fonts.h>
 
@@ -74,6 +77,7 @@ GLScene::GLScene()
     screenHeight= GetSystemMetrics(SM_CYSCREEN);
     screenWidth = GetSystemMetrics(SM_CXSCREEN);
     srand(time(0));
+    audio_ = new AudioComponent();
     //e191Array = new Enemy191T[10];
 //    e191Array = NULL;
      men->state =0;
@@ -87,6 +91,8 @@ GLScene::~GLScene()
 
 GLint GLScene::initGL()
 {
+    audio_->addAudioSource("audio/bieber.ogg",true);
+    audio_->play();
     projTimer->start();
     glShadeModel(GL_SMOOTH);
     glClearColor(0.0f,0.0f,0.0f,0.0f);
@@ -490,7 +496,9 @@ int GLScene::windMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             //KbMs->mouseWheel(modelTeapot,(double)GET_WHEEL_DELTA_WPARAM(wParam));
         break;								// Jump Back
         }
-}
+    }
+
+    return 0;
 }
 
 bool GLScene::boxCollision (cartesian2d objectLoc0, cart2dDim objectDim0, cartesian2d objectLoc1, cart2dDim objectDim1)
