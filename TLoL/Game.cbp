@@ -33,6 +33,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-std=c++11" />
 			<Add directory="../Common" />
 			<Add directory="../Common/inc" />
 			<Add directory="include/irrKlang" />
@@ -44,7 +45,7 @@
 			<Add library="glu32" />
 			<Add library="gdi32" />
 			<Add library="../Common/lib/glut32.lib" />
-			<Add library="lib/irrKlang.lib" />
+			<Add library="../Common/lib/libirrKlang.a" />
 		</Linker>
 		<Unit filename="include/AudioComponent.h" />
 		<Unit filename="include/Boss.h" />
@@ -60,7 +61,6 @@
 		<Unit filename="include/Map.h" />
 		<Unit filename="include/MediaControlsInterface.h" />
 		<Unit filename="include/Menu.h" />
-
 		<Unit filename="include/Model.h" />
 		<Unit filename="include/ParticleEngine.h" />
 		<Unit filename="include/Projectile.h" />
