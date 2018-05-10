@@ -94,17 +94,17 @@ void Enemy191T::objectInit()
     objectTimer->start();
     waitTime = (rand() % 100) + 200;
 
-    objectTexture[0].bindTexture("images/player/play.png");
-    objectTexture[1].bindTexture("images/player/player0.png");
-    objectTexture[2].bindTexture("images/player/player1.png");
-    objectTexture[3].bindTexture("images/player/player2.png");
-    objectTexture[4].bindTexture("images/player/player3.png");
-    objectTexture[5].bindTexture("images/player/player4.png");
-    objectTexture[6].bindTexture("images/player/player5.png");
-    objectTexture[7].bindTexture("images/player/player6.png");
-    objectTexture[8].bindTexture("images/player/player7.png");
-    objectTexture[9].bindTexture("images/player/player8.png");
-    objectTexture[10].bindTexture("images/player/player9.png");
+    objectTexture[0].bindTexture("images/boy1.png");
+    objectTexture[1].bindTexture("images/girl1.png");
+    objectTexture[2].bindTexture("images/boy1.png");
+    objectTexture[3].bindTexture("images/girl1.png");
+    objectTexture[4].bindTexture("images/girl1.png");
+    objectTexture[5].bindTexture("images/boy1.png");
+    objectTexture[6].bindTexture("images/girl1.png");
+    objectTexture[7].bindTexture("images/boy1.png");
+    objectTexture[8].bindTexture("images/girl1.png");
+    objectTexture[9].bindTexture("images/boy1.png");
+    objectTexture[10].bindTexture("images/girl1.png");
 }
 
 void Enemy191T::updateEnemy(cartesian2d inpTargetLoc)
