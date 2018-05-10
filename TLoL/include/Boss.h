@@ -21,7 +21,7 @@ class Boss
         bool waiting;
 
         void drawObject();
-        void bossInit(double x, char s);
+        void bossInit(double x, char s, int i);
 
         double getxVel();
         void setxVel(double x);
