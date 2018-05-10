@@ -347,8 +347,8 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
 		}
 		else										// If There Are No Messages
 		{
+		    Scene->drawGLScene();
 			// Draw The Scene.  Watch For ESC Key And Quit Messages From DrawGLScene()
-            Scene->drawGLScene();
 			if (keys[VK_ESCAPE])	// Active?  Was There A Quit Received?
 			{
 				done=TRUE;							// ESC or DrawGLScene Signalled A Quit

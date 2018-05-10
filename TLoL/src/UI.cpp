@@ -28,9 +28,9 @@ void UI::uiInit()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
-    playerPic[0].bindTexture("images/player/play.png");
-    keysPic[0].bindTexture("images/player/play.png");
-    heartPic[0].bindTexture("images/player/play.png");
+    playerPic[0].bindTexture("images/liu.png");
+    keysPic[0].bindTexture("images/test.png");
+    heartPic[0].bindTexture("images/heart.png");
 
 }
 

@@ -55,7 +55,7 @@ class GLScene
 
         void manageBoss();
 
-        void checkProj();
+        void checkProj(int inpTeam);
 
         void manageEnemies();
 
@@ -72,14 +72,18 @@ class GLScene
         bool boxCollision (cartesian2d objectLoc0, cart2dDim objectDim0, cartesian2d objectLoc1, cart2dDim objectDim1);
         void collisionListPlayerToEnemy();
         void collisionListProjectileToEnemy();
-        bool collisionEnemyToEnemy(uintptr_t inpID1, uintptr_t inpID2);
-        bool collisionEnemyToProjectile(uintptr_t inpID1, uintptr_t inpID2);
-        bool collisionEnemyToPlayer(uintptr_t inpID1, uintptr_t inpID2);
-        bool collisionEnemyToWall(uintptr_t inpID1, uintptr_t inpID2);
-        bool collisionPlayerToWall(uintptr_t inpID1, uintptr_t inpID2);
-        bool collisionPlayerToProjectile(uintptr_t inpID1, uintptr_t inpID2);
-        bool collisionProjectileToWall(uintptr_t inpID1, uintptr_t inpID2);
-        bool collisionProjectileToProjectile(uintptr_t inpID1, uintptr_t inpID2);
+        void collisionListProjectileToProjectile();
+        void collisionListProjectileToPlayer();
+
+        void collisionListProjectileToBoss();
+        void collisionListPlayerToBoss();
+
+        template <class T, class U>
+        bool collisionObjectToObject(T *inpObj1, U *inpObj2);
+
+        template <class T, class U>
+        bool collisionObjectBlockedByObject(T *inpObj1, U *inpObj2);
+
         void addEnemyListToGridMap();
         void addProjectileListToGridMap();
         void addWallListToGridMap();
@@ -98,6 +102,7 @@ class GLScene
 
         //IMPORANT: this calls exit
         void cleanPlayerList();
+        void cleanBossList();
 
         void generateMazeRandom(grid2dDim inpDim, grid2d inpStartPos, vector < grid2d > inpEndPoss, double inpWallToAreaRatio, double inpEnemyToAreaRatio);
 

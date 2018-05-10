@@ -18,7 +18,7 @@ class Projectile
 
         textureLoader *objectTexture;
 
-        void projInit(float, float, char);
+        void projInit(float, float, char, int inpProjTeam);
         void drawProj();
 
         float getxPos();
@@ -43,13 +43,18 @@ class Projectile
         void setIsDead(bool inpBool);
         bool getIsDead();
 
+        void setObjectTeam(int inpTeam);
+        int getObjectTeam();
+
     protected:
 
     private:
         float xPos, yPos, xVel, yVel;
 
         std::vector <grid2d> classCurrentGridCoords;
-        cart2dDim objectDimensions = {.25, .25};
+        cart2dDim objectDimensions = {.20, .20};
+
+        int objectTeam;
 
         bool isDead;
 

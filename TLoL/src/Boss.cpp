@@ -14,6 +14,9 @@ Boss::Boss()
     shooting = false;
     objectTimer = new timer();
     shootTimer = new timer();
+
+    isDead = false;
+    objectHealth = 3;
 }
 
 Boss::~Boss()
@@ -181,3 +184,69 @@ void Boss::setFiringDir(char x)
     firingDir = x;
 }
 
+void Boss::setIsDead(bool inpBool)
+{
+    isDead = inpBool;
+}
+
+bool Boss::getIsDead()
+{
+    return isDead;
+}
+
+void Boss::modifyHealth(int inpModifier)
+{
+    objectHealth += inpModifier;
+}
+
+int Boss::getHealth()
+{
+    return objectHealth;
+}
+
+cartesian2d Boss::getPosition()
+{
+    return {xPos, yPos};
+}
+
+cartesian2d Boss::getDestPosition()
+{
+    return destPosition;
+}
+
+void Boss::setPosition(cartesian2d inpCoord)
+{
+    xPos = inpCoord.x;
+    yPos = inpCoord.y;
+}
+
+void Boss::setDestPosition(cartesian2d inpCoord)
+{
+    destPosition.x = inpCoord.x;
+    destPosition.y = inpCoord.y;
+}
+
+cart2dDim Boss::getObjectDimensions()
+{
+    return objectDimensions;
+}
+
+void Boss::getCurrGridPos(std::vector<grid2d>& retPos)
+{
+    retPos = classCurrentGridCoords;
+}
+
+void Boss::setCurrGridPos(std::vector<grid2d>inpPos)
+{
+    classCurrentGridCoords = inpPos;
+}
+
+void Boss::getDestGridPos(std::vector<grid2d>& retPos)
+{
+    retPos = classTestGridCoords;
+}
+
+void Boss::setDestGridPos(std::vector<grid2d>inpPos)
+{
+    classTestGridCoords = inpPos;
+}
