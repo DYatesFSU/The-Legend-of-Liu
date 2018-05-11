@@ -639,6 +639,7 @@ void GLScene::collisionListProjectileToEnemy()
             tempIsCollision = collisionObjectToObject(projArray[j], e191Array[i]);
             if (tempIsCollision)
             {
+                std::cout << "Zombie hit! Attempting to play audio" << std::endl;
                 audio_->playOnce("audio/fx_zombie_death.ogg");
                 projArray[j]->setIsDead(tempIsCollision);
                 e191Array[i]->setIsDead(tempIsCollision);
