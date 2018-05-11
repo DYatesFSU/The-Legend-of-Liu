@@ -639,7 +639,7 @@ void GLScene::collisionListProjectileToEnemy()
             tempIsCollision = collisionObjectToObject(projArray[j], e191Array[i]);
             if (tempIsCollision)
             {
-                audio_->play("audio/fx_zombie_death.ogg");
+                audio_->playOnce("audio/fx_zombie_death.ogg");
                 projArray[j]->setIsDead(tempIsCollision);
                 e191Array[i]->setIsDead(tempIsCollision);
             }
@@ -662,7 +662,7 @@ void GLScene::collisionListPlayerToEnemy()
 
         if (tempIsCollision)
         {
-            audio_->play("audio/fx_damage_taken.ogg");
+            audio_->playOnce("audio/fx_damage_taken.ogg");
             ply->setIsDead(tempIsCollision);
             e191Array[i]->setIsDead(tempIsCollision);
         }
