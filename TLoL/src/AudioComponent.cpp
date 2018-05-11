@@ -14,31 +14,31 @@ AudioComponent::~AudioComponent()
 }
 
 void AudioComponent::play() {
-    std::cout << "Time to Belieb!" << std::endl;
+    //std::cout << "Time to Belieb!" << std::endl;
     if(audio_sources[last_played_]) {
         engine_->play2D(last_played_.c_str(), true);
     }
 }
 
 bool AudioComponent::play(std::string path_to_file) {
-std::cout << "Attempting to play " << path_to_file << std::endl;
+//std::cout << "Attempting to play " << path_to_file << std::endl;
     bool success = false;
     irrklang::ISound * sound = audio_sources[path_to_file];
     if(sound) {
 
         if (sound->getIsPaused()) {
             sound->setIsPaused(false);
-            std::cout << "Sound was paused " << path_to_file << " " << std::endl;
+          //  std::cout << "Sound was paused " << path_to_file << " " << std::endl;
         } else {
             sound->stop();
             registerAudioSource(path_to_file);
             play(path_to_file);
-            std::cout << "Registering: " << path_to_file << " " << std::endl;
+        //    std::cout << "Registering: " << path_to_file << " " << std::endl;
         }
 
         success = true;
     } else {
-        std::cout << "file " << path_to_file << " is not registered" << std::endl;
+      //  std::cout << "file " << path_to_file << " is not registered" << std::endl;
     }
 
     return success;
@@ -56,17 +56,17 @@ bool AudioComponent::playOnce(std::string path_to_file) {
 
         if (sound->getIsPaused()) {
             sound->setIsPaused(false);
-            std::cout << "Sound was paused " << path_to_file << " " << std::endl;
+           // std::cout << "Sound was paused " << path_to_file << " " << std::endl;
         } else {
             sound->stop();
             registerAudioSource(path_to_file);
             playOnce(path_to_file);
-            std::cout << "Registering: " << path_to_file << " " << std::endl;
+           // std::cout << "Registering: " << path_to_file << " " << std::endl;
         }
 
         success = true;
     } else {
-        std::cout << "file " << path_to_file << " is not registered" << std::endl;
+        //std::cout << "file " << path_to_file << " is not registered" << std::endl;
     }
 
     return success;
