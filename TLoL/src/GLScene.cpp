@@ -415,7 +415,6 @@ void GLScene::manageKeys()
         floorKey->drawKey();
         if (ply->getxPos() < .5 && ply->getxPos() > -.5 && ply->getyPos() < .5 && ply->getyPos() > -.5)
         {
-            std::cout << "New Room" << std::endl;
             audio_->playOnce("audio/fx_found_key.ogg");
             lvl->gotKey(xLvl, yLvl);
             ui->addKey();
@@ -443,6 +442,7 @@ void GLScene::manageProj()
 
 void GLScene::transition(char dir)
 {
+    audio_->playOnce("audio/fx_new_room.ogg");
     clearEnemies();
     switch (dir){
 case 'w':
@@ -641,7 +641,6 @@ void GLScene::collisionListProjectileToEnemy()
             tempIsCollision = collisionObjectToObject(projArray[j], e191Array[i]);
             if (tempIsCollision)
             {
-                std::cout << "Zombie hit! Attempting to play audio" << std::endl;
                 audio_->playOnce("audio/fx_zombie_death.ogg");
                 projArray[j]->setIsDead(tempIsCollision);
                 e191Array[i]->setIsDead(tempIsCollision);
