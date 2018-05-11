@@ -113,7 +113,7 @@ GLScene::~GLScene()
 GLint GLScene::initGL()
 {
 
-    audio_->play("audio/black.ogg");
+    //audio_->play("audio/black.ogg");
 
     projTimer->start();
     glShadeModel(GL_SMOOTH);
@@ -415,6 +415,7 @@ void GLScene::manageKeys()
         floorKey->drawKey();
         if (ply->getxPos() < .5 && ply->getxPos() > -.5 && ply->getyPos() < .5 && ply->getyPos() > -.5)
         {
+            audio_->playOnce("audio/new_room.ogg");
             lvl->gotKey(xLvl, yLvl);
             ui->addKey();
         }
