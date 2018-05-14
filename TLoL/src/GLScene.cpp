@@ -94,10 +94,10 @@ GLScene::GLScene()
 
     // Register SoundFX
     audio_->registerAudioSource("audio/fx_blast.ogg");
-    audio_->registerAudioSource("audio/fx_damage_taken.mp3");
-    audio_->registerAudioSource("audio/fx_found_key.mp3");
-    audio_->registerAudioSource("audio/fx_you_lose.mp3");
-    audio_->registerAudioSource("audio/fx_zombie_death.mp3");
+    audio_->registerAudioSource("audio/fx_damage_taken.ogg");
+    audio_->registerAudioSource("audio/fx_found_key.ogg");
+    audio_->registerAudioSource("audio/fx_you_lose.ogg");
+    audio_->registerAudioSource("audio/fx_zombie_death.ogg");
 
     //e191Array = new Enemy191T[10];
 //    e191Array = NULL;
@@ -216,12 +216,12 @@ GLint GLScene::drawGLScene()
     else if(men->state == 7)
     {
         men->MenuInit("images/loss.jpg");
-
+        //audio_->play("audio/fx_you_lose.mp3");
             glPushMatrix();
             glScaled(3.33,3.33,1.0);
             men->DrawMenu(screenWidth,screenHeight);
             glPopMatrix();
-            audio_->play("audio/fx_you_lose.mp3");
+
     }
 
 }
@@ -415,6 +415,7 @@ void GLScene::manageKeys()
         floorKey->drawKey();
         if (ply->getxPos() < .5 && ply->getxPos() > -.5 && ply->getyPos() < .5 && ply->getyPos() > -.5)
         {
+            audio_->playOnce("audio/fx_found_key.ogg");
             lvl->gotKey(xLvl, yLvl);
             ui->addKey();
         }
@@ -441,6 +442,7 @@ void GLScene::manageProj()
 
 void GLScene::transition(char dir)
 {
+    audio_->playOnce("audio/fx_new_room.ogg");
     clearEnemies();
     switch (dir){
 case 'w':
@@ -639,6 +641,7 @@ void GLScene::collisionListProjectileToEnemy()
             tempIsCollision = collisionObjectToObject(projArray[j], e191Array[i]);
             if (tempIsCollision)
             {
+                audio_->playOnce("audio/fx_zombie_death.ogg");
                 projArray[j]->setIsDead(tempIsCollision);
                 e191Array[i]->setIsDead(tempIsCollision);
             }
@@ -661,7 +664,7 @@ void GLScene::collisionListPlayerToEnemy()
 
         if (tempIsCollision)
         {
-            audio_->play("audio/fx_damage_taken");
+            audio_->playOnce("audio/fx_damage_taken.ogg");
             ply->setIsDead(tempIsCollision);
             e191Array[i]->setIsDead(tempIsCollision);
         }
