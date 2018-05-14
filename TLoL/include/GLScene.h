@@ -43,7 +43,7 @@ class GLScene
         GLint drawGLScene();
         GLvoid resizeGLScene(GLsizei, GLsizei);
 
-        int windMsg(HWND,UINT, WPARAM,LPARAM);
+        int windMsg(HWND,UINT, WPARAM,LPARAM, int &);
 
         void transition(char);
 
@@ -66,10 +66,12 @@ class GLScene
         float screenWidth;
 
         void manageProj();
+
+        AudioComponent* audio_;
     protected:
 
     private:
-        AudioComponent* audio_;
+
         //Enemy191T *e191Array;
 
         void mainGameLogic();

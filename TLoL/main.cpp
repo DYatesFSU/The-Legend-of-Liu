@@ -26,7 +26,8 @@ HINSTANCE	hInstance;		// Holds The Instance Of The Application
 
 bool	keys[256];			// Array Used For The Keyboard Routine
 bool	active=TRUE;		// Window Active Flag Set To TRUE By Default
-bool	fullscreen=FALSE;	// Fullscreen Flag Set To Fullscreen Mode By Default
+bool	fullscreen=TRUE;	// Fullscreen Flag Set To Fullscreen Mode By
+int newGameFlag = 0;
 
 LRESULT	CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);	// Declaration For WndProc
 
@@ -242,7 +243,7 @@ LRESULT CALLBACK WndProc(	HWND	hWnd,			// Handle For This Window
 							WPARAM	wParam,			// Additional Message Information
 							LPARAM	lParam)			// Additional Message Information
 {
-    Scene->windMsg(hWnd,uMsg,wParam,lParam);
+    Scene->windMsg(hWnd,uMsg,wParam,lParam, newGameFlag);
 	switch (uMsg)									// Check For Windows Messages
 	{
 		case WM_ACTIVATE:							// Watch For Window Activate Message
@@ -347,6 +348,17 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
 		}
 		else										// If There Are No Messages
 		{
+		    if (newGameFlag > 1)
+		    {
+		        Scene->audio_->engine_->stopAllSounds();
+		        GLScene *Scene2 = new GLScene();
+		        GLScene *temp = Scene;
+		        Scene = Scene2;
+		        delete temp;
+		        Scene->initGL();
+		        newGameFlag = 0;
+		    }
+		    else
 		    Scene->drawGLScene();
 			// Draw The Scene.  Watch For ESC Key And Quit Messages From DrawGLScene()
 			if (keys[VK_ESCAPE])	// Active?  Was There A Quit Received?

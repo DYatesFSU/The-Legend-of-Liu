@@ -17,12 +17,13 @@ class AudioComponent : public AudioControlsInterface
         void pause();
         bool registerAudioSource(std::string);
         //bool setActiveAudio(std::string);
+        irrklang::ISoundEngine* engine_;
 
     protected:
 
     private:
         std::string last_played_;
-        irrklang::ISoundEngine* engine_;
+
         std::unordered_map<std::string, irrklang::ISound*> audio_sources;
 };
 

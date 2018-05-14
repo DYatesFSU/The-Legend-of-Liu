@@ -538,7 +538,7 @@ GLvoid GLScene::resizeGLScene(GLsizei width, GLsizei height)
    glLoadIdentity();
 }
 
-int GLScene::windMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+int GLScene::windMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam, int &newGameFlag)
 {
     switch (uMsg)									// Check For Windows Messages
 	{
@@ -548,7 +548,7 @@ int GLScene::windMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	        //KbMs->keyPressed(modelTeapot);
 	        //KbMs->keyEnv(plx, 0.005);
 	        KbMs->keyPressed(ply);
-	        KbMs->keyPressed(men);
+	        KbMs->keyPressed(men, newGameFlag);
 	        //KbMs->keyPressed(sky);
 
 	    break;

@@ -180,7 +180,7 @@ void Inputs::keyUp(player* ply)
                 break;
             }
 }
-void Inputs::keyPressed(Menu* menu)
+void Inputs::keyPressed(Menu* menu, int &newGameFlag)
 {
      switch(wParam)
     {
@@ -196,6 +196,7 @@ void Inputs::keyPressed(Menu* menu)
     {
          Sleep(200);
          menu->state=2;        // set state to new game
+         newGameFlag++;
     }
         break;
     case 0x4F:                // O key
